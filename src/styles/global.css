@@ -88,11 +88,26 @@
   .cta-solid {
     @apply inline-flex items-center gap-3 bg-white px-8 py-4 font-display text-sm font-bold uppercase text-black;
     letter-spacing: 0.18em;
+    position: relative;
+    overflow: hidden;
     transition: background-color 300ms var(--ease-precise);
     will-change: transform;
   }
   .cta-solid:hover {
-    background-color: #d9d9d9;
+    background-color: #e9e9e9;
+  }
+  /* Light-sweep shine crossing the button on hover — the ray motif again */
+  .cta-solid::after {
+    content: '';
+    position: absolute;
+    inset: -20% -35%;
+    background: linear-gradient(105deg, transparent 42%, rgb(0 0 0 / 0.14) 50%, transparent 58%);
+    transform: translateX(-120%);
+    pointer-events: none;
+  }
+  .cta-solid:hover::after {
+    transform: translateX(120%);
+    transition: transform 700ms var(--ease-precise);
   }
 
   .cta-ghost {
@@ -167,14 +182,27 @@
       #000000;
   }
 
-  /* T1 fallback: compositor-only SVG ray drift (no WebGL) */
+  /* Hero power-on FOUC guard: content stays dark until GSAP takes over
+     (inline head script sets data-motion=pending, with a 3s safety release) */
+  html[data-motion='pending'] .boot-hide {
+    opacity: 0;
+  }
+
+  /* T1 fallback: compositor-only SVG ray drift (no WebGL), with warm-up */
   .hero-rays {
     opacity: 0;
     transform-origin: 14% 0%;
   }
   [data-tier='1'] .hero-rays {
     opacity: 1;
-    animation: ray-drift 16s ease-in-out infinite alternate;
+    animation:
+      rays-on 1.8s var(--ease-precise) both,
+      ray-drift 16s 1.8s ease-in-out infinite alternate;
+  }
+  @keyframes rays-on {
+    from { opacity: 0; }
+    60% { opacity: 0.35; }
+    to { opacity: 0.85; }
   }
   @keyframes ray-drift {
     from { transform: rotate(-1.6deg) scale(1.02); opacity: 0.75; }

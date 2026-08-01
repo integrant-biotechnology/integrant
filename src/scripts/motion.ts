@@ -1,24 +1,60 @@
 /**
  * Site motion system — Lenis smooth scroll + GSAP ScrollTrigger,
  * every animation behind a single reduced-motion gate.
+ *
+ * The hero runs a cinematic "power-on" sequence on load (synced with the
+ * shader's lamp warm-up envelope), then pins and hands off to the story
+ * section under scroll control (beam sweep + dim via hero-bridge).
+ *
+ * FOUC guard: an inline head script sets html[data-motion="pending"], which
+ * hides .boot-hide elements via CSS until GSAP owns their inline styles.
  * Debug: ?motion=off forces the static experience.
  */
+import { heroScroll } from '../components/hero/hero-bridge';
 
 export async function initMotion(): Promise<void> {
+  const root = document.documentElement;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   const params = new URLSearchParams(window.location.search);
   const off = reduce.matches || params.get('motion') === 'off';
 
-  document.documentElement.dataset.motion = off ? 'off' : 'on';
-  if (off) return; // static page is fully readable with zero JS motion
+  if (off) {
+    root.dataset.motion = 'off';
+    return; // static page is fully readable with zero JS motion
+  }
 
-  const [{ gsap }, { ScrollTrigger }, { default: Lenis }] = await Promise.all([
+  // Never initialize against a hidden or zero-sized viewport (prerendered
+  // tabs, background loads): ScrollTrigger would pin degenerate dimensions
+  // and SplitText would measure collapsed lines. The power-on plays when
+  // the page is actually seen — the show starts when the curtain rises.
+  const forceVisible = params.has('forcevisible');
+  if ((document.hidden && !forceVisible) || window.innerWidth === 0) {
+    await new Promise<void>((resolve) => {
+      // Poll as a backup: some embedders resize a hidden viewport without
+      // dispatching resize events.
+      const poll = window.setInterval(() => check(), 500);
+      const check = () => {
+        if ((!document.hidden || forceVisible) && window.innerWidth > 0) {
+          document.removeEventListener('visibilitychange', check);
+          window.removeEventListener('resize', check);
+          window.clearInterval(poll);
+          resolve();
+        }
+      };
+      document.addEventListener('visibilitychange', check);
+      window.addEventListener('resize', check);
+      check();
+    });
+  }
+
+  const [{ gsap }, { ScrollTrigger }, { SplitText }, { default: Lenis }] = await Promise.all([
     import('gsap'),
     import('gsap/ScrollTrigger'),
+    import('gsap/SplitText'),
     import('lenis'),
   ]);
 
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, SplitText);
 
   // --- Lenis <-> ScrollTrigger ---
   const lenis = new Lenis({ lerp: 0.12, wheelMultiplier: 0.95 });
@@ -26,25 +62,91 @@ export async function initMotion(): Promise<void> {
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
 
+  // Stable line-splitting needs final font metrics — force the display face
+  // to be resolved before measuring, don't just trust fonts.ready timing.
+  await Promise.race([
+    Promise.all([document.fonts.load('700 4.5rem Rajdhani'), document.fonts.ready]),
+    new Promise((r) => setTimeout(r, 1200)),
+  ]);
+
+  // --- Hero: power-on choreography + pinned scroll hand-off ---
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  let split: InstanceType<typeof SplitText> | null = null;
+
+  if (hero) {
+    const q = (sel: string) => hero.querySelector<HTMLElement>(sel);
+    const logo = q('.hero-logo');
+    const eyebrow = q('.hero-eyebrow');
+    const h1 = q('.hero-h1');
+    const sub = q('.hero-sub');
+    const ctaWrap = q('.hero-cta-wrap');
+    const cue = q('.hero-cue');
+
+    if (h1) split = new SplitText(h1, { type: 'lines', mask: 'lines', linesClass: 'hero-line' });
+
+    // Claim initial states with inline styles, then release the CSS guard —
+    // no frame exists where unstyled content flashes.
+    gsap.set([logo, eyebrow, sub, ctaWrap, cue], { autoAlpha: 0 });
+    gsap.set(logo, { y: 14, scale: 0.96 });
+    gsap.set(eyebrow, { letterSpacing: '0.55em' });
+    gsap.set([sub, ctaWrap], { y: 18 });
+    if (split) {
+      gsap.set(h1, { autoAlpha: 1 });
+      gsap.set(split.lines, { yPercent: 112 });
+    }
+    root.dataset.motion = 'on';
+
+    // Timed against the shader's bootEnvelope: blips ~0.4–0.75s, full ~1.6s.
+    // The split is reverted on completion — masks exist only for the reveal,
+    // so late resizes never fight stale line boxes.
+    const boot = gsap.timeline({
+      defaults: { ease: 'expo.out' },
+      onComplete: () => {
+        split?.revert();
+        split = null;
+      },
+    });
+    boot
+      .to(logo, { autoAlpha: 1, y: 0, scale: 1, duration: 1.1 }, 0.55)
+      .to(eyebrow, { autoAlpha: 1, letterSpacing: '0.35em', duration: 1.0 }, 0.75)
+      .to(split ? split.lines : h1, { yPercent: 0, autoAlpha: 1, duration: 1.15, stagger: 0.12, ease: 'power4.out' }, 0.9)
+      .to(sub, { autoAlpha: 1, y: 0, duration: 0.9 }, 1.35)
+      .to(ctaWrap, { autoAlpha: 1, y: 0, duration: 0.9 }, 1.5)
+      .to(cue, { autoAlpha: 1, duration: 0.8 }, 1.85);
+
+    // Pin the hero; scrub content away while the shader sweeps + dims the lamp
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: hero,
+          start: 'top top',
+          end: '+=75%',
+          pin: true,
+          scrub: 0.6,
+          anticipatePin: 1,
+        },
+      })
+      .to('.hero-content', { yPercent: -16, autoAlpha: 0, ease: 'none' }, 0)
+      .to('.hero-cue', { autoAlpha: 0, ease: 'none' }, 0)
+      .to(heroScroll, { value: 1, ease: 'none' }, 0);
+  } else {
+    root.dataset.motion = 'on';
+  }
+
   // If reduced motion is enabled mid-session, stop smoothing + kill triggers
   reduce.addEventListener('change', (e) => {
     if (e.matches) {
-      document.documentElement.dataset.motion = 'off';
+      root.dataset.motion = 'off';
       lenis.destroy();
       ScrollTrigger.getAll().forEach((st) => st.kill());
       gsap.globalTimeline.clear();
+      heroScroll.value = 0;
+      split?.revert();
       document
-        .querySelectorAll<HTMLElement>('[data-reveal], [data-reveal-hero], .sweep')
+        .querySelectorAll<HTMLElement>('[data-reveal], .boot-hide, .sweep, .hero-content')
         .forEach((el) => gsap.set(el, { clearProps: 'all' }));
     }
   });
-
-  // --- Hero content entrance (staggered, once) ---
-  gsap.fromTo(
-    '[data-reveal-hero]',
-    { autoAlpha: 0, y: 26 },
-    { autoAlpha: 1, y: 0, duration: 1.1, ease: 'expo.out', stagger: 0.09, delay: 0.15 }
-  );
 
   // --- Scroll reveals ---
   document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) => {

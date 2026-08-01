@@ -21,7 +21,7 @@ const ogImage = new URL('/brand/og.png', Astro.site ?? Astro.url);
 ---
 
 <!doctype html>
-<html lang="en-AU" data-motion="off">
+<html lang="en-AU">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -39,6 +39,36 @@ const ogImage = new URL('/brand/og.png', Astro.site ?? Astro.url);
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="generator" content={Astro.generator} />
+    <script is:inline>
+      // FOUC guard for the hero power-on: hide boot elements only when the
+      // motion system will animate them; release after 3s if it never loads.
+      (function () {
+        var d = document.documentElement;
+        var off =
+          matchMedia('(prefers-reduced-motion: reduce)').matches ||
+          new URLSearchParams(location.search).get('motion') === 'off';
+        d.dataset.motion = off ? 'off' : 'pending';
+        if (off) return;
+        // Safety release: show static content if the motion system never
+        // arrives. The timer only counts while the page is actually visible
+        // (prerendered/background tabs keep the stage dark until revealed).
+        var release = function () {
+          setTimeout(function () {
+            if (d.dataset.motion === 'pending') d.dataset.motion = 'off';
+          }, 3000);
+        };
+        if (document.hidden) {
+          document.addEventListener('visibilitychange', function onVis() {
+            if (!document.hidden) {
+              document.removeEventListener('visibilitychange', onVis);
+              release();
+            }
+          });
+        } else {
+          release();
+        }
+      })();
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

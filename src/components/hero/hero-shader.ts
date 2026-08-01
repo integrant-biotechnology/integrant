@@ -8,6 +8,7 @@
  * fine-pointer devices only.
  */
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
+import { heroScroll } from './hero-bridge';
 
 const VERTEX = /* glsl */ `
   attribute vec2 uv;
@@ -54,17 +55,28 @@ const FRAGMENT = /* glsl */ `
     return v;
   }
 
+  uniform float uScroll; // 0 at page top → 1 when the hero has handed over
+
+  // Theatre-lamp power-on: dark → two warm-up blips → bloom to full
+  float bootEnvelope(float t) {
+    float ramp = smoothstep(0.35, 1.6, t);
+    ramp *= 0.7 + 0.3 * smoothstep(1.6, 2.3, t);
+    float blip1 = step(0.42, t) * step(t, 0.50) * 0.45;
+    float blip2 = step(0.68, t) * step(t, 0.74) * 0.7;
+    return max(ramp, max(blip1, blip2));
+  }
+
   void main() {
-    // Light source just above the top-left corner
-    vec2 light = vec2(0.14, 1.10) + uAim;
+    // Light source just above the top-left corner; recedes as you scroll
+    vec2 light = vec2(0.14, 1.10 + 0.16 * uScroll) + uAim;
     vec2 p = vUv - light;
     p.x *= uAspect;
 
     float dist = length(p);
     float ang = atan(p.y, p.x);
 
-    // Beam cone aimed down-right into the frame
-    float aimAng = -1.12;
+    // Beam cone aimed down-right; sweeps gently with scroll hand-off
+    float aimAng = -1.12 + 0.22 * uScroll;
     float cone = smoothstep(0.95, 0.25, abs(ang - aimAng));
 
     // Layered angular ray bands, drifting very slowly
@@ -78,6 +90,12 @@ const FRAGMENT = /* glsl */ `
     float dust = fbm(vUv * vec2(3.0 * uAspect, 3.0) + vec2(uTime * 0.016, -uTime * 0.011));
     float vol = cone * rays * atten * (0.55 + 0.65 * dust);
 
+    // Bright dust motes twinkling inside the beam
+    vec2 mp = vUv * vec2(9.0 * uAspect, 9.0) + vec2(uTime * 0.035, uTime * 0.05);
+    float mn = noise(mp);
+    float motes = smoothstep(0.80, 0.96, mn) * (0.45 + 0.55 * sin(uTime * 1.7 + mn * 21.0));
+    vol += motes * cone * atten * 0.4;
+
     // Soft ambient bloom near the source
     float amb = exp(-dist * 2.6) * 0.30 + exp(-dist * 1.1) * 0.07;
 
@@ -85,7 +103,10 @@ const FRAGMENT = /* glsl */ `
     float floorFade = smoothstep(-0.08, 0.42, vUv.y);
     float edgeFade = smoothstep(1.06, 0.72, vUv.x);
 
+    // Organic lamp micro-flicker, power-on envelope, scroll dim
+    float flicker = 0.965 + 0.035 * noise(vec2(uTime * 2.7, 3.1));
     float l = (vol * 1.15 + amb) * floorFade * edgeFade * uIntensity;
+    l *= bootEnvelope(uTime) * flicker * (1.0 - 0.62 * uScroll);
 
     // Filmic-ish rolloff, monochrome
     l = 1.0 - exp(-l * 1.7);
@@ -129,6 +150,7 @@ export function mountHeroShader(
       uAspect: { value: 1 },
       uAim: { value: [0, 0] },
       uIntensity: { value: 1 },
+      uScroll: { value: 0 },
     },
   });
   const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
@@ -199,6 +221,7 @@ export function mountHeroShader(
     aim.y += (aim.ty - aim.y) * 0.03;
     program.uniforms.uAim.value = [aim.x, aim.y];
     program.uniforms.uTime.value = (now - t0) / 1000;
+    program.uniforms.uScroll.value = heroScroll.value;
     renderer.render({ scene: mesh });
     if (!firstFrame) {
       firstFrame = true;
