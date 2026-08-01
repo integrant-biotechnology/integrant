@@ -1,0 +1,846 @@
+[
+  {
+    "slug": "integrant-screw-removal-set",
+    "name": "Subtalar Arthroereisis Implant | Soft tissue integration | Integrant",
+    "line": "med-tech",
+    "path": "/integrant-screw-removal-set/",
+    "targetRoute": "/products/med-tech/screw-removal-set",
+    "specTables": [],
+    "images": [
+      {
+        "file": "1-09ca6e.png",
+        "alt": "",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2022/07/1-2048x1366.png"
+      },
+      {
+        "file": "3-d66989.png",
+        "alt": "",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2022/07/3.png"
+      },
+      {
+        "file": "2-e14271.png",
+        "alt": "",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2022/07/2.png"
+      }
+    ],
+    "docs": [
+      {
+        "file": "3-d66989.png",
+        "text": "",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2022/07/3.png"
+      },
+      {
+        "file": "2-e14271.png",
+        "text": "",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2022/07/2.png"
+      }
+    ],
+    "wordCount": 120,
+    "complianceFlags": []
+  },
+  {
+    "slug": "screwit",
+    "name": "ScrewIT",
+    "line": "med-tech",
+    "path": "/screwit/",
+    "targetRoute": "/products/med-tech/screwit",
+    "specTables": [
+      [
+        [
+          "Catalogue Numbers",
+          "ScrewIT Length)"
+        ],
+        [
+          "MI25-010",
+          "10 mm"
+        ],
+        [
+          "MI25-012",
+          "12mm"
+        ],
+        [
+          "MI25-014",
+          "14 mm"
+        ],
+        [
+          "MI25-016",
+          "16 mm"
+        ],
+        [
+          "MI25-018",
+          "18 mm"
+        ],
+        [
+          "MI25-020",
+          "20 mm"
+        ],
+        [
+          "MI25-022",
+          "22 mm"
+        ],
+        [
+          "MI25-024",
+          "24 mm"
+        ],
+        [
+          "MI25-026",
+          "26 mm"
+        ],
+        [
+          "MI25-022",
+          "28 mm"
+        ],
+        [
+          "MI25-030",
+          "30 mm"
+        ]
+      ]
+    ],
+    "images": [
+      {
+        "file": "integrant.png",
+        "alt": "",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2022/07/integrant.png"
+      }
+    ],
+    "docs": [],
+    "wordCount": 81,
+    "complianceFlags": []
+  },
+  {
+    "slug": "integrant-2-5mm-screw",
+    "name": "Integrant 2.5mm Screw | Integrant",
+    "line": "med-tech",
+    "path": "/integrant-2-5mm-screw/",
+    "targetRoute": "/products/med-tech/2-5mm-screw",
+    "specTables": [],
+    "images": [],
+    "docs": [],
+    "wordCount": 0,
+    "complianceFlags": []
+  },
+  {
+    "slug": "frame-it",
+    "name": "FrameIT",
+    "line": "bio-tech",
+    "path": "/frame-it/",
+    "targetRoute": "/products/bio-tech/frameit",
+    "specTables": [],
+    "images": [
+      {
+        "file": "2-3.png",
+        "alt": "External Frame",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/2-3-1825x2048.png"
+      },
+      {
+        "file": "1-2-scaled.jpg",
+        "alt": "",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/1-2-scaled.jpg"
+      },
+      {
+        "file": "2-2-scaled.jpg",
+        "alt": "Foot and Ankle Realignment",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/2-2-scaled.jpg"
+      }
+    ],
+    "docs": [],
+    "wordCount": 95,
+    "complianceFlags": []
+  },
+  {
+    "slug": "nail-it",
+    "name": "NaillT",
+    "line": "med-tech",
+    "path": "/nail-it/",
+    "targetRoute": "/products/med-tech/nailit",
+    "specTables": [],
+    "images": [
+      {
+        "file": "Nail-It.jpg",
+        "alt": "NailIT",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/Nail-It.jpg"
+      },
+      {
+        "file": "Nail-It-2.jpg",
+        "alt": "NaillT correcting",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/Nail-It-2-1721x2048.jpg"
+      }
+    ],
+    "docs": [],
+    "wordCount": 141,
+    "complianceFlags": [
+      "treat"
+    ]
+  },
+  {
+    "slug": "anchor-it",
+    "name": "ANCHORIT",
+    "line": "med-tech",
+    "path": "/anchor-it/",
+    "targetRoute": "/products/med-tech/anchorit",
+    "specTables": [],
+    "images": [
+      {
+        "file": "1.jpg",
+        "alt": "Ankle Arthroscopy",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/1.jpg"
+      },
+      {
+        "file": "2.jpg",
+        "alt": "Diathermy of Bleeding Points",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/2.jpg"
+      },
+      {
+        "file": "3.jpg",
+        "alt": "The Laterlat Ligaments",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/3.jpg"
+      },
+      {
+        "file": "4.jpg",
+        "alt": "The Anchors",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/4.jpg"
+      },
+      {
+        "file": "5.jpg",
+        "alt": "A Needle is Cut from each of the Sutures",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/5.jpg"
+      }
+    ],
+    "docs": [],
+    "wordCount": 581,
+    "complianceFlags": [
+      "indication"
+    ]
+  },
+  {
+    "slug": "integrant-screw-sets",
+    "name": "Integrant Screw Sets​",
+    "line": "med-tech",
+    "path": "/integrant-screw-sets/",
+    "targetRoute": "/products/med-tech/screw-sets",
+    "specTables": [
+      [
+        [
+          "Lengths",
+          "Catalogue Numbers"
+        ],
+        [
+          "11mm",
+          "# LA-007-11"
+        ],
+        [
+          "12mm",
+          "# LA-007-12"
+        ],
+        [
+          "13mm",
+          "# LA-007-13"
+        ],
+        [
+          "14mm",
+          "# LA-007-14"
+        ],
+        [
+          "15mm",
+          "# LA-007-15"
+        ],
+        [
+          "16mm",
+          "# LA-007-16"
+        ],
+        [
+          "18mm",
+          "# LA-007-18"
+        ],
+        [
+          "20mm",
+          "# LA-007-20"
+        ]
+      ],
+      [
+        [
+          "Lengths",
+          "Guide Pin Catalogue Numbers"
+        ],
+        [
+          "14mm",
+          "# LA-008-14"
+        ],
+        [
+          "16mm",
+          "# LA-008-16"
+        ],
+        [
+          "18mm",
+          "# LA-008-18"
+        ],
+        [
+          "20mm",
+          "# LA-008-20"
+        ],
+        [
+          "22mm",
+          "# LA-008-22"
+        ],
+        [
+          "24mm",
+          "# LA-008-24"
+        ],
+        [
+          "26mm",
+          "# LA-008-26"
+        ],
+        [
+          "28mm",
+          "# LA-008-28"
+        ],
+        [
+          "30mm",
+          "# LA-008-30"
+        ],
+        [
+          "32mm",
+          "# LA-008-32"
+        ],
+        [
+          "34mm",
+          "# LA-008-34"
+        ],
+        [
+          "36mm",
+          "# LA-008-36"
+        ],
+        [
+          "38mm",
+          "# LA-008-38"
+        ],
+        [
+          "40mm",
+          "# LA-008-40"
+        ],
+        [
+          "42mm",
+          "# LA-008-42"
+        ],
+        [
+          "44mm",
+          "# LA-008-44"
+        ],
+        [
+          "46mm",
+          "# LA-008-46"
+        ],
+        [
+          "48mm",
+          "# LA-008-48"
+        ],
+        [
+          "50mm",
+          "# LA-008-50"
+        ]
+      ],
+      [
+        [
+          "Lengths",
+          "Catalogue Numbers"
+        ],
+        [
+          "26mm",
+          "# LA-004-26"
+        ],
+        [
+          "28mm",
+          "# LA-004-28"
+        ],
+        [
+          "30mm",
+          "# LA-004-30"
+        ],
+        [
+          "32mm",
+          "# LA-004-32"
+        ],
+        [
+          "34mm",
+          "# LA-004-34"
+        ],
+        [
+          "36mm",
+          "# LA-004-36"
+        ],
+        [
+          "38mm",
+          "# LA-004-38"
+        ],
+        [
+          "40mm",
+          "# LA-004-40"
+        ],
+        [
+          "42mm",
+          "# LA-004-42"
+        ],
+        [
+          "44mm",
+          "# LA-004-44"
+        ],
+        [
+          "46mm",
+          "# LA-004-46"
+        ],
+        [
+          "48mm",
+          "# LA-004-48"
+        ],
+        [
+          "50mm",
+          "# LA-004-50"
+        ],
+        [
+          "52mm",
+          "# LA-004-52"
+        ],
+        [
+          "54mm",
+          "# LA-004-54"
+        ],
+        [
+          "56mm",
+          "# LA-004-56"
+        ],
+        [
+          "58mm",
+          "# LA-004-58"
+        ],
+        [
+          "60mm",
+          "# LA-004-60"
+        ],
+        [
+          "62mm",
+          "# LA-004-62"
+        ],
+        [
+          "64mm",
+          "# LA-004-64"
+        ],
+        [
+          "66mm",
+          "# LA-004-66"
+        ],
+        [
+          "68mm",
+          "# LA-004-68"
+        ],
+        [
+          "70mm",
+          "# LA-004-70"
+        ]
+      ],
+      [
+        [
+          "Lengths",
+          "Catalogue Numbers"
+        ],
+        [
+          "45mm",
+          "# LA-001-45"
+        ],
+        [
+          "50mm",
+          "# LA-001-50"
+        ],
+        [
+          "55mm",
+          "# LA-001-55"
+        ],
+        [
+          "60mm",
+          "# LA-001-60"
+        ],
+        [
+          "65mm",
+          "# LA-001-65"
+        ],
+        [
+          "70mm",
+          "# LA-001-70"
+        ],
+        [
+          "75mm",
+          "# LA-001-75"
+        ],
+        [
+          "80mm",
+          "# LA-001-80"
+        ],
+        [
+          "85mm",
+          "# LA-001-85"
+        ],
+        [
+          "90mm",
+          "# LA-001-90"
+        ],
+        [
+          "95mm",
+          "# LA-001-95"
+        ],
+        [
+          "100mm",
+          "# LA-001-100"
+        ],
+        [
+          "105mm",
+          "# LA-001-105"
+        ],
+        [
+          "110mm",
+          "# LA-001-110"
+        ],
+        [
+          "115mm",
+          "# LA-001-115"
+        ]
+      ]
+    ],
+    "images": [
+      {
+        "file": "3mm-e1592316643165.png",
+        "alt": "Triple Cut technology 3.0mm",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/3mm-e1592316643165.png"
+      },
+      {
+        "file": "4mm.png",
+        "alt": "Triple Cut technology 4.0 mm",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/4mm.png"
+      },
+      {
+        "file": "666mm.png",
+        "alt": "Triple Cut technology 6.5 mm",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/666mm.png"
+      }
+    ],
+    "docs": [],
+    "wordCount": 617,
+    "complianceFlags": []
+  },
+  {
+    "slug": "anterior-ankle-fusion-set",
+    "name": "ANTERIOR ANKLE FUSION SET",
+    "line": "med-tech",
+    "path": "/anterior-ankle-fusion-set/",
+    "targetRoute": "/products/med-tech/ankle-fusion-set",
+    "specTables": [],
+    "images": [
+      {
+        "file": "Integrant-Anterior-Ankle-Fusion.png",
+        "alt": "Anterior Ankle Fusion Set",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/07/Integrant-Anterior-Ankle-Fusion.png"
+      },
+      {
+        "file": "p1.jpg",
+        "alt": "Pre Operative",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/07/p1.jpg"
+      },
+      {
+        "file": "p1-2.jpg",
+        "alt": "Post Operative 4 Weeks",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/07/p1-2.jpg"
+      },
+      {
+        "file": "p1-3.jpg",
+        "alt": "Post Operative 3 Months",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/07/p1-3.jpg"
+      },
+      {
+        "file": "p2-1.jpg",
+        "alt": "Pre Operative",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/07/p2-1.jpg"
+      },
+      {
+        "file": "p2-2.jpg",
+        "alt": "Pre Operative 4 Weeks",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/07/p2-2.jpg"
+      },
+      {
+        "file": "p2-3.jpg",
+        "alt": "Pre Operative 3 Weeks",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/07/p2-3.jpg"
+      }
+    ],
+    "docs": [],
+    "wordCount": 465,
+    "complianceFlags": [
+      "heal"
+    ]
+  },
+  {
+    "slug": "loopit",
+    "name": "LoopIT",
+    "line": "med-tech",
+    "path": "/loopit/",
+    "targetRoute": "/products/med-tech/loopit",
+    "specTables": [],
+    "images": [
+      {
+        "file": "Ankle.jpg",
+        "alt": "Ankle Syndesmosis Repair",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/Ankle.jpg"
+      },
+      {
+        "file": "2-1.png",
+        "alt": "LoopIT Double Loop Lift Implant",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/2-1.png"
+      },
+      {
+        "file": "1-1.jpg",
+        "alt": "",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/1-1.jpg"
+      },
+      {
+        "file": "2-1.jpg",
+        "alt": "Hallux Vagus Repair",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/2-1.jpg"
+      },
+      {
+        "file": "3-1.jpg",
+        "alt": "LoopIT is inserted",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/3-1.jpg"
+      },
+      {
+        "file": "4-1.jpg",
+        "alt": "Grasp the sutures",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/4-1.jpg"
+      },
+      {
+        "file": "5-1.jpg",
+        "alt": "LoopIT using C-arm Xray",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/5-1.jpg"
+      }
+    ],
+    "docs": [],
+    "wordCount": 242,
+    "complianceFlags": [
+      "cure",
+      "heal",
+      "proven"
+    ]
+  },
+  {
+    "slug": "fuse-it",
+    "name": "FUSEIT",
+    "line": "med-tech",
+    "path": "/fuse-it/",
+    "targetRoute": "/products/med-tech/fuseit",
+    "specTables": [
+      [
+        [
+          "Length",
+          "Diameter",
+          "Catalogue"
+        ],
+        [
+          "1 cm",
+          "6 mm",
+          "LA010-6"
+        ],
+        [
+          "1 cm",
+          "8 mm",
+          "LA010-8"
+        ],
+        [
+          "1 cm",
+          "10 mm",
+          "LA010-10"
+        ],
+        [
+          "1 cm",
+          "12 mm",
+          "LA010-12"
+        ],
+        [
+          "2 cm",
+          "6 mm",
+          "LA010-6"
+        ],
+        [
+          "2 cm",
+          "8 mm",
+          "LA010-8"
+        ],
+        [
+          "2 cm",
+          "10 mm",
+          "LA010-10"
+        ],
+        [
+          "2 cm",
+          "12 mm",
+          "LA010-12"
+        ]
+      ]
+    ],
+    "images": [],
+    "docs": [
+      {
+        "file": "Case-Report-Pantalar-Arthrodesis-using-the-FuseIt-Arthrodesis-Plug-in-charcot.pdf",
+        "text": "Case Report Pantalar Arthrodesis using the FuseIt Arthrodesis Plug in Charcot",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/Case-Report-Pantalar-Arthrodesis-using-the-FuseIt-Arthrodesis-Plug-in-charcot.pdf"
+      },
+      {
+        "file": "FuseIt.pdf",
+        "text": "Minimally Invasive Opening Wedge Calcaneal Osteotomy Using a Titanium Structural Fusion Device",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/FuseIt.pdf"
+      },
+      {
+        "file": "subtalar-arthrodesis-slater-2018.pdf",
+        "text": "Subtalar Distraction Arthrodesis - An Innovative New Technique",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/subtalar-arthrodesis-slater-2018.pdf"
+      }
+    ],
+    "wordCount": 161,
+    "complianceFlags": [
+      "treat"
+    ]
+  },
+  {
+    "slug": "graft-it",
+    "name": "GRAFIT",
+    "line": "bio-tech",
+    "path": "/graft-it/",
+    "targetRoute": "/products/bio-tech/graftit",
+    "specTables": [],
+    "images": [
+      {
+        "file": "4-1.png",
+        "alt": "GRAFT IT",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/4-1.png"
+      }
+    ],
+    "docs": [
+      {
+        "file": "Rodriguez-2018-Barrier-Membranes-Review.pdf",
+        "text": "Rodriguez 2018 Barrier Membranes Review",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/Rodriguez-2018-Barrier-Membranes-Review.pdf"
+      },
+      {
+        "file": "Ramanauskaite-2019-Implants-and-Grafting-Review.pdf",
+        "text": "Ramanauskaite 2019 Implants and Grafting Review",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/Ramanauskaite-2019-Implants-and-Grafting-Review.pdf"
+      },
+      {
+        "file": "Pountos-2016-Coral-Graft-Review_new.pdf",
+        "text": "Pountos 2016 Coral Graft Review",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/Pountos-2016-Coral-Graft-Review_new.pdf"
+      },
+      {
+        "file": "McPherson-2019-Coral-Bone-Graft-Review.pdf",
+        "text": "McPherson 2019 Coral Bone Graft Review",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/McPherson-2019-Coral-Bone-Graft-Review.pdf"
+      },
+      {
+        "file": "Luo-Performanceofcorallinehydroxyapatiteinsinusflooraugmentation-aretrospectivestudy.pdf",
+        "text": "Luo  - Performance of Coralline Hydroxyapatite in sinus floor augmentation: a retrospective study",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/Luo-Performanceofcorallinehydroxyapatiteinsinusflooraugmentation-aretrospectivestudy.pdf"
+      },
+      {
+        "file": "Frizzera-2019-Peri-Implant-Defects-Review.pdf",
+        "text": "Frizzera 2019 Peri Implant Defects Review",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/Frizzera-2019-Peri-Implant-Defects-Review.pdf"
+      },
+      {
+        "file": "Faria-Almeida-2019-Membranes-Socket-Preservation-Review.pdf",
+        "text": "Faria-Almeida 2019 Membranes Socket Preservation Review",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/Faria-Almeida-2019-Membranes-Socket-Preservation-Review.pdf"
+      },
+      {
+        "file": "Drvivekanand-2019-HA-better-than-Xenograft.pdf",
+        "text": "Role of Synthetic Hydroxyapatite-In Socket Preservation: A Systematic Review and Meta-analysis",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/Drvivekanand-2019-HA-better-than-Xenograft.pdf"
+      },
+      {
+        "file": "De-Grado-2018-Graft-Large-Bone-Review_new.pdf",
+        "text": "De Grado 2018 Graft Large Bone Review",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/06/De-Grado-2018-Graft-Large-Bone-Review_new.pdf"
+      }
+    ],
+    "wordCount": 306,
+    "complianceFlags": [
+      "heal"
+    ]
+  },
+  {
+    "slug": "arch-it",
+    "name": "ARCHIT",
+    "line": "med-tech",
+    "path": "/arch-it/",
+    "targetRoute": "/products/med-tech/archit",
+    "specTables": [
+      [
+        [
+          "",
+          "Catalogue Numbers",
+          "Size"
+        ],
+        [
+          "AI08",
+          "ARCHIT Subtalar Arthroereisis Implant",
+          "8 mm"
+        ],
+        [
+          "AI09",
+          "ARCHIT Subtalar Arthroereisis Implant",
+          "9 mm"
+        ],
+        [
+          "AI10",
+          "ARCHIT Subtalar Arthroereisis Implant",
+          "10 mm"
+        ],
+        [
+          "AI11",
+          "ARCHIT Subtalar Arthroereisis Implant",
+          "11 mm"
+        ],
+        [
+          "AI12",
+          "ARCHIT Subtalar Arthroereisis Implant",
+          "12 mm"
+        ]
+      ]
+    ],
+    "images": [],
+    "docs": [],
+    "wordCount": 111,
+    "complianceFlags": [
+      "outcome",
+      "indication"
+    ]
+  },
+  {
+    "slug": "integrant-anterior-ankle-fusion-set",
+    "name": "Integrant Anterior Ankle Fusion Set | Integrant",
+    "line": "med-tech",
+    "path": "/integrant-anterior-ankle-fusion-set/",
+    "targetRoute": "/products/med-tech/ankle-fusion-set",
+    "specTables": [],
+    "images": [
+      {
+        "file": "Integrant-Anterior-Ankle-Fusion-Set-pdf.jpg",
+        "alt": "",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/07/Integrant-Anterior-Ankle-Fusion-Set-pdf-220x300.jpg"
+      }
+    ],
+    "docs": [
+      {
+        "file": "Integrant-Anterior-Ankle-Fusion-Set.pdf",
+        "text": "",
+        "legacyUrl": "https://integrant.com.au/wp-content/uploads/2020/07/Integrant-Anterior-Ankle-Fusion-Set.pdf"
+      }
+    ],
+    "wordCount": 5,
+    "complianceFlags": []
+  }
+]

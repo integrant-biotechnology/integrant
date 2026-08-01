@@ -1,0 +1,44 @@
+{
+  "pagesFetched": 42,
+  "discoveredBeyondSitemap": [
+    "/shop/page/2/",
+    "/shop/page/3/",
+    "/shop/page/4/",
+    "/shop/page/5/",
+    "/product/10mm-spanners/lost-password/",
+    "/category/uncategorized/",
+    "/shop/page/1/",
+    "/product/integrant-cap/lost-password/",
+    "/product/integrant-moon-boot/lost-password/",
+    "/product/knee-walker/lost-password/",
+    "/product/radio-frequency-machine/lost-password/"
+  ],
+  "pageFailures": [
+    {
+      "url": "https://integrant.com.au/product/10mm-spanners/lost-password/",
+      "status": 404
+    },
+    {
+      "url": "https://integrant.com.au/product/integrant-cap/lost-password/",
+      "status": 404
+    },
+    {
+      "url": "https://integrant.com.au/product/integrant-moon-boot/lost-password/",
+      "status": 404
+    },
+    {
+      "url": "https://integrant.com.au/product/knee-walker/lost-password/",
+      "status": 404
+    },
+    {
+      "url": "https://integrant.com.au/product/radio-frequency-machine/lost-password/",
+      "status": 404
+    }
+  ],
+  "assets": {
+    "downloaded": 101,
+    "failed": [],
+    "skippedLarge": [],
+    "videos": []
+  }
+}

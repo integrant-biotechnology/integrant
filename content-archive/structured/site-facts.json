@@ -1,0 +1,14 @@
+{
+  "phones": [],
+  "emails": [
+    "admin@integrant.com.au"
+  ],
+  "abn": [],
+  "socials": [],
+  "addressCandidates": [
+    "5 Ward Avenue, Potts Point NSW 2011"
+  ],
+  "notes": [
+    "No phone number is published anywhere on the legacy site (verified: no tel: links, no 7232 sequence in any raw HTML \u2014 earlier regex match was digit-concatenation noise). Contact = form + admin@integrant.com.au + 5 Ward Avenue, Potts Point NSW 2011."
+  ]
+}
