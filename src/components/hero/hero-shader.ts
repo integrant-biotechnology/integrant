@@ -18,7 +18,7 @@
  * fine-pointer devices only.
  */
 import { Renderer, Program, Mesh, Triangle, Geometry } from 'ogl';
-import { heroScroll } from './hero-bridge';
+import { heroScroll, heroMorph } from './hero-bridge';
 
 /** GLSL shared by every pass: hash/noise, power-on envelope, beam light. */
 const GLSL_COMMON = /* glsl */ `
@@ -64,18 +64,21 @@ const GLSL_COMMON = /* glsl */ `
   }
 `;
 
-/** Procedural particle drift shared by the points + lines vertex shaders. */
+/** Procedural particle drift + bio→AI morph shared by points + lines. */
 const GLSL_DRIFT = /* glsl */ `
-  // Deterministic drift: slow individual wander + a barely-perceptible
-  // rotation of the whole field (the cosmos turning).
-  vec3 drift(vec3 base, float seed) {
+  uniform float uMorph; // 0 = biological field → 1 = ANN lattice
+
+  vec3 wander(float seed) {
     float s = 0.55 + 0.45 * fract(seed * 7.31);
-    vec3 d = vec3(
+    return vec3(
       sin(uTime * 0.11 * s + seed * 17.0),
       cos(uTime * 0.13 * s + seed * 23.0),
       sin(uTime * 0.09 * s + seed * 29.0)
     ) * 0.045;
-    vec3 p = base + d;
+  }
+
+  // Barely-perceptible rotation of the organic field (the cosmos turning)
+  vec3 spin(vec3 p) {
     float ra = uTime * 0.006;
     float c = cos(ra);
     float sn = sin(ra);
@@ -83,11 +86,27 @@ const GLSL_DRIFT = /* glsl */ `
     return p;
   }
 
+  // Per-particle morph progress: a wave of organization sweeps the field,
+  // each particle snapping to its lattice slot on its own delay.
+  float morphE(float delay) {
+    float e = smoothstep(delay, delay + 0.45, uMorph);
+    return e * e * (3.0 - 2.0 * e);
+  }
+
+  // Organic drift → machine stillness. The lattice barely breathes (12%
+  // residual wander, no rotation): biology is alive, the machine is precise.
+  vec3 morphPos(vec3 a, vec3 b, float seed, float delay) {
+    float e = morphE(delay);
+    vec3 organic = spin(a + wander(seed));
+    vec3 machine = b + wander(seed) * 0.12;
+    return mix(organic, machine, e);
+  }
+
   // Depth parallax from the damped pointer + scroll recede (deep = slower)
   vec2 place(vec3 p) {
     vec2 xy = p.xy;
     xy += uAim * mix(0.3, 2.6, p.z);
-    xy.y += uScroll * mix(0.10, 0.32, p.z);
+    xy.y += uScroll * mix(0.10, 0.32, p.z) * (1.0 - 0.7 * uMorph);
     return xy;
   }
 `;
@@ -172,27 +191,34 @@ const POINTS_VERTEX = /* glsl */ `
   ${GLSL_COMMON}
   ${GLSL_DRIFT}
   attribute vec3 aPos;
+  attribute vec3 aPosB;
   attribute float aSeed;
   attribute float aSize;
+  attribute float aDelay;
   uniform float uDpr;
   varying float vBright;
 
   void main() {
-    vec3 p = drift(aPos, aSeed);
+    float e = morphE(aDelay);
+    vec3 p = morphPos(aPos, aPosB, aSeed, aDelay);
     vec2 xy = place(p);
     vec2 uvPos = xy * 0.5 + 0.5;
 
     float beam = beamLight(uvPos);
 
-    // Slow individual twinkle
-    float tw = 0.6 + 0.4 * sin(uTime * (0.5 + fract(aSeed * 3.7)) + aSeed * 40.0);
+    // Slow individual twinkle — steadies as the machine takes over
+    float tw = 0.6 + 0.4 * (1.0 - 0.7 * e) * sin(uTime * (0.5 + fract(aSeed * 3.7)) + aSeed * 40.0);
 
     // Occasional neuron "firing": a ~1.5s bloom every ~25s, staggered
     float ph = fract(uTime * 0.04 + aSeed);
     float fire = smoothstep(0.0, 0.04, ph) * smoothstep(0.13, 0.05, ph);
+    // The lattice computes: an extra firing cycle fades in with the morph
+    float ph2 = fract(uTime * 0.085 + aSeed * 1.7);
+    fire += smoothstep(0.0, 0.03, ph2) * smoothstep(0.10, 0.04, ph2) * e;
 
-    vBright = (0.14 + 0.9 * beam) * tw + fire * (0.35 + 0.65 * beam);
-    vBright *= bootEnvelope(uTime - 0.45) * (1.0 - 0.55 * uScroll);
+    // Machine neurons hold a steady glow; biology relies on the lamp
+    vBright = (0.14 + 0.9 * beam) * tw + fire * (0.35 + 0.65 * beam) + e * 0.30;
+    vBright *= bootEnvelope(uTime - 0.45) * (1.0 - 0.45 * uScroll * (1.0 - 0.6 * e));
 
     gl_PointSize = aSize * uDpr * mix(0.65, 1.5, p.z) * (1.0 + fire * 1.6);
     gl_Position = vec4(xy, 0.0, 1.0);
@@ -216,7 +242,9 @@ const LINES_VERTEX = /* glsl */ `
   ${GLSL_COMMON}
   ${GLSL_DRIFT}
   attribute vec3 aPos;
+  attribute vec3 aPosB;
   attribute float aSeed;
+  attribute float aDelay;
   attribute float aT;        // 0 at one endpoint, 1 at the other
   attribute float aEdgeFade; // closer rest-length = stronger line
   attribute float aEdgePhase;
@@ -225,15 +253,17 @@ const LINES_VERTEX = /* glsl */ `
   varying float vPhase;
   varying float vBeam;
   varying float vEnv;
+  varying float vMorph;
 
   void main() {
-    vec3 p = drift(aPos, aSeed);
+    vec3 p = morphPos(aPos, aPosB, aSeed, aDelay);
     vec2 xy = place(p);
     vT = aT;
     vFade = aEdgeFade;
     vPhase = aEdgePhase;
+    vMorph = morphE(aDelay);
     vBeam = beamLight(xy * 0.5 + 0.5);
-    vEnv = bootEnvelope(uTime - 0.6) * (1.0 - 0.55 * uScroll);
+    vEnv = bootEnvelope(uTime - 0.6) * (1.0 - 0.45 * uScroll * (1.0 - 0.6 * vMorph));
     gl_Position = vec4(xy, 0.0, 1.0);
   }
 `;
@@ -246,18 +276,21 @@ const LINES_FRAGMENT = /* glsl */ `
   varying float vPhase;
   varying float vBeam;
   varying float vEnv;
+  varying float vMorph;
 
   void main() {
-    // Resting synapse: hairline, brighter where the lamp reaches it
-    float base = vFade * (0.038 + 0.085 * vBeam);
+    // Resting synapse: hairline, brighter where the lamp reaches it —
+    // and steadier once it becomes a layer connection
+    float base = vFade * (0.038 + 0.085 * vBeam + 0.05 * vMorph);
 
-    // Light impulse traveling along the fiber — only some cycles fire
+    // Light impulse traveling along the fiber — more cycles fire as the
+    // network "computes" harder in its machine state
     float cycle = uTime * 0.14 + vPhase * 7.0;
-    float gate = step(0.72, hash(vec2(floor(cycle), vPhase * 91.7)));
+    float gate = step(0.72 - 0.4 * vMorph, hash(vec2(floor(cycle), vPhase * 91.7)));
     float pos = fract(cycle) * 1.5 - 0.25;
     float imp = exp(-pow((vT - pos) * 7.0, 2.0)) * gate;
 
-    float a = (base + imp * vFade * (0.10 + 0.55 * vBeam)) * vEnv;
+    float a = (base + imp * vFade * (0.10 + 0.55 * vBeam + 0.20 * vMorph)) * vEnv;
     gl_FragColor = vec4(vec3(1.0), a);
   }
 `;
@@ -289,6 +322,7 @@ export function mountHeroShader(
     uAspect: { value: 1 },
     uAim: { value: [0, 0] },
     uScroll: { value: 0 },
+    uMorph: { value: 0 },
   });
 
   // --- Pass 1: god-rays ---
@@ -317,6 +351,35 @@ export function mountHeroShader(
     pSize[i] = isStar ? rand(1.1, 1.9) : rand(1.8, 3.6);
   }
 
+  // Lattice targets: a 6×10 grid of xy sites, stacked in depth — each site
+  // becomes a glowing "artificial neuron" of 3–5 additive points. Stars keep
+  // their positions (the universe stays behind the machine). Morph delays
+  // sweep the wave of organization left → right across the field.
+  const pPosB = new Float32Array(N * 3);
+  const pDelay = new Float32Array(N);
+  const LCOLS = 6;
+  const LROWS = 10;
+  {
+    let k = 0;
+    for (let i = 0; i < N; i++) {
+      if (star[i]) {
+        pPosB[i * 3] = pPos[i * 3]!;
+        pPosB[i * 3 + 1] = pPos[i * 3 + 1]!;
+        pPosB[i * 3 + 2] = pPos[i * 3 + 2]!;
+        pDelay[i] = 0;
+        continue;
+      }
+      const col = k % LCOLS;
+      const row = Math.floor(k / LCOLS) % LROWS;
+      const dep = Math.floor(k / (LCOLS * LROWS));
+      pPosB[i * 3] = -0.85 + (col * 1.7) / (LCOLS - 1) + rand(-0.012, 0.012);
+      pPosB[i * 3 + 1] = -0.74 + (row * 1.48) / (LROWS - 1) + rand(-0.012, 0.012);
+      pPosB[i * 3 + 2] = 0.3 + Math.min(dep / 4, 1) * 0.7;
+      pDelay[i] = (col / (LCOLS - 1)) * 0.38 + Math.random() * 0.16;
+      k++;
+    }
+  }
+
   const RADIUS = 0.23;
   const degree = new Uint8Array(N);
   const edges: Array<[number, number, number]> = []; // [i, j, restDist]
@@ -341,7 +404,9 @@ export function mountHeroShader(
   // --- Pass 2: synapse lines ---
   const E = edges.length;
   const lPos = new Float32Array(E * 2 * 3);
+  const lPosB = new Float32Array(E * 2 * 3);
   const lSeed = new Float32Array(E * 2);
+  const lDelay = new Float32Array(E * 2);
   const lT = new Float32Array(E * 2);
   const lFade = new Float32Array(E * 2);
   const lPhase = new Float32Array(E * 2);
@@ -356,7 +421,11 @@ export function mountHeroShader(
       lPos[v * 3] = pPos[idx * 3]!;
       lPos[v * 3 + 1] = pPos[idx * 3 + 1]!;
       lPos[v * 3 + 2] = pPos[idx * 3 + 2]!;
+      lPosB[v * 3] = pPosB[idx * 3]!;
+      lPosB[v * 3 + 1] = pPosB[idx * 3 + 1]!;
+      lPosB[v * 3 + 2] = pPosB[idx * 3 + 2]!;
       lSeed[v] = pSeed[idx]!;
+      lDelay[v] = pDelay[idx]!;
       lT[v] = t;
       lFade[v] = fade;
       lPhase[v] = phase;
@@ -376,7 +445,9 @@ export function mountHeroShader(
     mode: gl.LINES,
     geometry: new Geometry(gl, {
       aPos: { size: 3, data: lPos },
+      aPosB: { size: 3, data: lPosB },
       aSeed: { size: 1, data: lSeed },
+      aDelay: { size: 1, data: lDelay },
       aT: { size: 1, data: lT },
       aEdgeFade: { size: 1, data: lFade },
       aEdgePhase: { size: 1, data: lPhase },
@@ -398,8 +469,10 @@ export function mountHeroShader(
     mode: gl.POINTS,
     geometry: new Geometry(gl, {
       aPos: { size: 3, data: pPos },
+      aPosB: { size: 3, data: pPosB },
       aSeed: { size: 1, data: pSeed },
       aSize: { size: 1, data: pSize },
+      aDelay: { size: 1, data: pDelay },
     }),
     program: pointsProgram,
   });
@@ -477,6 +550,7 @@ export function mountHeroShader(
       p.uniforms.uTime!.value = t;
       p.uniforms.uAim!.value = [aim.x, aim.y];
       p.uniforms.uScroll!.value = heroScroll.value;
+      p.uniforms.uMorph!.value = heroMorph.value;
     }
     renderer.render({ scene: raysMesh });
     renderer.render({ scene: linesMesh, clear: false });

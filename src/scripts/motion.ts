@@ -10,7 +10,7 @@
  * hides .boot-hide elements via CSS until GSAP owns their inline styles.
  * Debug: ?motion=off forces the static experience.
  */
-import { heroScroll } from '../components/hero/hero-bridge';
+import { heroScroll, heroMorph } from '../components/hero/hero-bridge';
 
 export async function initMotion(): Promise<void> {
   const root = document.documentElement;
@@ -58,6 +58,8 @@ export async function initMotion(): Promise<void> {
 
   // --- Lenis <-> ScrollTrigger ---
   const lenis = new Lenis({ lerp: 0.12, wheelMultiplier: 0.95 });
+  // QA hook: lets headless verification drive real scrolls (?forcevisible)
+  if (forceVisible) (window as unknown as { __lenis: unknown }).__lenis = lenis;
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
@@ -114,21 +116,34 @@ export async function initMotion(): Promise<void> {
       .to(ctaWrap, { autoAlpha: 1, y: 0, duration: 0.9 }, 1.5)
       .to(cue, { autoAlpha: 1, duration: 0.8 }, 1.85);
 
-    // Pin the hero; scrub content away while the shader sweeps + dims the lamp
+    // QA override: inspect the lattice state without scrolling
+    if (params.get('morph') === '1') heroMorph.value = 1;
+
+    // Pin the hero for the full act: content exits (0–50%), the biological
+    // field reorganizes into the ANN lattice (15–85%), then the bloom floods
+    // the frame white (82–100%) so the unpin lands seamlessly on the white
+    // Vision section. Fully reversible under scrub.
     gsap
       .timeline({
         scrollTrigger: {
           trigger: hero,
           start: 'top top',
-          end: '+=75%',
+          end: '+=110%',
           pin: true,
           scrub: 0.6,
           anticipatePin: 1,
         },
       })
-      .to('.hero-content', { yPercent: -16, autoAlpha: 0, ease: 'none' }, 0)
-      .to('.hero-cue', { autoAlpha: 0, ease: 'none' }, 0)
-      .to(heroScroll, { value: 1, ease: 'none' }, 0);
+      .to('.hero-content', { yPercent: -16, autoAlpha: 0, ease: 'none', duration: 0.5 }, 0)
+      .to('.hero-cue', { autoAlpha: 0, ease: 'none', duration: 0.15 }, 0)
+      .to(heroScroll, { value: 1, ease: 'none', duration: 1 }, 0)
+      .to(heroMorph, { value: 1, ease: 'none', duration: 0.7 }, 0.15)
+      .fromTo(
+        '.hero-bloom',
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 2.4, ease: 'none', duration: 0.18 },
+        0.82
+      );
   } else {
     root.dataset.motion = 'on';
   }
@@ -141,10 +156,14 @@ export async function initMotion(): Promise<void> {
       ScrollTrigger.getAll().forEach((st) => st.kill());
       gsap.globalTimeline.clear();
       heroScroll.value = 0;
+      heroMorph.value = 0;
       split?.revert();
       document
-        .querySelectorAll<HTMLElement>('[data-reveal], .boot-hide, .sweep, .hero-content')
+        .querySelectorAll<HTMLElement>('[data-reveal], .boot-hide, .sweep, .hero-content, .hero-bloom')
         .forEach((el) => gsap.set(el, { clearProps: 'all' }));
+      document
+        .querySelectorAll<SVGElement>('svg[data-draw] path, svg[data-draw] line, svg[data-draw] circle')
+        .forEach((el) => el.removeAttribute('style'));
     }
   });
 
@@ -175,6 +194,25 @@ export async function initMotion(): Promise<void> {
       { backgroundPosition: '-15% 0', duration: 1.4, ease: 'power2.inOut' },
       0.15
     );
+  });
+
+  // --- Hairline draw-on: molecule bonds, EEG pulses (svg[data-draw]) ---
+  document.querySelectorAll<SVGSVGElement>('svg[data-draw]').forEach((svg) => {
+    const strokes = Array.from(
+      svg.querySelectorAll<SVGGeometryElement>('path, line, polyline, circle')
+    ).filter((el) => typeof el.getTotalLength === 'function');
+    strokes.forEach((p) => {
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = `${len}`;
+      p.style.strokeDashoffset = `${len}`;
+    });
+    gsap.to(strokes, {
+      strokeDashoffset: 0,
+      duration: 1.6,
+      ease: 'power2.inOut',
+      stagger: 0.12,
+      scrollTrigger: { trigger: svg, start: 'top 82%', once: true },
+    });
   });
 
   // --- Stat counters ---

@@ -1,0 +1,47 @@
+---
+// The Formula — regenerative medicine as an abstract bond-line molecule that
+// draws itself in hairlines on scroll ([data-draw] handled in motion.ts).
+// Deliberately abstract: evocative, TGA-safe, claims nothing specific.
+---
+
+<section class="relative bg-surface text-ink">
+  <div class="mx-auto grid max-w-6xl items-center gap-16 px-6 py-28 md:grid-cols-2 md:py-40">
+    <div>
+      <p class="readout text-ink/45" data-reveal>03 — The formula</p>
+      <h2 class="sweep mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-sweep>
+        Engineered to regenerate.
+      </h2>
+      <p class="mt-8 max-w-md text-lg leading-relaxed text-ink/65" data-reveal>
+        Our biologics are built around a simple conviction: the body is the
+        best surgeon. Integrant scaffolds and graft systems are designed to
+        give biology the structure it needs to do the rest.
+      </p>
+      <p class="readout mt-10 text-[10px] text-ink/40" data-reveal>
+        FrameIT · GraftIT · developed with surgeons
+      </p>
+    </div>
+
+    <svg
+      viewBox="0 0 480 400"
+      class="mx-auto w-full max-w-md"
+      fill="none"
+      stroke="currentColor"
+      data-draw
+      data-reveal
+      aria-hidden="true"
+    >
+      <!-- bond-line hexagons -->
+      <path d="M 210.6 175 L 210.6 245 L 150 280 L 89.4 245 L 89.4 175 L 150 140 Z" stroke-width="1.5" class="text-ink/60"></path>
+      <path d="M 330.6 105 L 330.6 175 L 270 210 L 209.4 175 L 209.4 105 L 270 70 Z" stroke-width="1.5" class="text-ink/60"></path>
+      <path d="M 330.6 245 L 330.6 315 L 270 350 L 209.4 315 L 209.4 245 L 270 210 Z" stroke-width="1.5" class="text-ink/35"></path>
+      <!-- substituent bonds -->
+      <path d="M 150 140 L 150 76" stroke-width="1.5" class="text-ink/60"></path>
+      <path d="M 330.6 105 L 388 72" stroke-width="1.5" class="text-ink/60"></path>
+      <!-- atoms -->
+      <circle cx="150" cy="68" r="7" class="fill-ink/85" stroke="none"></circle>
+      <circle cx="394" cy="68" r="7" class="fill-ink/85" stroke="none"></circle>
+      <circle cx="209.4" cy="175" r="5" class="fill-ink/55" stroke="none"></circle>
+      <circle cx="330.6" cy="245" r="5" class="fill-ink/55" stroke="none"></circle>
+    </svg>
+  </div>
+</section>

@@ -188,6 +188,20 @@
     opacity: 0;
   }
 
+  /* The bloom: white light floods the frame at the end of the hero pin so
+     the unpin lands seamlessly on the white Vision section. Scrubbed by
+     GSAP (transform/opacity only) — works identically on every tier. */
+  .hero-bloom {
+    position: absolute;
+    inset: -20%;
+    z-index: 30;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.7);
+    background: radial-gradient(circle at 50% 46%, #fff 0%, #fff 46%, rgb(255 255 255 / 0) 72%);
+    will-change: transform, opacity;
+  }
+
   /* T1 fallback: compositor-only SVG ray drift (no WebGL), with warm-up */
   .hero-rays {
     opacity: 0;

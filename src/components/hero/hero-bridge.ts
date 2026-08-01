@@ -8,3 +8,10 @@
  * and sweep the beam as the viewer scrolls away.
  */
 export const heroScroll = { value: 0 };
+
+/**
+ * morph: 0 = organic biological field → 1 = structured ANN lattice.
+ * Scrubbed by the pinned-hero timeline (15%–85% of the pin), read per-frame
+ * by the shader. The wave of organization staggers per-particle via aDelay.
+ */
+export const heroMorph = { value: 0 };

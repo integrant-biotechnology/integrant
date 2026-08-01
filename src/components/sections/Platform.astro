@@ -1,0 +1,54 @@
+---
+// The "platform, not product" section — four disciplines, one system.
+// NOTE: placeholder copy, pending content review + TGA compliance sign-off.
+const pillars = [
+  {
+    index: '01',
+    title: 'Implant Systems',
+    body: 'Surgical-grade fixation engineered for anatomy — from ArchIT to FuseIT.',
+    tag: 'TI-6AL-4V · ARTG LISTED',
+  },
+  {
+    index: '02',
+    title: 'Biologics & Regeneration',
+    body: 'Scaffolds and graft systems designed to work with the body’s own repair.',
+    tag: 'FRAMEIT · GRAFTIT',
+  },
+  {
+    index: '03',
+    title: 'AI Clinical Software',
+    body: 'Neural documentation that writes the operation note while you operate.',
+    tag: 'iOS · IN DEVELOPMENT',
+  },
+  {
+    index: '04',
+    title: 'Clinical Research',
+    body: 'Evidence-first: trial methodology and partnerships behind every claim.',
+    tag: 'AU + NZ',
+  },
+];
+---
+
+<section id="platform" class="relative bg-white text-ink">
+  <div class="mx-auto max-w-6xl px-6 py-28 md:py-36">
+    <p class="readout text-ink/45" data-reveal>02 — The platform</p>
+    <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>
+      Four disciplines. One system.
+    </h2>
+
+    <div class="mt-16 grid gap-px border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        pillars.map((p) => (
+          <article class="group relative flex min-h-96 flex-col justify-between bg-surface p-7" data-reveal>
+            <div>
+              <p class="font-display text-6xl font-bold text-ink/[0.08]">{p.index}</p>
+              <h3 class="mt-16 font-display text-2xl font-semibold text-ink">{p.title}</h3>
+              <p class="mt-4 text-sm leading-relaxed text-ink/60">{p.body}</p>
+            </div>
+            <p class="readout mt-10 text-[10px] text-ink/40">{p.tag}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
