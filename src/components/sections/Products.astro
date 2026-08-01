@@ -1,0 +1,57 @@
+---
+// Product teaser — black cards with rim-light, hairline grid, spec micro-labels.
+// NOTE: placeholder copy; full catalogue lands in Phase 1b from the CMS.
+const products = [
+  {
+    name: 'ArchIT',
+    line: 'Med-Tech · Foot & Ankle',
+    blurb: 'Arch reconstruction system, titanium fixation platform.',
+  },
+  {
+    name: 'FuseIT',
+    line: 'Med-Tech · Fixation',
+    blurb: 'Fusion system engineered for stability under load.',
+  },
+  {
+    name: 'GraftIT',
+    line: 'Bio-Tech · Regenerative',
+    blurb: 'Biological scaffold supporting graft integration.',
+  },
+];
+---
+
+<section id="products" class="relative bg-void text-white">
+  <div class="mx-auto max-w-6xl px-6 py-28 md:py-36">
+    <p class="readout text-white/40" data-reveal>02 — Product systems</p>
+    <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>
+      Two divisions. One standard.
+    </h2>
+
+    <div class="mt-16 grid gap-px border border-white/10 bg-white/10 md:grid-cols-3">
+      {
+        products.map((product) => (
+          <article
+            class="group relative flex min-h-72 flex-col justify-between p-8"
+            style="background:
+              radial-gradient(120% 85% at 82% -12%, rgb(255 255 255 / 0.09), transparent 55%),
+              #050505;"
+            data-reveal
+          >
+            <div>
+              <p class="readout text-[10px] text-white/35">{product.line}</p>
+              <h3 class="mt-5 font-display text-3xl font-bold text-white">{product.name}</h3>
+              <p class="mt-3 max-w-xs text-sm leading-relaxed text-white/55">{product.blurb}</p>
+            </div>
+            <p class="readout mt-10 text-[10px] text-white/40 transition-colors duration-300 group-hover:text-white">
+              View system →
+            </p>
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="readout mt-10 text-[10px] text-white/25" data-reveal>
+      Full catalogue — browse by anatomy or product line — arrives with the build phase
+    </p>
+  </div>
+</section>

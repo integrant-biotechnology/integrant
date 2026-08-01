@@ -1,0 +1,98 @@
+---
+// Full-viewport hero — white volumetric light in a black void.
+// Tiers: T3/T2 WebGL shader · T1 CSS/SVG rays · T0 static (reduced motion).
+---
+
+<section
+  class="hero relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-void text-white"
+  data-hero
+  data-tier="0"
+>
+  <!-- Static placeholder: paints instantly, no JS, no layout shift -->
+  <div class="hero-bg absolute inset-0" aria-hidden="true"></div>
+
+  <!-- T1 fallback: compositor-only ray drift -->
+  <svg
+    class="hero-rays absolute inset-0 h-full w-full"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient id="ray-fade" x1="0" y1="0" x2="0.7" y2="1">
+        <stop offset="0" stop-color="#ffffff" stop-opacity="0.14"></stop>
+        <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.03"></stop>
+        <stop offset="1" stop-color="#ffffff" stop-opacity="0"></stop>
+      </linearGradient>
+    </defs>
+    <g fill="url(#ray-fade)">
+      <polygon points="8,-5 30,-5 78,105 48,105"></polygon>
+      <polygon points="-2,-5 10,-5 40,105 22,105"></polygon>
+      <polygon points="26,-5 34,-5 96,105 82,105"></polygon>
+    </g>
+  </svg>
+
+  <!-- T2/T3: OGL god-rays canvas, fades in after first frame -->
+  <canvas
+    class="hero-canvas absolute inset-0 h-full w-full opacity-0 transition-opacity duration-1000"
+    aria-hidden="true"
+  ></canvas>
+
+  <!-- Content -->
+  <div class="relative z-10 mx-auto max-w-4xl px-6 pb-28 pt-28 text-center">
+    <img
+      src="/brand/logo-white.png"
+      alt="Integrant"
+      width="144"
+      height="144"
+      class="mx-auto mb-8 w-28 md:w-36"
+      fetchpriority="high"
+    />
+    <p class="readout text-white/45" data-reveal-hero>
+      Orthopaedic Med-Tech · Bio-Tech · Australia
+    </p>
+    <h1
+      class="mt-6 font-display text-5xl font-bold leading-[1.02] tracking-tight text-white md:text-6xl lg:text-7xl"
+      data-reveal-hero
+    >
+      Engineering the future of orthopaedic care.
+    </h1>
+    <p class="mx-auto mt-5 max-w-xl text-base text-white/60 md:text-lg" data-reveal-hero>
+      Implant systems, biologics and surgical technology — designed with the
+      precision the theatre demands.
+    </p>
+    <div class="mt-9" data-reveal-hero>
+      <a href="#products" class="cta-solid" data-magnetic>Explore products</a>
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div
+    class="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-white/40"
+    aria-hidden="true"
+  >
+    <span class="readout text-[10px]">Scroll</span>
+    <span class="cue-line block h-10 w-px bg-white/15"></span>
+  </div>
+</section>
+
+<script>
+  import { detectTier, applyTier } from './hero-boot';
+
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  const canvas = hero?.querySelector<HTMLCanvasElement>('.hero-canvas');
+
+  if (hero && canvas) {
+    const params = new URLSearchParams(window.location.search);
+    const forced = params.get('tier');
+    const tier = forced !== null ? (Number(forced) as 0 | 1 | 2 | 3) : detectTier();
+    applyTier(hero, canvas, tier);
+
+    // Live downgrade if the user enables reduced motion mid-session
+    window
+      .matchMedia('(prefers-reduced-motion: reduce)')
+      .addEventListener('change', (e) => {
+        if (e.matches) applyTier(hero, canvas, 0);
+      });
+  }
+</script>
