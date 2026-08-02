@@ -1,36 +1,38 @@
 # Integrant — Website Rebuild
 
-Premium rebuild of [integrant.com.au](https://integrant.com.au) on Astro.
-**Current state: v0.1 hero-concept prototype** — the full-viewport
-volumetric-light hero, nav, and three proof sections, per the approved
-project plan ("Monolith" black-and-white design language from the brand
-board in `brand/`).
+Investor-grade rebuild of [integrant.com.au](https://integrant.com.au) — orthopaedic med-tech, bio-tech and AI clinical software, unified as one platform story: **“Where biology becomes intelligence.”**
+
+**Live staging:** https://integrant.vercel.app · **Design concept (Figma):** [Neural Genesis](https://www.figma.com/design/OxDexcGVcMOJSoTtSArabs)
+
+## The experience
+
+- **Cinematic hero** — a WebGL theatre-lamp power-on reveals a living biological neural field (OGL, three GPU passes, fully procedural vertex animation)
+- **The morph** — on scroll, biological neurons reorganize into an artificial neural-network lattice, then bloom to white as the page hands off from darkness to a bright, airy content world
+- **Strict monochrome brand system** — #000/#FFF only, Rajdhani + Titillium Web, hairlines, film grain
+- **Engineered to degrade** — capability tiers T0–T3 (static → CSS rays → WebGL), FPS auto-downgrade, context-loss recovery, one global reduced-motion gate; ~74KB gz total JS
 
 ## Stack
 
-- **Astro** (static output) + **Tailwind CSS v4** — tokens in `src/styles/global.css`
-- **OGL** WebGL god-rays hero shader with a formal degradation ladder
-  (T3/T2 shader → T1 CSS/SVG rays → T0 static for reduced motion)
-- **GSAP ScrollTrigger + Lenis** behind a single `prefers-reduced-motion` gate
-- **Rajdhani** (display/readout) + **Titillium Web** (body), self-hosted
-- Sanity schema stubs in `cms/schemas/` (Studio project deferred — needs client login)
+Astro 5 (static) · Tailwind CSS v4 · OGL · GSAP + ScrollTrigger + SplitText · Lenis · Vercel
 
 ## Commands
 
-```bash
-npm run dev       # dev server on :4321
-npm run build     # static build to dist/
-npm run preview   # serve the build
-```
+| Command | Purpose |
+|---|---|
+| `npm run dev` | dev server on `:4321` |
+| `npm run build` | static production build to `dist/` |
+| `npm run scrape` | full legacy-site capture into `content-archive/` |
+| `npm run scrape:diff` | detect legacy content drift vs the archive |
 
-## QA debug parameters
+QA params: `?motion=off` · `?tier=1\|2\|3` · `?morph=1` · `?forcevisible`
 
-- `?tier=0|1|2|3` — force a hero capability tier
-- `?motion=off` — force the static (reduced-motion) experience
+## Repository layout
 
-## Notes
+- `src/` — the site (see `CLAUDE.md` for the full architecture map)
+- `content-archive/` — complete capture of the legacy WordPress site: markdown + structured JSON (real product spec tables), full-res assets, screenshots, migration inventory. **Source material only — never imported by the site.**
+- `cms/schemas/` — Sanity schema stubs for the future Studio
+- `brand/` — source brand assets (brand board, logo originals)
 
-- All copy is **placeholder pending content review and TGA compliance sign-off**.
-- `<meta name="robots" content="noindex">` is set in `src/layouts/Base.astro` — remove at production launch.
-- Brand sources live in `brand/` (not shipped); web derivatives in `public/brand/`.
-- Asset requests outstanding: vector logo (SVG/AI/EPS), Nexa font license decision, product photography/CAD.
+## Conventions
+
+Deploys promote via Git pushes once the repo is connected to the Vercel project (or `vercel deploy --prod` from local). `noindex` stays until DNS cutover. All copy passes brand-voice rewrite + TGA compliance review before publishing — see `CLAUDE.md`.
