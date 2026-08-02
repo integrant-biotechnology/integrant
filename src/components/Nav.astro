@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from './ui/ThemeToggle.astro';
+
 // Absolute paths so the nav works from every route, not just the homepage.
 // Links only appear here once their destination actually exists — a nav item
 // that scrolls nowhere is worse than one that isn't there yet. "For Surgeons"
@@ -43,7 +45,8 @@ const isCurrent = (link: (typeof links)[number]) =>
       }
     </nav>
 
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-2 sm:gap-4">
+      <ThemeToggle />
       <a href="/#contact" class="cta-ghost hidden sm:inline-flex">Enquire</a>
 
       <!-- Mobile menu trigger -->
@@ -64,7 +67,7 @@ const isCurrent = (link: (typeof links)[number]) =>
 </header>
 
 <!-- Mobile menu: full-viewport panel, hidden from AT until opened -->
-<div id="mobile-menu" class="mobile-menu" data-open="false" hidden>
+<div id="mobile-menu" data-contrast class="mobile-menu" data-open="false" hidden>
   <nav aria-label="Mobile" class="mx-auto flex h-full max-w-7xl flex-col justify-between px-6 pb-12 pt-28">
     <ul class="space-y-2">
       {
@@ -72,7 +75,7 @@ const isCurrent = (link: (typeof links)[number]) =>
           <li class="mobile-menu-item overflow-hidden" style={`--i: ${i}`}>
             <a
               href={link.href}
-              class="block border-b border-white/10 py-5 font-display text-4xl font-bold text-white"
+              class="block border-b border-hairline py-5 font-display text-4xl font-bold text-ink"
               aria-current={isCurrent(link) ? 'page' : undefined}
             >
               {link.label}
@@ -83,14 +86,14 @@ const isCurrent = (link: (typeof links)[number]) =>
       <li class="mobile-menu-item overflow-hidden" style={`--i: ${links.length}`}>
         <a
           href="/#contact"
-          class="block border-b border-white/10 py-5 font-display text-4xl font-bold text-white"
+          class="block border-b border-hairline py-5 font-display text-4xl font-bold text-ink"
         >
           Enquire
         </a>
       </li>
     </ul>
 
-    <p class="readout mobile-menu-item text-white/35" style={`--i: ${links.length + 1}`}>
+    <p class="readout mobile-menu-item text-ink-3" style={`--i: ${links.length + 1}`}>
       Orthopaedic Med-Tech · Bio-Tech · AI
     </p>
   </nav>
@@ -107,13 +110,14 @@ const isCurrent = (link: (typeof links)[number]) =>
     let ticking = false;
     let lastY = window.scrollY;
 
-    // Which half of the brand system is under the bar right now? Sample the
-    // page just below the nav and read the nearest section's declared theme.
+    // The bar is fixed, so it can't inherit a contrast band's scoped tokens —
+    // it derives its own theme instead. Over a contrast band the palette is
+    // always dark; everywhere else it follows the global theme.
     const themeAt = (): 'light' | 'dark' => {
       const y = header.getBoundingClientRect().bottom + 4;
       const el = document.elementFromPoint(window.innerWidth / 2, y);
-      const section = el?.closest<HTMLElement>('[data-nav-theme]');
-      return section?.dataset.navTheme === 'light' ? 'light' : 'dark';
+      if (el?.closest('[data-contrast]')) return 'dark';
+      return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
     };
 
     const update = () => {
@@ -149,6 +153,8 @@ const isCurrent = (link: (typeof links)[number]) =>
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
+    // A theme switch changes the bar's palette without any scrolling
+    window.addEventListener('integrant:themechange', onScroll);
     update();
   }
 

@@ -1,0 +1,72 @@
+---
+// Theme control — an aperture that fills and empties: the theatre lamp,
+// on and off. Deliberately not a sun/moon; this brand is instruments and
+// light, not weather.
+---
+
+<button
+  type="button"
+  class="theme-toggle"
+  aria-pressed="false"
+  aria-label="Switch to light theme"
+  title="Switch theme"
+>
+  <span class="theme-aperture" aria-hidden="true">
+    <span class="theme-aperture-core"></span>
+  </span>
+</button>
+
+<script>
+  const KEY = 'integrant-theme';
+  const root = document.documentElement;
+  const toggle = document.querySelector<HTMLButtonElement>('.theme-toggle');
+
+  const read = (): string | null => {
+    try {
+      return localStorage.getItem(KEY);
+    } catch {
+      return null;
+    }
+  };
+
+  const sync = () => {
+    const light = root.dataset.theme === 'light';
+    toggle?.setAttribute('aria-pressed', String(light));
+    toggle?.setAttribute('aria-label', `Switch to ${light ? 'dark' : 'light'} theme`);
+  };
+
+  const apply = (theme: 'light' | 'dark', animate: boolean) => {
+    // The colour transition is applied ONLY on user toggle — never on load,
+    // which must be instant — and never under reduced motion.
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (animate && !reduce) {
+      root.classList.add('theme-animating');
+      window.setTimeout(() => root.classList.remove('theme-animating'), 400);
+    }
+    root.dataset.theme = theme;
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', theme === 'light' ? '#ffffff' : '#000000');
+    sync();
+    // Let the hero shader repaint for the new palette
+    window.dispatchEvent(new CustomEvent('integrant:themechange', { detail: { theme } }));
+  };
+
+  toggle?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+    try {
+      localStorage.setItem(KEY, next);
+    } catch {
+      /* choice simply won't persist */
+    }
+    apply(next, true);
+  });
+
+  // Follow the OS only until the visitor has made an explicit choice
+  matchMedia('(prefers-color-scheme: light)').addEventListener('change', (event) => {
+    if (read()) return;
+    apply(event.matches ? 'light' : 'dark', true);
+  });
+
+  sync();
+</script>

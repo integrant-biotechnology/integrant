@@ -1,0 +1,31 @@
+---
+import { buildField, renderField, type FieldVariant } from '../../lib/neural-field';
+
+interface Props {
+  variant?: FieldVariant;
+  /** Distinct per section so neighbours never look duplicated. */
+  seed?: number;
+  /** Override the theme's whisper level (rarely needed). */
+  opacity?: number;
+  class?: string;
+}
+
+const { variant = 'edge', seed = 1, opacity, class: className = '' } = Astro.props;
+const geo = buildField(variant, seed);
+const markup = renderField(geo);
+---
+
+<!--
+  Purely decorative: behind content, never interactive, never announced.
+  Colour and strength come from the theme (--c-motif / --motif-opacity), so
+  it inverts automatically in light mode and inside contrast bands.
+-->
+<svg
+  class={`neural-field ${className}`}
+  viewBox={`0 0 ${geo.width} ${geo.height}`}
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+  style={opacity !== undefined ? `--motif-opacity: ${opacity}` : undefined}
+  set:html={markup}
+/>

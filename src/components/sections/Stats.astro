@@ -1,4 +1,5 @@
 ---
+import NeuralField from '../ui/NeuralField.astro';
 // Light stats band — Rajdhani numerals counting on entry.
 // NOTE: placeholder figures drawn from the site audit, pending confirmation.
 const stats = [
@@ -8,8 +9,9 @@ const stats = [
 ];
 ---
 
-<section class="relative bg-surface text-ink" data-nav-theme="light">
-  <div class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+<section class="relative bg-raised text-ink">
+  <NeuralField variant="edge" seed={67} />
+  <div class="mx-auto max-w-6xl border-t border-hairline px-6 py-20 md:py-24">
     <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-4" data-reveal>
       {
         stats.map((stat) => (
@@ -17,13 +19,13 @@ const stats = [
             <p class="font-display text-5xl font-bold tabular-nums text-ink md:text-6xl">
               <span data-count={stat.value}>{stat.value}</span>{stat.suffix}
             </p>
-            <p class="readout mt-3 text-ink/40">{stat.label}</p>
+            <p class="readout mt-3 text-ink-3">{stat.label}</p>
           </div>
         ))
       }
       <div>
         <p class="font-display text-5xl font-bold text-ink md:text-6xl">AU·NZ</p>
-        <p class="readout mt-3 text-ink/40">Regulated supply</p>
+        <p class="readout mt-3 text-ink-3">Regulated supply</p>
       </div>
     </div>
   </div>

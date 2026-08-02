@@ -4,7 +4,7 @@
 ---
 
 <section
-  class="hero relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-void text-white"
+  class="hero relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-base text-ink"
   data-hero
   data-tier="0"
 >
@@ -13,16 +13,16 @@
 
   <!-- T1 fallback: compositor-only ray drift -->
   <svg
-    class="hero-rays absolute inset-0 h-full w-full"
+    class="hero-rays absolute inset-0 h-full w-full text-ink"
     viewBox="0 0 100 100"
     preserveAspectRatio="none"
     aria-hidden="true"
   >
     <defs>
       <linearGradient id="ray-fade" x1="0" y1="0" x2="0.7" y2="1">
-        <stop offset="0" stop-color="#ffffff" stop-opacity="0.14"></stop>
-        <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.03"></stop>
-        <stop offset="1" stop-color="#ffffff" stop-opacity="0"></stop>
+        <stop offset="0" stop-color="currentColor" stop-opacity="0.14"></stop>
+        <stop offset="0.55" stop-color="currentColor" stop-opacity="0.03"></stop>
+        <stop offset="1" stop-color="currentColor" stop-opacity="0"></stop>
       </linearGradient>
     </defs>
     <g fill="url(#ray-fade)">
@@ -48,15 +48,15 @@
       class="hero-logo boot-hide mx-auto mb-8 w-28 md:w-36"
       fetchpriority="high"
     />
-    <p class="hero-eyebrow boot-hide readout text-white/45">
+    <p class="hero-eyebrow boot-hide readout text-ink-3">
       Orthopaedic Med-Tech · Bio-Tech · AI
     </p>
     <h1
-      class="hero-h1 boot-hide mt-6 font-display text-5xl font-bold leading-[1.02] tracking-tight text-white md:text-6xl lg:text-7xl"
+      class="hero-h1 boot-hide mt-6 font-display text-5xl font-bold leading-[1.02] tracking-tight text-ink md:text-6xl lg:text-7xl"
     >
       Where biology becomes intelligence.
     </h1>
-    <p class="hero-sub boot-hide mx-auto mt-5 max-w-xl text-base text-white/60 md:text-lg">
+    <p class="hero-sub boot-hide mx-auto mt-5 max-w-xl text-base text-ink-2 md:text-lg">
       Implant systems, biologics and AI clinical software — one platform
       engineering the future of orthopaedic care.
     </p>
@@ -70,11 +70,11 @@
 
   <!-- Scroll cue -->
   <div
-    class="hero-cue boot-hide absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-white/40"
+    class="hero-cue boot-hide absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-ink-3"
     aria-hidden="true"
   >
     <span class="readout text-[10px]">Scroll</span>
-    <span class="cue-line block h-10 w-px bg-white/15"></span>
+    <span class="cue-line block h-10 w-px bg-ink-3"></span>
   </div>
 </section>
 

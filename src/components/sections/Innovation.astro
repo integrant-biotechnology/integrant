@@ -1,24 +1,26 @@
 ---
+import NeuralField from '../ui/NeuralField.astro';
 // Dark interlude: the AI chapter. HUD readout chips, an EEG pulse hairline
 // that draws itself, and the app silhouette. Copy stays claim-free.
 const chips = ['Neural documentation', 'AI-assisted', 'iOS', 'PDF reports'];
 ---
 
-<section id="innovation" class="relative bg-canvas text-white">
+<section id="innovation" data-contrast class="relative bg-base text-ink">
+  <NeuralField variant="dense" seed={41} />
   <div class="mx-auto grid max-w-6xl gap-16 px-6 py-28 md:grid-cols-[1fr_260px] md:py-36">
     <div>
-      <p class="readout text-white/40" data-reveal>04 — Innovation &amp; AI</p>
+      <p class="readout text-ink-3" data-reveal>04 — Innovation &amp; AI</p>
       <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>
         AI in the operating theatre.
       </h2>
-      <p class="mt-8 max-w-xl text-lg leading-relaxed text-white/60" data-reveal>
+      <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>
         The Integrant app listens to the case and writes the clinical
         documentation — structured, complete, ready to sign.
       </p>
       <div class="mt-10 flex flex-wrap gap-3" data-reveal>
         {
           chips.map((chip) => (
-            <span class="readout border border-white/20 px-4 py-2.5 text-[10px] text-white/70">
+            <span class="readout border border-hairline-strong px-4 py-2.5 text-[10px] text-ink-2">
               {chip}
             </span>
           ))
@@ -27,7 +29,7 @@ const chips = ['Neural documentation', 'AI-assisted', 'iOS', 'PDF reports'];
 
       <svg
         viewBox="0 0 800 140"
-        class="mt-16 w-full text-white/35"
+        class="mt-16 w-full text-ink-3"
         fill="none"
         stroke="currentColor"
         stroke-width="1.5"
@@ -39,16 +41,16 @@ const chips = ['Neural documentation', 'AI-assisted', 'iOS', 'PDF reports'];
     </div>
 
     <div class="relative mx-auto hidden w-56 md:block" data-reveal aria-hidden="true">
-      <div class="rounded-[28px] border border-white/25 bg-void p-6 pt-10">
-        <p class="readout text-[9px] text-white/50">Op note — draft</p>
+      <div class="rounded-[28px] border border-hairline-strong bg-base p-6 pt-10">
+        <p class="readout text-[9px] text-ink-2">Op note — draft</p>
         <div class="mt-6 space-y-4">
           {[44, 40, 28, 44, 40, 28].map((w) => (
-            <div class="h-1.5 bg-white/15" style={`width: ${w * 2}%`}></div>
+            <div class="h-1.5 bg-ink-3" style={`width: ${w * 2}%`}></div>
           ))}
         </div>
         <div class="mt-8 flex items-center gap-2">
-          <span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-white/70"></span>
-          <p class="readout text-[9px] text-white/40">Listening</p>
+          <span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-ink"></span>
+          <p class="readout text-[9px] text-ink-3">Listening</p>
         </div>
       </div>
     </div>

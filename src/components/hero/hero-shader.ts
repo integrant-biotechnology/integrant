@@ -26,6 +26,7 @@ const GLSL_COMMON = /* glsl */ `
   uniform float uAspect;
   uniform vec2 uAim;
   uniform float uScroll;
+  uniform float uInvert; // 0 = god-rays on black, 1 = blueprint on white
 
   float hash(vec2 p) {
     return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
@@ -227,6 +228,7 @@ const POINTS_VERTEX = /* glsl */ `
 
 const POINTS_FRAGMENT = /* glsl */ `
   precision highp float;
+  uniform float uInvert;
   varying float vBright;
 
   void main() {
@@ -234,7 +236,7 @@ const POINTS_FRAGMENT = /* glsl */ `
     float halo = smoothstep(1.0, 0.25, d);
     float core = smoothstep(0.45, 0.0, d);
     float a = (halo * 0.45 + core * 0.9) * vBright;
-    gl_FragColor = vec4(vec3(1.0), a);
+    gl_FragColor = vec4(vec3(1.0 - uInvert), a);
   }
 `;
 
@@ -291,7 +293,7 @@ const LINES_FRAGMENT = /* glsl */ `
     float imp = exp(-pow((vT - pos) * 7.0, 2.0)) * gate;
 
     float a = (base + imp * vFade * (0.10 + 0.55 * vBeam + 0.20 * vMorph)) * vEnv;
-    gl_FragColor = vec4(vec3(1.0), a);
+    gl_FragColor = vec4(vec3(1.0 - uInvert), a);
   }
 `;
 
@@ -323,6 +325,7 @@ export function mountHeroShader(
     uAim: { value: [0, 0] },
     uScroll: { value: 0 },
     uMorph: { value: 0 },
+    uInvert: { value: 0 },
   });
 
   // --- Pass 1: god-rays ---
@@ -440,6 +443,15 @@ export function mountHeroShader(
     depthTest: false,
     depthWrite: false,
   });
+  const applyPalette = (invert: boolean) => {
+    const src = gl.SRC_ALPHA;
+    const dst = invert ? gl.ONE_MINUS_SRC_ALPHA : gl.ONE;
+    linesProgram.setBlendFunc(src, dst);
+    pointsProgram.setBlendFunc(src, dst);
+    gl.clearColor(invert ? 1 : 0, invert ? 1 : 0, invert ? 1 : 0, 1);
+    for (const p of programs) p.uniforms.uInvert!.value = invert ? 1 : 0;
+  };
+
   linesProgram.setBlendFunc(gl.SRC_ALPHA, gl.ONE);
   const linesMesh = new Mesh(gl, {
     mode: gl.LINES,
@@ -478,6 +490,17 @@ export function mountHeroShader(
   });
 
   const programs = [raysProgram, linesProgram, pointsProgram];
+
+  const isLight = () => document.documentElement.dataset.theme === 'light';
+  let invert = isLight();
+  applyPalette(invert);
+
+  // A theme switch only changes palette + blending — no context teardown.
+  const onThemeChange = () => {
+    invert = isLight();
+    applyPalette(invert);
+  };
+  window.addEventListener('integrant:themechange', onThemeChange);
 
   // QA override: embedded preview panes report visibilityState "hidden",
   // which would (correctly) pause the loop. ?forcevisible bypasses the gate.
@@ -552,9 +575,14 @@ export function mountHeroShader(
       p.uniforms.uScroll!.value = heroScroll.value;
       p.uniforms.uMorph!.value = heroMorph.value;
     }
-    renderer.render({ scene: raysMesh });
-    renderer.render({ scene: linesMesh, clear: false });
-    renderer.render({ scene: pointsMesh, clear: false });
+    if (invert) {
+      renderer.render({ scene: linesMesh });
+      renderer.render({ scene: pointsMesh, clear: false });
+    } else {
+      renderer.render({ scene: raysMesh });
+      renderer.render({ scene: linesMesh, clear: false });
+      renderer.render({ scene: pointsMesh, clear: false });
+    }
     if (!firstFrame) {
       firstFrame = true;
       canvas.style.opacity = '1';
@@ -605,6 +633,7 @@ export function mountHeroShader(
     ro.disconnect();
     io.disconnect();
     document.removeEventListener('visibilitychange', onVisibility);
+    window.removeEventListener('integrant:themechange', onThemeChange);
     canvas.removeEventListener('webglcontextlost', onContextLost);
     if (finePointer) window.removeEventListener('pointermove', onPointer);
     canvas.style.opacity = '0';

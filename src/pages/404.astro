@@ -1,28 +1,30 @@
 ---
 import Base from '../layouts/Base.astro';
 import { PRODUCTS } from '../data/products';
+import NeuralField from '../components/ui/NeuralField.astro';
 
 // A few real destinations beat a dead end.
 const suggestions = PRODUCTS.slice(0, 3);
 ---
 
 <Base title="Page not found — Integrant" description="The page you requested could not be found.">
-  <section class="relative flex min-h-screen items-center overflow-hidden bg-void text-white">
+  <section data-contrast class="relative flex min-h-screen items-center overflow-hidden bg-base text-ink">
+  <NeuralField variant="dense" seed={71} />
     <div
       class="pointer-events-none absolute inset-0"
       style="background: radial-gradient(110% 80% at 14% -10%, rgb(255 255 255 / 0.17), transparent 60%);"
       aria-hidden="true"
     >
     </div>
-    <span class="corner corner-tl border-white/20" aria-hidden="true"></span>
-    <span class="corner corner-br border-white/20" aria-hidden="true"></span>
+    <span class="corner corner-tl border-hairline-strong" aria-hidden="true"></span>
+    <span class="corner corner-br border-hairline-strong" aria-hidden="true"></span>
 
     <div class="relative mx-auto w-full max-w-6xl px-6 py-32">
-      <p class="readout text-white/45">Error 404</p>
+      <p class="readout text-ink-3">Error 404</p>
       <h1 class="mt-8 font-display text-6xl font-bold leading-[0.95] md:text-8xl">
         This page has<br />no signal.
       </h1>
-      <p class="mt-8 max-w-lg text-lg leading-relaxed text-white/55">
+      <p class="mt-8 max-w-lg text-lg leading-relaxed text-ink-2">
         The address you followed doesn’t resolve to a page. It may have moved
         during our site rebuild.
       </p>
@@ -32,15 +34,15 @@ const suggestions = PRODUCTS.slice(0, 3);
         <a href="/products" class="cta-ghost">Browse products</a>
       </div>
 
-      <div class="mt-20 border-t border-white/10 pt-10">
-        <p class="readout text-white/35">Popular systems</p>
+      <div class="mt-20 border-t border-hairline pt-10">
+        <p class="readout text-ink-3">Popular systems</p>
         <ul class="mt-6 flex flex-wrap gap-x-10 gap-y-4">
           {
             suggestions.map((product) => (
               <li>
                 <a
                   href={`/products/${product.line}/${product.slug}`}
-                  class="font-display text-2xl font-semibold text-white/70 transition-colors duration-300 hover:text-white"
+                  class="font-display text-2xl font-semibold text-ink-2 transition-colors duration-300 hover:text-ink"
                 >
                   {product.name}
                 </a>
