@@ -1,26 +1,18 @@
 ---
 // Product systems — light cards with dark rim-lit visual wells.
 // NOTE: placeholder copy; full catalogue lands in Phase 1b from the CMS.
-const products = [
-  {
-    name: 'ArchIT',
-    line: 'Med-Tech · Fixation',
-    blurb: 'Arch reconstruction system, titanium fixation platform.',
-    tilt: 18,
-  },
-  {
-    name: 'FuseIT',
-    line: 'Med-Tech · Fusion',
-    blurb: 'Ankle and hindfoot fusion engineered for stability under load.',
-    tilt: 4,
-  },
-  {
-    name: 'GraftIT',
-    line: 'Bio-Tech · Regeneration',
-    blurb: 'Biological scaffold supporting graft integration.',
-    tilt: -12,
-  },
-];
+import { getProduct } from '../../data/products';
+
+const featured = ['archit', 'fuseit', 'graftit']
+  .map((slug) => getProduct(slug))
+  .filter((p) => p !== undefined)
+  .map((p, i) => ({
+    name: p.name,
+    line: p.category,
+    blurb: p.tagline,
+    href: `/products/${p.line}/${p.slug}`,
+    tilt: [18, 4, -12][i] ?? 0,
+  }));
 ---
 
 <section id="products" class="relative bg-white text-ink">
@@ -32,8 +24,8 @@ const products = [
 
     <div class="mt-16 grid gap-6 md:grid-cols-3">
       {
-        products.map((product) => (
-          <article class="group border border-ink/10 bg-surface" data-reveal>
+        featured.map((product) => (
+          <a href={product.href} class="group block border border-ink/10 bg-surface" data-reveal>
             <div
               class="relative h-56 overflow-hidden"
               style="background:
@@ -57,13 +49,18 @@ const products = [
                 </p>
               </div>
             </div>
-          </article>
+          </a>
         ))
       }
     </div>
 
-    <p class="readout mt-10 text-[10px] text-ink/30" data-reveal>
-      Full catalogue — browse by anatomy or product line — arrives with the build phase
-    </p>
+    <div class="mt-12" data-reveal>
+      <a
+        href="/products"
+        class="readout inline-flex items-center gap-3 border-b border-ink/20 pb-2 text-[10px] text-ink/60 transition-colors duration-300 hover:border-ink hover:text-ink"
+      >
+        View all systems →
+      </a>
+    </div>
   </div>
 </section>

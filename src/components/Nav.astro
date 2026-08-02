@@ -1,10 +1,12 @@
 ---
+// Absolute paths so the nav works from every route, not just the homepage.
+// Sections that are not yet standalone pages deep-link into the homepage.
 const links = [
-  { href: '#products', label: 'Products' },
-  { href: '#innovation', label: 'Innovation' },
-  { href: '#surgeons', label: 'For Surgeons' },
-  { href: '#research', label: 'Research' },
-  { href: '#about', label: 'About' },
+  { href: '/products', label: 'Products' },
+  { href: '/#innovation', label: 'Innovation' },
+  { href: '/#surgeons', label: 'For Surgeons' },
+  { href: '/#research', label: 'Research' },
+  { href: '/#about', label: 'About' },
 ];
 ---
 
@@ -30,7 +32,7 @@ const links = [
       }
     </nav>
 
-    <a href="#contact" class="cta-ghost">Enquire</a>
+    <a href="/#contact" class="cta-ghost">Enquire</a>
   </div>
 </header>
 

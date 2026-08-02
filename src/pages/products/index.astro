@@ -1,0 +1,81 @@
+---
+import Base from '../../layouts/Base.astro';
+import { PRODUCTS, PRODUCT_LINES } from '../../data/products';
+
+const title = 'Product systems — Integrant';
+const description =
+  'Integrant implant systems, instrumentation and graft materials — engineered for foot, ankle, hand and wrist.';
+---
+
+<Base title={title} description={description}>
+  <!-- Dark bookend: keeps the fixed nav legible and anchors the catalogue -->
+  <section class="relative overflow-hidden bg-void text-white">
+    <div
+      class="pointer-events-none absolute inset-0"
+      style="background: radial-gradient(120% 90% at 12% -20%, rgb(255 255 255 / 0.16), transparent 60%);"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="relative mx-auto max-w-6xl px-6 pb-24 pt-40 md:pb-28 md:pt-48">
+      <p class="readout text-white/45">Catalogue</p>
+      <h1 class="mt-6 max-w-3xl font-display text-5xl font-bold leading-[1.03] md:text-7xl">
+        Precision, instrument by instrument.
+      </h1>
+      <p class="mt-8 max-w-xl text-lg leading-relaxed text-white/60">
+        Two divisions, one engineering standard — implant systems and
+        instrumentation for the foot and ankle, and graft materials that work
+        with the body’s own repair.
+      </p>
+    </div>
+  </section>
+
+  {
+    PRODUCT_LINES.map((line, lineIndex) => (
+      <section
+        id={line.id}
+        class={lineIndex % 2 === 0 ? 'relative bg-surface text-ink' : 'relative bg-white text-ink'}
+      >
+        <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+          <p class="readout text-ink/45" data-reveal>
+            {String(lineIndex + 1).padStart(2, '0')} — {line.label}
+          </p>
+          <h2 class="sweep mt-6 max-w-2xl font-display text-3xl font-bold leading-tight md:text-5xl" data-sweep>
+            {line.blurb}
+          </h2>
+
+          <!-- Individually bordered cards: an odd item count must never leave
+               empty cells showing the grid's hairline background -->
+          <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {PRODUCTS.filter((p) => p.line === line.id).map((product) => (
+              <a
+                href={`/products/${product.line}/${product.slug}`}
+                class="group relative flex min-h-64 flex-col justify-between border border-ink/12 bg-surface p-7 transition-colors duration-300 hover:border-ink/30 hover:bg-white"
+                data-reveal
+              >
+                <div>
+                  <p class="readout text-[10px] text-ink/40">{product.category}</p>
+                  <h3 class="mt-4 font-display text-3xl font-bold text-ink">{product.name}</h3>
+                  <p class="mt-3 text-sm leading-relaxed text-ink/60">{product.tagline}</p>
+                </div>
+                <p class="readout mt-8 text-[10px] text-ink/40 transition-colors duration-300 group-hover:text-ink">
+                  View system →
+                </p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="relative bg-surface text-ink">
+    <div class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-16">
+      <p class="max-w-3xl text-sm leading-relaxed text-ink/50">
+        Implant systems are supplied to healthcare professionals on enquiry.
+        Product specifications are provided for identification and are subject
+        to confirmation; refer to the Instructions for Use supplied with each
+        device for indications, contraindications and warnings.
+      </p>
+    </div>
+  </section>
+</Base>
