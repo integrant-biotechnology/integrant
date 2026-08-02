@@ -127,11 +127,31 @@ export function buildField(variant: FieldVariant, seed: number): FieldGeometry {
 
 const n = (v: number) => Math.round(v * 10) / 10;
 
-/** Renders geometry to SVG markup. Colour comes from `currentColor`. */
-export function renderField(geo: FieldGeometry): string {
+/**
+ * Renders geometry to SVG markup. Colour comes from `currentColor`.
+ *
+ * `pulse` adds a few separate fibres that carry a travelling impulse (CSS
+ * animated). Deliberately a handful, not all of them — the field must stay a
+ * background, and every animated stroke is a compositor layer.
+ */
+export function renderField(geo: FieldGeometry, pulse = false): string {
   const lines = geo.edges
     .map(([a, b]) => `M${n(a.x)} ${n(a.y)}L${n(b.x)} ${n(b.y)}`)
     .join('');
+
+  // pick a spread of edges rather than adjacent ones, so impulses don't cluster
+  const impulses = pulse
+    ? geo.edges
+        .filter((_, i) => i % Math.max(1, Math.floor(geo.edges.length / 5)) === 0)
+        .slice(0, 5)
+        .map(
+          ([a, b], i) =>
+            `<path class="field-impulse" d="M${n(a.x)} ${n(a.y)}L${n(b.x)} ${n(b.y)}" ` +
+            `fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" ` +
+            `opacity="0.9" style="--d:${(i * 1.05).toFixed(2)}s"/>`
+        )
+        .join('')
+    : '';
 
   const plain = geo.nodes.filter((p) => !p.fired);
   const fired = geo.nodes.filter((p) => p.fired);
@@ -143,6 +163,7 @@ export function renderField(geo: FieldGeometry): string {
 
   return (
     `<path d="${lines}" fill="none" stroke="currentColor" stroke-width="1" opacity="0.55"/>` +
+    impulses +
     `<g fill="currentColor">${dots(plain, 0.9)}${dots(fired, 1)}</g>` +
     fired
       .map((p) => `<circle cx="${n(p.x)}" cy="${n(p.y)}" r="${p.r * 3}" fill="currentColor" opacity="0.18"/>`)

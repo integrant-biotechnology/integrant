@@ -1,13 +1,18 @@
 ---
 import NeuralField from '../ui/NeuralField.astro';
-// Dark interlude: the AI chapter. HUD readout chips, an EEG pulse hairline
-// that draws itself, and the app silhouette. Copy stays claim-free.
+// Dark interlude: the AI chapter. Everything here dramatises the claim in the
+// copy — a live vitals trace (bio), an op note writing itself line by line
+// (AI), and a listening level meter. All CSS-driven, all behind the global
+// reduced-motion gate. Copy stays claim-free.
 const chips = ['Neural documentation', 'AI-assisted', 'iOS', 'PDF reports'];
+// Widths mimic prose: full lines, a short one to close each paragraph.
+const noteLines = [92, 84, 58, 96, 88, 62, 90, 46];
 ---
 
-<section id="innovation" data-contrast class="relative bg-base text-ink">
-  <NeuralField variant="dense" seed={41} />
-  <div class="mx-auto grid max-w-6xl gap-16 px-6 py-28 md:grid-cols-[1fr_260px] md:py-36">
+<section id="innovation" data-contrast class="relative overflow-hidden bg-base text-ink">
+  <NeuralField variant="dense" seed={41} pulse />
+
+  <div class="mx-auto grid max-w-6xl gap-16 px-6 py-28 md:grid-cols-[1fr_280px] md:py-36">
     <div>
       <p class="readout text-ink-3" data-reveal>04 — Innovation &amp; AI</p>
       <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>
@@ -27,29 +32,51 @@ const chips = ['Neural documentation', 'AI-assisted', 'iOS', 'PDF reports'];
         }
       </div>
 
-      <svg
-        viewBox="0 0 800 140"
-        class="mt-16 w-full text-ink-3"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        data-draw
-        aria-hidden="true"
-      >
-        <path d="M 0 70 L 300 70 L 330 70 L 350 34 L 372 116 L 394 10 L 416 128 L 436 50 L 456 70 L 800 70"></path>
-      </svg>
+      <!-- Vitals trace: the baseline draws in on scroll, then a bright pulse
+           runs it continuously — a monitor, not a picture of one -->
+      <div class="vitals relative mt-16" data-reveal>
+        <svg viewBox="0 0 800 140" class="w-full" fill="none" data-draw aria-hidden="true">
+          <path
+            class="vitals-base text-ink-3"
+            d="M 0 70 L 300 70 L 330 70 L 350 34 L 372 116 L 394 10 L 416 128 L 436 50 L 456 70 L 800 70"
+            stroke="currentColor"
+            stroke-width="1.5"
+          ></path>
+          <path
+            class="vitals-pulse text-ink"
+            d="M 0 70 L 300 70 L 330 70 L 350 34 L 372 116 L 394 10 L 416 128 L 436 50 L 456 70 L 800 70"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            data-no-draw
+          ></path>
+        </svg>
+      </div>
     </div>
 
-    <div class="relative mx-auto hidden w-56 md:block" data-reveal aria-hidden="true">
-      <div class="rounded-[28px] border border-hairline-strong bg-base p-6 pt-10">
-        <p class="readout text-[9px] text-ink-2">Op note — draft</p>
-        <div class="mt-6 space-y-4">
-          {[44, 40, 28, 44, 40, 28].map((w) => (
-            <div class="h-1.5 bg-ink-3" style={`width: ${w * 2}%`}></div>
-          ))}
+    <!-- The app, writing. Lines fill in sequence, the caret follows, then the
+         draft clears and the next case begins. -->
+    <div class="relative mx-auto hidden w-64 md:block" data-reveal aria-hidden="true">
+      <div class="op-note rounded-[28px] border border-hairline-strong bg-base p-6 pt-9">
+        <div class="flex items-center justify-between">
+          <p class="readout text-[9px] text-ink-2">Op note — draft</p>
+          <span class="readout text-[8px] text-ink-3">LIVE</span>
         </div>
-        <div class="mt-8 flex items-center gap-2">
-          <span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-ink"></span>
+
+        <div class="mt-6 space-y-3.5">
+          {
+            noteLines.map((w, i) => (
+              <div class="note-row h-1.5" style={`--i: ${i}; width: ${w}%`}>
+                <span class="note-fill block h-full w-full bg-ink-3"></span>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="mt-8 flex items-center gap-2.5">
+          <span class="level" aria-hidden="true">
+            <i style="--i: 0"></i><i style="--i: 1"></i><i style="--i: 2"></i><i style="--i: 3"></i>
+          </span>
           <p class="readout text-[9px] text-ink-3">Listening</p>
         </div>
       </div>

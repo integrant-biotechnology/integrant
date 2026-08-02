@@ -261,6 +261,114 @@
     z-index: 1;
   }
 
+  /* --- Bio-tech + AI motion ------------------------------------------------
+     Everything here is compositor-friendly (transform/opacity/dashoffset) and
+     inherits the global reduced-motion gate, which collapses all animation
+     durations to ~0. Nothing loops fast enough to pull the eye off copy. */
+
+  /* Vitals trace: a bright pulse runs the drawn baseline, like a monitor */
+  .vitals-base {
+    opacity: 0.45;
+  }
+  .vitals-pulse {
+    /* one short lit segment travelling a long empty dash */
+    stroke-dasharray: 70 1700;
+    stroke-dashoffset: 1770;
+    opacity: 0.9;
+    animation: vitals-run 4.6s linear infinite;
+  }
+  @keyframes vitals-run {
+    from {
+      stroke-dashoffset: 1770;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* The op note writes itself: each line fills, the set holds, then clears */
+  .note-row {
+    overflow: hidden;
+  }
+  .note-fill {
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: note-write 11s var(--ease-precise) infinite;
+    animation-delay: calc(var(--i, 0) * 420ms);
+  }
+  @keyframes note-write {
+    0% {
+      transform: scaleX(0);
+    }
+    /* each line takes ~5% of the cycle to type */
+    5% {
+      transform: scaleX(1);
+    }
+    88% {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+    94% {
+      transform: scaleX(1);
+      opacity: 0;
+    }
+    95% {
+      transform: scaleX(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scaleX(0);
+      opacity: 1;
+    }
+  }
+
+  /* Listening level meter — four bars reacting to a voice */
+  .level {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 11px;
+  }
+  .level i {
+    display: block;
+    width: 2px;
+    height: 100%;
+    background: var(--color-ink);
+    transform-origin: bottom center;
+    transform: scaleY(0.25);
+    animation: level-bounce 1.15s var(--ease-precise) infinite;
+    animation-delay: calc(var(--i, 0) * 130ms);
+  }
+  @keyframes level-bounce {
+    0%,
+    100% {
+      transform: scaleY(0.25);
+    }
+    35% {
+      transform: scaleY(1);
+    }
+    65% {
+      transform: scaleY(0.5);
+    }
+  }
+
+  /* Synapse impulses in the motif — opt-in, contrast bands only. Kept to a
+     handful of fibres so it reads as a living network, not a light show. */
+  .neural-field.is-pulsing .field-impulse {
+    stroke-dasharray: 26 620;
+    stroke-dashoffset: 646;
+    animation: impulse-run 5.2s linear infinite;
+    animation-delay: var(--d, 0s);
+  }
+  @keyframes impulse-run {
+    from {
+      stroke-dashoffset: 646;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
   /* Film grain — blacks read as emulsion, not dead #000 */
   .grain {
     position: fixed;

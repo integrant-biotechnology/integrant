@@ -7,12 +7,14 @@ interface Props {
   seed?: number;
   /** Override the theme's whisper level (rarely needed). */
   opacity?: number;
+  /** Send impulses along a few fibres — dark bands only, never behind body copy. */
+  pulse?: boolean;
   class?: string;
 }
 
-const { variant = 'edge', seed = 1, opacity, class: className = '' } = Astro.props;
+const { variant = 'edge', seed = 1, opacity, pulse = false, class: className = '' } = Astro.props;
 const geo = buildField(variant, seed);
-const markup = renderField(geo);
+const markup = renderField(geo, pulse);
 ---
 
 <!--
@@ -21,7 +23,7 @@ const markup = renderField(geo);
   it inverts automatically in light mode and inside contrast bands.
 -->
 <svg
-  class={`neural-field ${className}`}
+  class={`neural-field ${pulse ? 'is-pulsing' : ''} ${className}`}
   viewBox={`0 0 ${geo.width} ${geo.height}`}
   preserveAspectRatio="xMidYMid slice"
   aria-hidden="true"

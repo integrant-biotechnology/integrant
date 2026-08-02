@@ -199,7 +199,9 @@ export async function initMotion(): Promise<void> {
   // --- Hairline draw-on: molecule bonds, EEG pulses (svg[data-draw]) ---
   document.querySelectorAll<SVGSVGElement>('svg[data-draw]').forEach((svg) => {
     const strokes = Array.from(
-      svg.querySelectorAll<SVGGeometryElement>('path, line, polyline, circle')
+      svg.querySelectorAll<SVGGeometryElement>(
+        'path:not([data-no-draw]), line:not([data-no-draw]), polyline:not([data-no-draw]), circle:not([data-no-draw])'
+      )
     ).filter((el) => typeof el.getTotalLength === 'function');
     strokes.forEach((p) => {
       const len = p.getTotalLength();
