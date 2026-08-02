@@ -1,3 +1,6 @@
-# Migration archive + raw brand sources are repo-only — never part of a deployment upload
-content-archive
-brand
+# Repo-only directories — excluded from deployment uploads.
+# NOTE: patterns MUST be anchored with a leading slash. A bare `brand` also
+# matches `public/brand`, which would strip every logo and favicon from the
+# deployed site.
+/content-archive
+/brand

@@ -39,15 +39,15 @@ const featured = ['archit', 'fuseit', 'graftit']
                 aria-hidden="true"
               ></span>
             </div>
+            {/* Category sits above the title — sharing a row with the link
+                collided once wide-tracked labels wrapped */}
             <div class="p-7">
-              <h3 class="font-display text-3xl font-bold text-ink">{product.name}</h3>
+              <p class="readout text-[10px] text-ink/40">{product.line}</p>
+              <h3 class="mt-4 font-display text-3xl font-bold text-ink">{product.name}</h3>
               <p class="mt-2 text-sm leading-relaxed text-ink/60">{product.blurb}</p>
-              <div class="mt-8 flex items-center justify-between">
-                <p class="readout text-[10px] text-ink/40">{product.line}</p>
-                <p class="readout text-[10px] text-ink/40 transition-colors duration-300 group-hover:text-ink">
-                  View system →
-                </p>
-              </div>
+              <p class="readout mt-8 text-[10px] text-ink/40 transition-colors duration-300 group-hover:text-ink">
+                View system →
+              </p>
             </div>
           </a>
         ))

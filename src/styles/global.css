@@ -191,11 +191,13 @@
     background-color: transparent;
     border-bottom: 1px solid transparent;
   }
+  /* Opaque enough that light-section content passing underneath doesn't
+     ghost through the bar (headings were visibly bleeding at 0.85) */
   .site-nav[data-scrolled='true'] {
-    background-color: rgb(5 5 5 / 0.85);
-    border-bottom-color: rgb(255 255 255 / 0.08);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background-color: rgb(5 5 5 / 0.96);
+    border-bottom-color: rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(16px) saturate(120%);
+    -webkit-backdrop-filter: blur(16px) saturate(120%);
   }
 
   /* Current page: a hairline under the label — the ray motif, small */
