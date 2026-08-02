@@ -1,18 +1,22 @@
 ---
 // Absolute paths so the nav works from every route, not just the homepage.
-// Sections that are not yet standalone pages deep-link into the homepage.
+// Links only appear here once their destination actually exists — a nav item
+// that scrolls nowhere is worse than one that isn't there yet. "For Surgeons"
+// and "Clinical Research" rejoin the nav when those pages ship (CLAUDE.md §4).
 const links = [
-  { href: '/products', label: 'Products' },
+  { href: '/products', label: 'Products', match: '/products' },
   { href: '/#innovation', label: 'Innovation' },
-  { href: '/#surgeons', label: 'For Surgeons' },
-  { href: '/#research', label: 'Research' },
   { href: '/#about', label: 'About' },
 ];
+
+const path = Astro.url.pathname;
+const isCurrent = (link: (typeof links)[number]) =>
+  link.match ? path === link.match || path.startsWith(`${link.match}/`) : false;
 ---
 
 <header class="site-nav fixed inset-x-0 top-0 z-50" data-scrolled="false">
   <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:py-5">
-    <a href="/" class="flex items-center gap-3 text-white" aria-label="Integrant home">
+    <a href="/" class="nav-link flex items-center gap-3 text-white" aria-label="Integrant — home">
       <img src="/brand/mark-white.png" alt="" width="34" height="34" />
       <span class="font-display text-sm font-semibold uppercase" style="letter-spacing: var(--tracking-nav);">
         Integrant
@@ -24,7 +28,9 @@ const links = [
         links.map((link) => (
           <a
             href={link.href}
-            class="readout text-white/55 transition-colors duration-300 hover:text-white"
+            class="nav-link readout text-white/55 transition-colors duration-300 hover:text-white"
+            aria-current={isCurrent(link) ? 'page' : undefined}
+            data-current={isCurrent(link) ? 'true' : undefined}
           >
             {link.label}
           </a>
@@ -32,12 +38,63 @@ const links = [
       }
     </nav>
 
-    <a href="/#contact" class="cta-ghost">Enquire</a>
+    <div class="flex items-center gap-4">
+      <a href="/#contact" class="cta-ghost hidden sm:inline-flex">Enquire</a>
+
+      <!-- Mobile menu trigger -->
+      <button
+        type="button"
+        class="nav-toggle lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Open menu"
+      >
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+    </div>
   </div>
 </header>
 
+<!-- Mobile menu: full-viewport panel, hidden from AT until opened -->
+<div id="mobile-menu" class="mobile-menu" data-open="false" hidden>
+  <nav aria-label="Mobile" class="mx-auto flex h-full max-w-7xl flex-col justify-between px-6 pb-12 pt-28">
+    <ul class="space-y-2">
+      {
+        links.map((link, i) => (
+          <li class="mobile-menu-item overflow-hidden" style={`--i: ${i}`}>
+            <a
+              href={link.href}
+              class="block border-b border-white/10 py-5 font-display text-4xl font-bold text-white"
+              aria-current={isCurrent(link) ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="mobile-menu-item overflow-hidden" style={`--i: ${links.length}`}>
+        <a
+          href="/#contact"
+          class="block border-b border-white/10 py-5 font-display text-4xl font-bold text-white"
+        >
+          Enquire
+        </a>
+      </li>
+    </ul>
+
+    <p class="readout mobile-menu-item text-white/35" style={`--i: ${links.length + 1}`}>
+      Orthopaedic Med-Tech · Bio-Tech · AI
+    </p>
+  </nav>
+</div>
+
 <script>
   const header = document.querySelector<HTMLElement>('.site-nav');
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const menu = document.querySelector<HTMLElement>('#mobile-menu');
+
+  // --- solidify the bar on scroll ---
   if (header) {
     let ticking = false;
     const update = () => {
@@ -55,5 +112,63 @@ const links = [
       { passive: true }
     );
     update();
+  }
+
+  // --- mobile menu ---
+  if (toggle && menu) {
+    let open = false;
+
+    const setOpen = (next: boolean) => {
+      if (next === open) return;
+      open = next;
+
+      // `hidden` keeps the panel out of the a11y tree and tab order when closed.
+      // Flush styles synchronously (a forced reflow) rather than waiting on
+      // rAF — rAF is throttled in background/hidden tabs, which would leave
+      // the menu stuck half-open.
+      if (open) {
+        menu.hidden = false;
+        void menu.offsetHeight;
+      }
+      menu.dataset.open = String(open);
+
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      toggle.dataset.open = String(open);
+      document.documentElement.classList.toggle('menu-open', open);
+
+      // Lenis owns scrolling — stop it, and lock the native scrollbar too
+      const lenis = (window as unknown as { __lenis?: { stop(): void; start(): void } }).__lenis;
+      if (open) lenis?.stop();
+      else lenis?.start();
+
+      if (open) {
+        // focus only lands once the panel is actually visible
+        menu.querySelector<HTMLAnchorElement>('a')?.focus({ preventScroll: true });
+      } else {
+        toggle.focus();
+        // wait for the close transition before removing from the tree
+        window.setTimeout(() => {
+          if (!open) menu.hidden = true;
+        }, 400);
+      }
+    };
+
+    toggle.addEventListener('click', () => setOpen(!open));
+
+    // Any navigation closes the panel (same-page anchors don't unload)
+    menu.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && open) setOpen(false);
+    });
+
+    // Returning to desktop width must never leave the page scroll-locked
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    desktop.addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
   }
 </script>

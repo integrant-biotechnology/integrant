@@ -26,6 +26,15 @@
     background-color: var(--color-canvas);
     color-scheme: dark;
     scroll-behavior: smooth;
+    /* Anchor targets must clear the fixed nav instead of hiding beneath it */
+    scroll-padding-top: 6rem;
+  }
+
+  /* Scroll lock while the mobile menu is open (Lenis is stopped in parallel) */
+  html.menu-open,
+  html.menu-open body {
+    overflow: hidden;
+    touch-action: none;
   }
 
   body {
@@ -38,9 +47,24 @@
     color: #000000;
   }
 
+  /* Keyboard focus must be unmistakable on both black and white surfaces:
+     a solid ring plus a contrasting halo so it reads either way (WCAG 2.4.7) */
   :focus-visible {
-    outline: 1.5px solid currentColor;
-    outline-offset: 4px;
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+  .bg-void :focus-visible,
+  .bg-canvas :focus-visible,
+  .site-nav :focus-visible,
+  .mobile-menu :focus-visible {
+    outline-color: #ffffff;
+    box-shadow: 0 0 0 6px rgb(0 0 0 / 0.85);
+  }
+  .bg-surface :focus-visible,
+  .bg-white :focus-visible {
+    outline-color: #0a0a0a;
+    box-shadow: 0 0 0 6px rgb(255 255 255 / 0.9);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -172,6 +196,123 @@
     border-bottom-color: rgb(255 255 255 / 0.08);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* Current page: a hairline under the label — the ray motif, small */
+  .site-nav [data-current='true'] {
+    color: #ffffff;
+    position: relative;
+  }
+  .site-nav [data-current='true']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -7px;
+    height: 1px;
+    background: rgb(255 255 255 / 0.75);
+  }
+
+  /* Underline-on-hover for the wordmark + nav links (pointer devices only) */
+  @media (hover: hover) {
+    .nav-link {
+      position: relative;
+    }
+  }
+
+  /* --- Mobile menu trigger: two bars that cross into an X --- */
+  .nav-toggle {
+    display: flex;
+    height: 44px;
+    width: 44px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+  .nav-toggle-bar {
+    display: block;
+    height: 1.5px;
+    width: 22px;
+    background: #ffffff;
+    transition:
+      transform 400ms var(--ease-precise),
+      opacity 250ms var(--ease-precise);
+  }
+  .nav-toggle[data-open='true'] .nav-toggle-bar:first-child {
+    transform: translateY(4.25px) rotate(45deg);
+  }
+  .nav-toggle[data-open='true'] .nav-toggle-bar:last-child {
+    transform: translateY(-4.25px) rotate(-45deg);
+  }
+
+  /* --- Mobile menu panel --- */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: #000000;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 400ms var(--ease-precise),
+      visibility 400ms var(--ease-precise);
+  }
+  .mobile-menu[data-open='true'] {
+    opacity: 1;
+    visibility: visible;
+  }
+  .mobile-menu::before {
+    /* the lamp, echoed */
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(90% 60% at 12% -10%, rgb(255 255 255 / 0.16), transparent 62%);
+    pointer-events: none;
+  }
+  .mobile-menu-item > * {
+    transform: translateY(110%);
+    transition: transform 550ms var(--ease-precise);
+    transition-delay: calc(var(--i, 0) * 60ms);
+  }
+  .mobile-menu[data-open='true'] .mobile-menu-item > * {
+    transform: translateY(0);
+  }
+  .mobile-menu-item.readout {
+    transform: none;
+    opacity: 0;
+    transition: opacity 400ms var(--ease-precise);
+    transition-delay: calc(var(--i, 0) * 60ms);
+  }
+  .mobile-menu[data-open='true'] .mobile-menu-item.readout {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-menu-item > *,
+    .mobile-menu-item.readout {
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  /* Wide tables: fade the right edge so it reads as scrollable, and keep
+     zebra-free hairline rows. The fade retracts once scrolled to the end. */
+  .table-scroll {
+    position: relative;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent 100%);
+  }
+  @supports not (mask-image: linear-gradient(#000, #000)) {
+    .table-scroll {
+      mask-image: none;
+    }
+  }
+  /* Once the region can't scroll further, drop the fade entirely */
+  @media (min-width: 40rem) {
+    .table-scroll {
+      mask-image: none;
+    }
   }
 
   /* Hero static placeholder — paints instantly, zero JS */
