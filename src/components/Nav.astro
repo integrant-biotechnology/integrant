@@ -14,11 +14,14 @@ const isCurrent = (link: (typeof links)[number]) =>
   link.match ? path === link.match || path.startsWith(`${link.match}/`) : false;
 ---
 
-<header class="site-nav fixed inset-x-0 top-0 z-50" data-scrolled="false">
+<header class="site-nav fixed inset-x-0 top-0 z-50" data-scrolled="false" data-theme="dark" data-hidden="false">
   <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:py-5">
-    <a href="/" class="nav-link flex items-center gap-3 text-white" aria-label="Integrant — home">
-      <img src="/brand/mark-white.png" alt="" width="34" height="34" />
-      <span class="font-display text-sm font-semibold uppercase" style="letter-spacing: var(--tracking-nav);">
+    <a href="/" class="nav-link flex items-center gap-3" aria-label="Integrant — home">
+      <img src="/brand/mark-white.png" alt="" width="34" height="34" class="nav-mark" />
+      <span
+        class="nav-wordmark font-display text-sm font-semibold uppercase"
+        style="letter-spacing: var(--tracking-nav);"
+      >
         Integrant
       </span>
     </a>
@@ -28,7 +31,9 @@ const isCurrent = (link: (typeof links)[number]) =>
         links.map((link) => (
           <a
             href={link.href}
-            class="nav-link readout text-white/55 transition-colors duration-300 hover:text-white"
+            {/* colour comes from the nav theme vars — a hardcoded text-*
+                utility would outrank them and stay white on light sections */}
+            class="nav-link readout transition-colors duration-300"
             aria-current={isCurrent(link) ? 'page' : undefined}
             data-current={isCurrent(link) ? 'true' : undefined}
           >
@@ -54,6 +59,8 @@ const isCurrent = (link: (typeof links)[number]) =>
       </button>
     </div>
   </div>
+
+  <span class="nav-progress" aria-hidden="true"></span>
 </header>
 
 <!-- Mobile menu: full-viewport panel, hidden from AT until opened -->
@@ -94,23 +101,54 @@ const isCurrent = (link: (typeof links)[number]) =>
   const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
   const menu = document.querySelector<HTMLElement>('#mobile-menu');
 
-  // --- solidify the bar on scroll ---
+  // --- bar state: solidity, theme, retraction, scroll progress ---
   if (header) {
+    const progress = header.querySelector<HTMLElement>('.nav-progress');
     let ticking = false;
+    let lastY = window.scrollY;
+
+    // Which half of the brand system is under the bar right now? Sample the
+    // page just below the nav and read the nearest section's declared theme.
+    const themeAt = (): 'light' | 'dark' => {
+      const y = header.getBoundingClientRect().bottom + 4;
+      const el = document.elementFromPoint(window.innerWidth / 2, y);
+      const section = el?.closest<HTMLElement>('[data-nav-theme]');
+      return section?.dataset.navTheme === 'light' ? 'light' : 'dark';
+    };
+
     const update = () => {
-      header.dataset.scrolled = String(window.scrollY > 24);
+      const y = window.scrollY;
+      header.dataset.scrolled = String(y > 24);
+      header.dataset.theme = themeAt();
+
+      // Retract on downward scroll, but only well past the hero so the
+      // opening sequence is never interrupted. Never retract while the
+      // mobile menu is open.
+      const menuOpen = document.documentElement.classList.contains('menu-open');
+      const pastHero = y > window.innerHeight * 1.5;
+      const scrollingDown = y > lastY + 4;
+      const scrollingUp = y < lastY - 4;
+      if (menuOpen || !pastHero || scrollingUp) header.dataset.hidden = 'false';
+      else if (scrollingDown) header.dataset.hidden = 'true';
+
+      if (progress) {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        progress.style.setProperty('--progress', String(max > 0 ? Math.min(y / max, 1) : 0));
+      }
+
+      lastY = y;
       ticking = false;
     };
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (!ticking) {
-          ticking = true;
-          requestAnimationFrame(update);
-        }
-      },
-      { passive: true }
-    );
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
     update();
   }
 

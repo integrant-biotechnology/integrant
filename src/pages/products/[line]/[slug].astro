@@ -70,7 +70,7 @@ const related = PRODUCTS.filter((p) => p.line === product.line && p.slug !== pro
   </section>
 
   <!-- Overview + design features -->
-  <section class="relative bg-surface text-ink">
+  <section class="relative bg-surface text-ink" data-nav-theme="light">
     <div class="mx-auto grid max-w-6xl gap-14 px-6 py-24 md:grid-cols-2 md:py-32">
       <div>
         <p class="readout text-ink/45" data-reveal>01 — Overview</p>
@@ -96,7 +96,7 @@ const related = PRODUCTS.filter((p) => p.line === product.line && p.slug !== pro
   </section>
 
   <!-- Engineering panel: specs + applications + contents -->
-  <section class="relative bg-white text-ink">
+  <section class="relative bg-white text-ink" data-nav-theme="light">
     <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
       <p class="readout text-ink/45" data-reveal>03 — Specification</p>
 
@@ -145,7 +145,7 @@ const related = PRODUCTS.filter((p) => p.line === product.line && p.slug !== pro
   <!-- Catalogue tables — engineering-drawing treatment -->
   {
     product.tables && product.tables.length > 0 && (
-      <section class="relative bg-surface text-ink">
+      <section class="relative bg-surface text-ink" data-nav-theme="light">
         <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
           <p class="readout text-ink/45" data-reveal>04 — Catalogue</p>
 
@@ -231,7 +231,7 @@ const related = PRODUCTS.filter((p) => p.line === product.line && p.slug !== pro
   <!-- Related systems -->
   {
     related.length > 0 && (
-      <section class="relative bg-surface text-ink">
+      <section class="relative bg-surface text-ink" data-nav-theme="light">
         <div class="mx-auto max-w-6xl px-6 py-24">
           <p class="readout text-ink/45" data-reveal>Related systems</p>
           <div class="mt-10 grid gap-6 sm:grid-cols-3">

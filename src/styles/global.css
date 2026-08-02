@@ -183,43 +183,125 @@
     -webkit-text-fill-color: transparent;
   }
 
-  /* Site nav: transparent over the void, solidifies on scroll */
+  /* --- Site nav -----------------------------------------------------------
+     The bar rides over both halves of the brand system, so it carries its own
+     theme: white-on-dark over the void sections, ink-on-light over the content
+     sections. A fixed dark bar over a light page always ghosts the content
+     passing beneath it — inverting is the only clean answer. */
   .site-nav {
+    --nav-fg: #ffffff;
+    --nav-fg-dim: rgb(255 255 255 / 0.55);
+    --nav-bg: transparent;
+    --nav-border: transparent;
+    --nav-rule: rgb(255 255 255 / 0.25);
+
+    background-color: var(--nav-bg);
+    border-bottom: 1px solid var(--nav-border);
+    color: var(--nav-fg);
     transition:
-      background-color 400ms var(--ease-precise),
-      border-color 400ms var(--ease-precise);
-    background-color: transparent;
-    border-bottom: 1px solid transparent;
+      background-color 450ms var(--ease-precise),
+      border-color 450ms var(--ease-precise),
+      color 450ms var(--ease-precise),
+      transform 500ms var(--ease-precise);
   }
-  /* Opaque enough that light-section content passing underneath doesn't
-     ghost through the bar (headings were visibly bleeding at 0.85) */
+  .site-nav[data-theme='light'] {
+    --nav-fg: #0a0a0a;
+    --nav-fg-dim: rgb(10 10 10 / 0.55);
+    --nav-rule: rgb(10 10 10 / 0.22);
+  }
   .site-nav[data-scrolled='true'] {
-    background-color: rgb(5 5 5 / 0.96);
-    border-bottom-color: rgb(255 255 255 / 0.1);
+    --nav-bg: rgb(5 5 5 / 0.96);
+    --nav-border: rgb(255 255 255 / 0.1);
     backdrop-filter: blur(16px) saturate(120%);
     -webkit-backdrop-filter: blur(16px) saturate(120%);
   }
+  .site-nav[data-scrolled='true'][data-theme='light'] {
+    --nav-bg: rgb(250 250 250 / 0.96);
+    --nav-border: rgb(10 10 10 / 0.1);
+  }
 
-  /* Current page: a hairline under the label — the ray motif, small */
-  .site-nav [data-current='true'] {
-    color: #ffffff;
+  /* The mark ships as white-on-transparent; invert it for light sections */
+  .site-nav .nav-mark {
+    transition: filter 450ms var(--ease-precise);
+  }
+  .site-nav[data-theme='light'] .nav-mark {
+    filter: invert(1);
+  }
+
+  .site-nav .nav-wordmark {
+    color: var(--nav-fg);
+  }
+  .site-nav nav a {
+    color: var(--nav-fg-dim);
+  }
+  .site-nav nav a:hover {
+    color: var(--nav-fg);
+  }
+  .site-nav .cta-ghost {
+    border-color: var(--nav-rule);
+    color: var(--nav-fg);
+  }
+  .site-nav .cta-ghost:hover {
+    border-color: var(--nav-fg);
+  }
+  .site-nav .nav-toggle-bar {
+    background: var(--nav-fg);
+  }
+
+  /* Retract the bar while scrolling down past the hero, return it on the way
+     up — the content gets the full viewport, the nav is a gesture away */
+  .site-nav[data-hidden='true'] {
+    transform: translateY(-100%);
+  }
+
+  /* Hairline scroll progress along the bottom edge — the ray motif, reduced
+     to a single measuring line */
+  .nav-progress {
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 1px;
+    width: 100%;
+    transform: scaleX(var(--progress, 0));
+    transform-origin: left center;
+    background: var(--nav-fg);
+    opacity: 0;
+    transition: opacity 400ms var(--ease-precise);
+  }
+  .site-nav[data-scrolled='true'] .nav-progress {
+    opacity: 0.4;
+  }
+
+  /* Link hover: a hairline wipes in beneath the label */
+  .site-nav nav a {
     position: relative;
   }
-  .site-nav [data-current='true']::after {
+  .site-nav nav a::after {
     content: '';
     position: absolute;
     left: 0;
     right: 0;
     bottom: -7px;
     height: 1px;
-    background: rgb(255 255 255 / 0.75);
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 400ms var(--ease-precise);
+  }
+  @media (hover: hover) {
+    .site-nav nav a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left center;
+    }
   }
 
-  /* Underline-on-hover for the wordmark + nav links (pointer devices only) */
-  @media (hover: hover) {
-    .nav-link {
-      position: relative;
-    }
+  /* Current page: the hairline stays drawn */
+  .site-nav [data-current='true'] {
+    color: var(--nav-fg);
+  }
+  .site-nav [data-current='true']::after {
+    transform: scaleX(1);
+    opacity: 0.75;
   }
 
   /* --- Mobile menu trigger: two bars that cross into an X --- */
