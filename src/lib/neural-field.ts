@@ -161,12 +161,17 @@ export function renderField(geo: FieldGeometry, pulse = false): string {
       .map((p) => `<circle cx="${n(p.x)}" cy="${n(p.y)}" r="${p.r}" opacity="${op}"/>`)
       .join('');
 
+  // Everything sits in one inner group so CSS can drift it slowly. An <svg>
+  // clips its content by default, so the drift can never bleed over the
+  // section boundary into a neighbour — no overflow-hidden needed upstream.
   return (
+    `<g class="field-inner">` +
     `<path d="${lines}" fill="none" stroke="currentColor" stroke-width="1" opacity="0.55"/>` +
     impulses +
     `<g fill="currentColor">${dots(plain, 0.9)}${dots(fired, 1)}</g>` +
     fired
       .map((p) => `<circle cx="${n(p.x)}" cy="${n(p.y)}" r="${p.r * 3}" fill="currentColor" opacity="0.18"/>`)
-      .join('')
+      .join('') +
+    `</g>`
   );
 }

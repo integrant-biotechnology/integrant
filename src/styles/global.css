@@ -306,6 +306,25 @@
     z-index: 1;
   }
 
+  /* Ambient drift: the constellation breathes very slowly — alive, never
+     distracting. Animating the inner group keeps the motion clipped by the
+     <svg> itself; transform-only, so it stays on the compositor. The global
+     reduced-motion rule collapses it to a static frame. */
+  .neural-field .field-inner {
+    transform-box: view-box;
+    transform-origin: center;
+    animation: field-drift var(--drift-dur, 90s) ease-in-out var(--drift-delay, 0s) infinite
+      alternate;
+  }
+  @keyframes field-drift {
+    from {
+      transform: translate3d(-9px, -6px, 0) scale(1.02) rotate(-0.35deg);
+    }
+    to {
+      transform: translate3d(11px, 8px, 0) scale(1.055) rotate(0.4deg);
+    }
+  }
+
   /* --- Bio-tech + AI motion ------------------------------------------------
      Everything here is compositor-friendly (transform/opacity/dashoffset) and
      inherits the global reduced-motion gate, which collapses all animation

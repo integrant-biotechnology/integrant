@@ -15,6 +15,17 @@ interface Props {
 const { variant = 'edge', seed = 1, opacity, pulse = false, class: className = '' } = Astro.props;
 const geo = buildField(variant, seed);
 const markup = renderField(geo, pulse);
+
+// Deterministic per-seed phase + period so neighbouring sections never drift
+// in lockstep (synchronised backgrounds read as one repeating texture).
+const driftDelay = -(seed % 41);
+const driftDuration = 75 + (seed % 5) * 9;
+
+const styleParts = [
+  opacity !== undefined ? `--motif-opacity: ${opacity}` : null,
+  `--drift-delay: ${driftDelay}s`,
+  `--drift-dur: ${driftDuration}s`,
+].filter(Boolean);
 ---
 
 <!--
@@ -28,6 +39,6 @@ const markup = renderField(geo, pulse);
   preserveAspectRatio="xMidYMid slice"
   aria-hidden="true"
   focusable="false"
-  style={opacity !== undefined ? `--motif-opacity: ${opacity}` : undefined}
+  style={styleParts.join('; ')}
   set:html={markup}
 />
