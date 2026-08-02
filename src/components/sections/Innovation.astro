@@ -12,7 +12,7 @@ const noteLines = [92, 84, 58, 96, 88, 62, 90, 46];
 <section id="innovation" data-contrast class="relative overflow-hidden bg-base text-ink">
   <NeuralField variant="dense" seed={41} pulse />
 
-  <div class="mx-auto grid max-w-6xl gap-16 px-6 py-28 md:grid-cols-[1fr_280px] md:py-36">
+  <div class="mx-auto grid max-w-6xl gap-16 px-6 py-20 md:grid-cols-[1fr_280px] md:py-36">
     <div>
       <p class="readout text-ink-3" data-reveal>04 — Innovation &amp; AI</p>
       <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>
@@ -56,7 +56,7 @@ const noteLines = [92, 84, 58, 96, 88, 62, 90, 46];
 
     <!-- The app, writing. Lines fill in sequence, the caret follows, then the
          draft clears and the next case begins. -->
-    <div class="relative mx-auto hidden w-64 md:block" data-reveal aria-hidden="true">
+    <div class="relative mx-auto mt-12 w-full max-w-[17rem] md:mt-0 md:w-64" data-reveal aria-hidden="true">
       <div class="op-note rounded-[28px] border border-hairline-strong bg-base p-6 pt-9">
         <div class="flex items-center justify-between">
           <p class="readout text-[9px] text-ink-2">Op note — draft</p>
@@ -66,7 +66,10 @@ const noteLines = [92, 84, 58, 96, 88, 62, 90, 46];
         <div class="mt-6 space-y-3.5">
           {
             noteLines.map((w, i) => (
-              <div class="note-row h-1.5" style={`--i: ${i}; width: ${w}%`}>
+              <div
+                class={`note-row h-1.5 ${i >= 6 ? 'hidden md:block' : ''}`}
+                style={`--i: ${i}; width: ${w}%`}
+              >
                 <span class="note-fill block h-full w-full bg-ink-3"></span>
               </div>
             ))

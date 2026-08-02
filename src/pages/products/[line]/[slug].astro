@@ -38,15 +38,17 @@ const related = PRODUCTS.filter((p) => p.line === product.line && p.slug !== pro
       <div>
         <nav aria-label="Breadcrumb">
           <ol class="readout flex flex-wrap items-center gap-2 text-[10px] text-ink-3">
-            <li><a href="/products" class="transition-colors hover:text-ink">Products</a></li>
+            <li><a href="/products" class="tap-target-sm inline-block transition-colors hover:text-ink">Products</a></li>
             <li aria-hidden="true">/</li>
-            <li><a href={`/products#${product.line}`} class="transition-colors hover:text-ink">{lineLabel}</a></li>
+            <li><a href={`/products#${product.line}`} class="tap-target-sm inline-block transition-colors hover:text-ink">{lineLabel}</a></li>
             <li aria-hidden="true">/</li>
             <li class="text-ink-2" aria-current="page">{product.name}</li>
           </ol>
         </nav>
 
-        <h1 class="mt-8 font-display text-6xl font-bold leading-[0.98] md:text-8xl">{product.name}</h1>
+        <h1
+          class="mt-8 max-w-[14ch] font-display text-5xl font-bold leading-[0.98] [text-wrap:balance] sm:text-6xl md:text-7xl xl:text-8xl"
+        >{product.name}</h1>
         <p class="mt-5 text-xl text-ink-2 md:text-2xl">{product.category}</p>
         <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2">{product.tagline}</p>
 
@@ -74,7 +76,7 @@ const related = PRODUCTS.filter((p) => p.line === product.line && p.slug !== pro
   <!-- Overview + design features -->
   <section class="relative bg-raised text-ink">
     <NeuralField variant="organic" seed={97} />
-    <div class="mx-auto grid max-w-6xl gap-14 px-6 py-24 md:grid-cols-2 md:py-32">
+    <div class="mx-auto grid max-w-6xl gap-14 px-6 py-16 md:grid-cols-2 md:py-32">
       <div>
         <p class="readout text-ink-3" data-reveal>01 — Overview</p>
         <p class="mt-8 text-lg leading-relaxed text-ink-2" data-reveal>{product.summary}</p>
@@ -101,7 +103,7 @@ const related = PRODUCTS.filter((p) => p.line === product.line && p.slug !== pro
   <!-- Engineering panel: specs + applications + contents -->
   <section class="relative bg-base text-ink">
     <NeuralField variant="lattice" seed={101} />
-    <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="readout text-ink-3" data-reveal>03 — Specification</p>
 
       <!-- Bordered cells rather than a gap-background grid: spec counts vary
@@ -150,7 +152,7 @@ const related = PRODUCTS.filter((p) => p.line === product.line && p.slug !== pro
   {
     product.tables && product.tables.length > 0 && (
       <section class="relative bg-raised text-ink">
-        <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+        <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
           <p class="readout text-ink-3" data-reveal>04 — Catalogue</p>
 
           <div class="mt-10 space-y-14">
@@ -206,7 +208,7 @@ const related = PRODUCTS.filter((p) => p.line === product.line && p.slug !== pro
 
   <!-- Enquiry + regulatory note -->
   <section data-contrast class="relative bg-base text-ink">
-    <div class="mx-auto max-w-6xl px-6 py-24 md:py-28">
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-28">
       <div class="grid gap-12 md:grid-cols-[1fr_auto] md:items-end">
         <div>
           <h2 class="font-display text-3xl font-bold leading-tight md:text-5xl" data-reveal>

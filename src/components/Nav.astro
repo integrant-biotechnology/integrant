@@ -18,7 +18,7 @@ const isCurrent = (link: (typeof links)[number]) =>
 
 <header class="site-nav fixed inset-x-0 top-0 z-50" data-scrolled="false" data-theme="dark" data-hidden="false">
   <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:py-5">
-    <a href="/" class="nav-link flex items-center gap-3" aria-label="Integrant — home">
+    <a href="/" class="nav-link tap-target flex items-center gap-3" aria-label="Integrant — home">
       <img src="/brand/mark-white.png" alt="" width="34" height="34" class="nav-mark" />
       <span
         class="nav-wordmark font-display text-sm font-semibold uppercase"
@@ -28,14 +28,14 @@ const isCurrent = (link: (typeof links)[number]) =>
       </span>
     </a>
 
-    <nav aria-label="Primary" class="hidden items-center gap-8 lg:flex">
+    <nav aria-label="Primary" class="hidden items-center gap-8 xl:flex">
       {
         links.map((link) => (
           <a
             href={link.href}
             {/* colour comes from the nav theme vars — a hardcoded text-*
                 utility would outrank them and stay white on light sections */}
-            class="nav-link readout transition-colors duration-300"
+            class="nav-link tap-target readout transition-colors duration-300"
             aria-current={isCurrent(link) ? 'page' : undefined}
             data-current={isCurrent(link) ? 'true' : undefined}
           >
@@ -52,7 +52,7 @@ const isCurrent = (link: (typeof links)[number]) =>
       <!-- Mobile menu trigger -->
       <button
         type="button"
-        class="nav-toggle lg:hidden"
+        class="nav-toggle xl:hidden"
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label="Open menu"
@@ -210,7 +210,7 @@ const isCurrent = (link: (typeof links)[number]) =>
     });
 
     // Returning to desktop width must never leave the page scroll-locked
-    const desktop = window.matchMedia('(min-width: 1024px)');
+    const desktop = window.matchMedia('(min-width: 1280px)');
     desktop.addEventListener('change', (event) => {
       if (event.matches) setOpen(false);
     });

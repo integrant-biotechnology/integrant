@@ -121,17 +121,27 @@ export async function initMotion(): Promise<void> {
 
     // Pin the hero for the full act: content exits (0–50%), the biological
     // field reorganizes into the ANN lattice (15–85%), then the bloom floods
-    // the frame white (82–100%) so the unpin lands seamlessly on the white
-    // Vision section. Fully reversible under scrub.
+    // the frame (82–100%) so the unpin lands seamlessly on the Vision
+    // section. Fully reversible under scrub.
+    //
+    // Phones get a compressed pin: at +110% the hero cost ~2.1 screens of
+    // thumb-scrolling before any content. The proportions are unchanged, so
+    // the morph and bloom still read — the act is just tighter. Desktop is
+    // untouched. ScrollTrigger re-evaluates this on resize via its own
+    // matchMedia integration.
+    const phone = window.matchMedia('(max-width: 767px)');
+    const pinLength = () => (phone.matches ? '+=45%' : '+=110%');
+
     gsap
       .timeline({
         scrollTrigger: {
           trigger: hero,
           start: 'top top',
-          end: '+=110%',
+          end: pinLength,
           pin: true,
           scrub: 0.6,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       })
       .to('.hero-content', { yPercent: -16, autoAlpha: 0, ease: 'none', duration: 0.5 }, 0)
@@ -166,6 +176,9 @@ export async function initMotion(): Promise<void> {
         .forEach((el) => el.removeAttribute('style'));
     }
   });
+
+  // A width change across the phone breakpoint changes the pin length
+  window.addEventListener('resize', () => ScrollTrigger.refresh(), { passive: true });
 
   // --- Scroll reveals ---
   document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) => {

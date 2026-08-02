@@ -166,13 +166,53 @@
 }
 
 @layer components {
-  /* Technical readout — the HUD/engineering voice from the brand board */
+  /* Technical readout — the HUD/engineering voice from the brand board.
+     Bumped a step on small screens: 11px of wide-tracked uppercase is hard
+     to read at arm's length on a phone. */
   .readout {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: var(--tracking-eyebrow);
+  }
+  @media (min-width: 768px) {
+    .readout {
+      font-size: 0.6875rem;
+    }
+  }
+
+  /* A ≥44px hit area (Apple HIG / WCAG 2.5.8) without changing visual size:
+     padding grows the target, the negative margin gives the space back to
+     the layout. Applied to controls whose text is smaller than a fingertip. */
+  .tap-target {
+    position: relative;
+    padding-block: 14px;
+    margin-block: -14px;
+  }
+  /* For small text links: a 44px hit box via min-height (a padding utility
+     like `pb-2` outranks the components layer and would silently shrink a
+     padding-based target). The negative margin returns the extra height to
+     the layout so nothing shifts. */
+  .tap-target-sm {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-block: -14px;
+  }
+
+  /* Touch hygiene: the default blue flash is off-brand for a strict
+     monochrome system, so presses get an explicit acknowledgement instead. */
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media (hover: none) {
+    a:active,
+    button:active {
+      opacity: 0.62;
+    }
   }
 
   .skip-link {
@@ -180,7 +220,7 @@
     top: -100%;
     left: 1.5rem;
     z-index: 100;
-    padding: 0.75rem 1.25rem;
+    padding: 0.85rem 1.25rem;
     background: var(--color-ink);
     color: var(--color-base);
     font-family: var(--font-display);
@@ -208,8 +248,10 @@
       color 300ms var(--ease-precise);
     will-change: transform;
   }
-  .cta-solid:hover {
-    background-color: color-mix(in srgb, var(--color-ink) 88%, var(--color-base));
+  @media (hover: hover) {
+    .cta-solid:hover {
+      background-color: color-mix(in srgb, var(--color-ink) 88%, var(--color-base));
+    }
   }
   /* Light-sweep shine crossing the button on hover — the ray motif again */
   .cta-solid::after {
@@ -232,6 +274,7 @@
 
   .cta-ghost {
     @apply inline-flex items-center px-5 py-2.5 font-display text-xs font-semibold uppercase;
+    min-height: 44px;
     border: 1px solid var(--color-hairline-strong);
     color: var(--color-ink);
     letter-spacing: 0.18em;
@@ -239,8 +282,10 @@
       border-color 300ms var(--ease-precise),
       color 300ms var(--ease-precise);
   }
-  .cta-ghost:hover {
-    border-color: var(--color-ink);
+  @media (hover: hover) {
+    .cta-ghost:hover {
+      border-color: var(--color-ink);
+    }
   }
 
   /* Neural field — the hero's motif as a quiet structural layer. Sits behind
@@ -414,6 +459,8 @@
      sections. A fixed dark bar over a light page always ghosts the content
      passing beneath it — inverting is the only clean answer. */
   .site-nav {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
     --nav-fg: #ffffff;
     --nav-fg-dim: rgb(255 255 255 / 0.55);
     --nav-bg: transparent;
@@ -459,15 +506,19 @@
   .site-nav nav a {
     color: var(--nav-fg-dim);
   }
-  .site-nav nav a:hover {
-    color: var(--nav-fg);
+  @media (hover: hover) {
+    .site-nav nav a:hover {
+      color: var(--nav-fg);
+    }
   }
   .site-nav .cta-ghost {
     border-color: var(--nav-rule);
     color: var(--nav-fg);
   }
-  .site-nav .cta-ghost:hover {
-    border-color: var(--nav-fg);
+  @media (hover: hover) {
+    .site-nav .cta-ghost:hover {
+      border-color: var(--nav-fg);
+    }
   }
   .site-nav .nav-toggle-bar {
     background: var(--nav-fg);
@@ -506,7 +557,8 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -7px;
+    /* 14px hit-area padding minus the 7px the underline sits below the text */
+    bottom: 7px;
     height: 1px;
     background: currentColor;
     transform: scaleX(0);
@@ -532,8 +584,8 @@
   /* --- Theme toggle: an aperture that fills and empties --- */
   .theme-toggle {
     display: flex;
-    height: 40px;
-    width: 40px;
+    height: 44px;
+    width: 44px;
     align-items: center;
     justify-content: center;
     color: var(--nav-fg, var(--color-ink));
@@ -548,8 +600,10 @@
     transition: opacity 300ms var(--ease-precise);
     opacity: 0.72;
   }
-  .theme-toggle:hover .theme-aperture {
-    opacity: 1;
+  @media (hover: hover) {
+    .theme-toggle:hover .theme-aperture {
+      opacity: 1;
+    }
   }
   .theme-aperture-core {
     position: absolute;
@@ -594,6 +648,11 @@
   .mobile-menu {
     position: fixed;
     inset: 0;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
+    overflow-y: auto;
+    /* scrolling the panel must not chain to the page behind it */
+    overscroll-behavior-y: contain;
     z-index: 40;
     background: #000000;
     opacity: 0;
