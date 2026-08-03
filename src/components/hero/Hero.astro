@@ -1,6 +1,7 @@
 ---
 // Full-viewport hero — white volumetric light in a black void.
 // Tiers: T3/T2 WebGL shader · T1 CSS/SVG rays · T0 static (reduced motion).
+import BrandMark from '../ui/BrandMark.astro';
 ---
 
 <section
@@ -40,14 +41,9 @@
 
   <!-- Content -->
   <div class="hero-content relative z-10 mx-auto max-w-4xl px-6 pb-28 pt-28 text-center">
-    <img
-      src="/brand/logo-white.png"
-      alt="Integrant"
-      width="144"
-      height="144"
-      class="hero-logo boot-hide mx-auto mb-8 w-28 md:w-36"
-      fetchpriority="high"
-    />
+    {/* Mark alone — the wordmark already lives in the nav directly above;
+        repeating it here read as a template lockup, not a brand moment */}
+    <BrandMark size={64} class="hero-logo boot-hide mx-auto mb-9 text-ink md:mb-10" label="Integrant" />
     <p class="hero-eyebrow boot-hide readout text-ink-3">
       Orthopaedic Med-Tech · Bio-Tech · AI
     </p>

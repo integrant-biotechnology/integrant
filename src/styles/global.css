@@ -511,12 +511,10 @@
     --nav-border: rgb(10 10 10 / 0.1);
   }
 
-  /* The mark ships as white-on-transparent; invert it for light sections */
+  /* Inline SVG mark inherits the nav theme through currentColor */
   .site-nav .nav-mark {
-    transition: filter 450ms var(--ease-precise);
-  }
-  .site-nav[data-theme='light'] .nav-mark {
-    filter: invert(1);
+    color: var(--nav-fg);
+    transition: color 450ms var(--ease-precise);
   }
 
   .site-nav .nav-wordmark {

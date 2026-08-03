@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from './ui/ThemeToggle.astro';
+import BrandMark from './ui/BrandMark.astro';
 
 // Absolute paths so the nav works from every route, not just the homepage.
 // Links only appear here once their destination actually exists — a nav item
@@ -19,7 +20,7 @@ const isCurrent = (link: (typeof links)[number]) =>
 <header class="site-nav fixed inset-x-0 top-0 z-50" data-scrolled="false" data-theme="dark" data-hidden="false">
   <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:py-5">
     <a href="/" class="nav-link tap-target flex items-center gap-3" aria-label="Integrant — home">
-      <img src="/brand/mark-white.png" alt="" width="34" height="34" class="nav-mark" />
+      <BrandMark size={28} class="nav-mark" />
       <span
         class="nav-wordmark font-display text-sm font-semibold uppercase"
         style="letter-spacing: var(--tracking-nav);"
