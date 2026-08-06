@@ -156,10 +156,17 @@ const map = buildDotMap();
     const ts = form.querySelector<HTMLInputElement>('input[name="ts"]');
     if (ts) ts.value = String(Date.now());
 
-    const channel = new URLSearchParams(location.search).get('channel');
+    // Allowlist only — never reflect arbitrary query text into the field.
+    const CHANNEL_SUBJECTS: Record<string, string> = {
+      partners: 'Partnership enquiry',
+      surgeons: 'Surgeon enquiry',
+      research: 'Research collaboration enquiry',
+      clinical: 'Clinical case material request',
+    };
+    const channel = new URLSearchParams(location.search).get('channel') ?? '';
     const subject = form.querySelector<HTMLInputElement>('input[name="subject"]');
-    if (channel && subject && !subject.value) {
-      subject.value = channel === 'partners' ? 'Partnership enquiry' : `${channel} enquiry`;
+    if (subject && !subject.value && CHANNEL_SUBJECTS[channel]) {
+      subject.value = CHANNEL_SUBJECTS[channel];
     }
 
     const status = document.getElementById('form-status');

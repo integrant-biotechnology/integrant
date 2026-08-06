@@ -15,6 +15,8 @@ interface Props {
   ogImage?: string;
   /** Structured data — one object or an array; rendered as a single JSON-LD block. */
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** Error pages: skip canonical/og:url (a 404 must not canonicalise itself). */
+  omitCanonical?: boolean;
 }
 
 const {
@@ -22,6 +24,7 @@ const {
   description = 'Integrant designs and delivers orthopaedic implant systems, biologics and surgical technology across Australia and New Zealand.',
   ogImage: ogImagePath = '/brand/og.png',
   jsonLd,
+  omitCanonical = false,
 } = Astro.props;
 
 const ogImage = new URL(ogImagePath, Astro.site ?? Astro.url);
@@ -57,16 +60,19 @@ const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph
     <meta name="description" content={description} />
     <!-- Prototype preview: remove before production launch -->
     <meta name="robots" content="noindex" />
-    <meta name="theme-color" content="#000000" />
+    <!-- No-JS/pre-script chrome colour follows the OS; the inline script
+         below replaces these with one resolved meta (explicit choice wins) -->
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
     <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg" />
     <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
-    <link rel="canonical" href={canonical} />
+    {!omitCanonical && <link rel="canonical" href={canonical} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonical} />
+    {!omitCanonical && <meta property="og:url" content={canonical} />}
     <meta property="og:site_name" content="Integrant" />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
@@ -91,8 +97,16 @@ const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph
               ? 'light'
               : 'dark';
         d.dataset.theme = theme;
-        var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute('content', theme === 'light' ? '#ffffff' : '#000000');
+        // Collapse the two media-scoped theme-color metas into one resolved
+        // value so an explicit stored choice overrides the OS scheme (and
+        // the toggle has a single meta to update).
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+          m.remove();
+        });
+        var meta = document.createElement('meta');
+        meta.name = 'theme-color';
+        meta.content = theme === 'light' ? '#ffffff' : '#000000';
+        document.head.appendChild(meta);
       })();
 
       // FOUC guard for the hero power-on: hide boot elements only when the

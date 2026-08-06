@@ -1,11 +1,19 @@
 ---
 import NeuralField from '../ui/NeuralField.astro';
-// Light stats band — Rajdhani numerals counting on entry.
-// NOTE: placeholder figures drawn from the site audit, pending confirmation.
+import { PRODUCTS, PRODUCT_LINES } from '../../data/products';
+import { ANATOMY_AREAS } from '../../data/anatomy-areas';
+// Light stats band — Rajdhani numerals counting on entry. Figures are
+// computed from the data modules at build time (same source as /about),
+// so the two pages can never disagree and the numbers can never drift
+// from the catalogue.
 const stats = [
-  { value: 11, suffix: '+', label: 'Product systems' },
-  { value: 8, suffix: '', label: 'Anatomical regions' },
-  { value: 2, suffix: '', label: 'Divisions — Med · Bio' },
+  { value: PRODUCTS.length, suffix: '', label: 'Product systems' },
+  {
+    value: ANATOMY_AREAS.filter((a) => a.productSlugs.length > 0).length,
+    suffix: '',
+    label: 'Anatomical regions covered',
+  },
+  { value: PRODUCT_LINES.length, suffix: '', label: 'Divisions — Med · Bio' },
 ];
 ---
 

@@ -6,11 +6,25 @@
 // fills automatically as consent documents verify. All 22 legacy photos are
 // modelled in data/clinical-images.ts and CANNOT render until then. The
 // legacy URL stays live at cutover without publishing one unconsented pixel.
+import { existsSync } from 'node:fs';
 import Base from '../layouts/Base.astro';
 import NeuralField from '../components/ui/NeuralField.astro';
 import { publishableCases } from '../data/clinical-images';
 import { getAnatomyArea } from '../data/anatomy-areas';
 import { getProduct } from '../data/products';
+
+// Build guard: a consent-cleared case whose imagery hasn't been copied into
+// public/clinical/ must fail the build loudly, not ship broken <img>s.
+for (const c of publishableCases) {
+  for (const img of c.images) {
+    if (!existsSync(new URL(`../../public/clinical/${img.file}`, import.meta.url))) {
+      throw new Error(
+        `clinical-images: ${c.id} is consentConfirmed but public/clinical/${img.file} is missing — ` +
+          'copy the approved imagery before flipping the flag.'
+      );
+    }
+  }
+}
 ---
 
 <Base
