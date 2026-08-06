@@ -1,18 +1,22 @@
 ---
-// Theme control — an aperture that fills and empties: the theatre lamp,
-// on and off. Deliberately not a sun/moon; this brand is instruments and
-// light, not weather.
+// Theme control — a precision switch. Track and thumb in strict monochrome
+// (no sun/moon; this brand is instruments and light, not weather). The
+// switch state is unmistakable at a glance, and the theme change itself
+// irises out from the control (View Transitions API, with an instant
+// fallback) so the press visibly answers everywhere — including pages
+// whose first viewport is a permanent dark band.
 ---
 
 <button
   type="button"
   class="theme-toggle"
-  aria-pressed="false"
+  role="switch"
+  aria-checked="false"
   aria-label="Switch to light theme"
   title="Switch theme"
 >
-  <span class="theme-aperture" aria-hidden="true">
-    <span class="theme-aperture-core"></span>
+  <span class="theme-track" aria-hidden="true">
+    <span class="theme-thumb"></span>
   </span>
 </button>
 
@@ -31,18 +35,11 @@
 
   const sync = () => {
     const light = root.dataset.theme === 'light';
-    toggle?.setAttribute('aria-pressed', String(light));
+    toggle?.setAttribute('aria-checked', String(light));
     toggle?.setAttribute('aria-label', `Switch to ${light ? 'dark' : 'light'} theme`);
   };
 
-  const apply = (theme: 'light' | 'dark', animate: boolean) => {
-    // The colour transition is applied ONLY on user toggle — never on load,
-    // which must be instant — and never under reduced motion.
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (animate && !reduce) {
-      root.classList.add('theme-animating');
-      window.setTimeout(() => root.classList.remove('theme-animating'), 400);
-    }
+  const mutate = (theme: 'light' | 'dark') => {
     root.dataset.theme = theme;
     document
       .querySelector('meta[name="theme-color"]')
@@ -52,12 +49,33 @@
     window.dispatchEvent(new CustomEvent('integrant:themechange', { detail: { theme } }));
   };
 
+  const apply = (theme: 'light' | 'dark', animate: boolean) => {
+    const reduce =
+      matchMedia('(prefers-reduced-motion: reduce)').matches || root.dataset.motion === 'off';
+
+    // The iris: the new theme sweeps out from the switch as an expanding
+    // circle. Only on a user press, never on load/sync, never under the
+    // motion gates, and only where the View Transitions API exists.
+    if (animate && !reduce && typeof document.startViewTransition === 'function') {
+      if (toggle) {
+        const r = toggle.getBoundingClientRect();
+        root.style.setProperty('--iris-x', `${Math.round(r.left + r.width / 2)}px`);
+        root.style.setProperty('--iris-y', `${Math.round(r.top + r.height / 2)}px`);
+      }
+      document.startViewTransition(() => mutate(theme));
+      return;
+    }
+
+    // Fallback: the 320ms colour crossfade (also skipped under the gates).
+    if (animate && !reduce) {
+      root.classList.add('theme-animating');
+      window.setTimeout(() => root.classList.remove('theme-animating'), 400);
+    }
+    mutate(theme);
+  };
+
   toggle?.addEventListener('click', () => {
     const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-    // The aperture acknowledges the press even when the surrounding band is
-    // a theme-immune contrast section. Killed by the motion gates.
-    toggle.classList.add('is-pulsing');
-    window.setTimeout(() => toggle.classList.remove('is-pulsing'), 400);
     try {
       // If the choice lands back on the OS preference, release the override —
       // the visitor silently resumes following their system setting.
@@ -87,7 +105,6 @@
     if (value === 'light' || value === 'dark') {
       apply(value, false);
     } else if (value === null) {
-      // Override released elsewhere — fall back to the OS preference.
       apply(matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark', false);
     }
   });

@@ -502,6 +502,8 @@
     --nav-bg: transparent;
     --nav-border: transparent;
     --nav-rule: rgb(255 255 255 / 0.25);
+    /* Switch thumb when the track is filled with --nav-fg */
+    --nav-thumb-contrast: #0a0a0a;
 
     background-color: var(--nav-bg);
     border-bottom: 1px solid var(--nav-border);
@@ -516,6 +518,7 @@
     --nav-fg: #0a0a0a;
     --nav-fg-dim: rgb(10 10 10 / 0.72);
     --nav-rule: rgb(10 10 10 / 0.22);
+    --nav-thumb-contrast: #ffffff;
   }
   .site-nav[data-scrolled='true'] {
     --nav-bg: rgb(5 5 5 / 0.98);
@@ -621,51 +624,83 @@
     opacity: 0.75;
   }
 
-  /* --- Theme toggle: an aperture that fills and empties --- */
+  /* --- Theme toggle: a precision switch ---
+     Monochrome track + thumb. Checked = light = the lamp is on: the track
+     fills with the bar's ink and the thumb inverts. Colours ride the nav
+     theme vars so the switch is legible over the hero, contrast bands and
+     the solid scrolled bar alike. */
   .theme-toggle {
     display: flex;
     height: 44px;
-    width: 44px;
+    width: 56px;
     align-items: center;
     justify-content: center;
-    color: var(--nav-fg, var(--color-ink));
   }
-  .theme-aperture {
+  .theme-track {
     position: relative;
     display: block;
-    height: 17px;
-    width: 17px;
-    border: 1.5px solid currentColor;
-    border-radius: 50%;
-    transition: opacity 300ms var(--ease-precise);
-    opacity: 0.72;
+    width: 40px;
+    height: 22px;
+    border-radius: 11px;
+    border: 1.5px solid var(--nav-fg, var(--color-ink));
+    opacity: 0.78;
+    transition:
+      background-color 320ms var(--ease-precise),
+      opacity 300ms var(--ease-precise);
   }
   @media (hover: hover) {
-    .theme-toggle:hover .theme-aperture {
+    .theme-toggle:hover .theme-track {
       opacity: 1;
     }
   }
-  .theme-aperture-core {
+  .theme-thumb {
     position: absolute;
-    inset: 2px;
+    top: 50%;
+    left: 3px;
+    width: 13px;
+    height: 13px;
+    margin-top: -6.5px;
     border-radius: 50%;
-    background: currentColor;
-    transform: scale(1);
-    transition: transform 420ms var(--ease-precise);
+    background: var(--nav-fg, var(--color-ink));
+    transition:
+      transform 320ms var(--ease-precise),
+      background-color 320ms var(--ease-precise),
+      width 200ms var(--ease-precise);
   }
-  /* Light theme active → the lamp is on → aperture opens (core retracts) */
-  .theme-toggle[aria-pressed='true'] .theme-aperture-core {
-    transform: scale(0);
+  /* Checked = light mode = lamp on */
+  .theme-toggle[aria-checked='true'] .theme-track {
+    background: var(--nav-fg, var(--color-ink));
   }
-  /* Press acknowledgement: one aperture pulse, even when the surrounding
-     band is theme-immune. Transform-only; the motion kill switches zero it. */
-  .theme-toggle.is-pulsing .theme-aperture {
-    animation: aperture-pulse 350ms var(--ease-precise);
+  .theme-toggle[aria-checked='true'] .theme-thumb {
+    transform: translateX(18px);
+    background: var(--nav-thumb-contrast, var(--color-base));
   }
-  @keyframes aperture-pulse {
-    0% { transform: scale(1); }
-    45% { transform: scale(1.35); }
-    100% { transform: scale(1); }
+  /* A press briefly stretches the thumb toward the destination — the iOS
+     touch. Transform-only; zeroed by the motion kill switches. */
+  .theme-toggle:active .theme-thumb {
+    width: 16px;
+  }
+
+  /* --- Theme iris: the new theme sweeps out from the switch ------------
+     Driven by document.startViewTransition in ThemeToggle.astro; --iris-x/y
+     are set to the switch centre before the transition starts. Browsers
+     without the API fall back to the 320ms crossfade; the motion kill
+     switches zero the animation entirely. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+  ::view-transition-new(root) {
+    animation: theme-iris 480ms var(--ease-precise) forwards;
+  }
+  @keyframes theme-iris {
+    from {
+      clip-path: circle(0px at var(--iris-x, 50%) var(--iris-y, 8%));
+    }
+    to {
+      clip-path: circle(150% at var(--iris-x, 50%) var(--iris-y, 8%));
+    }
   }
 
   /* --- Mobile menu trigger: two bars that cross into an X --- */

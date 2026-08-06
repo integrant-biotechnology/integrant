@@ -1,8 +1,8 @@
 ---
-// /innovation — "The Notebook". The hero, the notebook (01) and the R&D
-// vault (04) are permanent dark interludes; the app (02) and workflow (03)
-// follow the theme — a page that is ALL contrast bands makes the theme
-// toggle look broken (that bug shipped once). Copy discipline is absolute:
+// /innovation — "The Notebook". Only the hero and the R&D vault (04) are
+// permanent dark bands; everything between follows the theme — a page whose
+// first viewport is all contrast bands makes the theme switch look broken
+// (that bug shipped twice before this held). Copy discipline is absolute:
 // function only —
 // no time-saved, accuracy or error claims anywhere (substantiation + possible
 // device-classification exposure). The App Store CTA renders only when the
@@ -41,9 +41,11 @@ const workflow = [
     pulse
   />
 
-  <!-- 01 · The notebook, centre stage -->
-  <section data-contrast class="relative overflow-hidden bg-base text-ink">
-    <NeuralField variant="dense" seed={227} pulse />
+  <!-- 01 · The notebook, centre stage. Theme-responsive: in light mode the
+       op-note reads as paper — and the first viewport visibly answers the
+       theme switch (hero + vault are the page's only permanent dark bands). -->
+  <section class="relative overflow-hidden bg-base text-ink">
+    <NeuralField variant="dense" seed={227} />
     <div class="relative mx-auto max-w-6xl px-6 py-20 md:py-36">
       <p class="readout md:text-xs text-ink-3" data-reveal>01 — The notebook</p>
 
