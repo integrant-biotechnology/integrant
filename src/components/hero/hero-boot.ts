@@ -21,6 +21,15 @@ export function detectTier(): Tier {
   if (nav.connection?.saveData) return 1;
   if (nav.deviceMemory !== undefined && nav.deviceMemory <= 2) return 1;
 
+  // True phones ride T1: the shader's synchronous GLSL compile is a ~1s
+  // main-thread stall on mid-range handsets, and the compressed mobile pin
+  // (+45%) gives the morph little room to read anyway. The CSS/SVG ray
+  // drift is compositor-only and battery-friendly. Tablets (≥768 shortest
+  // side) and desktops keep the full WebGL experience.
+  if (window.matchMedia('(pointer: coarse)').matches && Math.min(window.innerWidth, window.innerHeight) < 768) {
+    return 1;
+  }
+
   const probe = document.createElement('canvas');
   const gl2 = probe.getContext('webgl2');
   const gl = gl2 ?? probe.getContext('webgl');

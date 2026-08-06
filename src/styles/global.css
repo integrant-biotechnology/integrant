@@ -159,9 +159,26 @@
     *::before,
     *::after {
       animation-duration: 0.001ms !important;
+      animation-delay: 0s !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
     }
+  }
+
+  /* The SAME kill switch keyed on the resolved gate: html[data-motion='off']
+     covers ?motion=off, OS reduced-motion (the script mirrors it here), and
+     the 3s no-JS safety release — one gate, JS and CSS agreeing. The media
+     query above stays for pre-script coverage. */
+  html[data-motion='off'] {
+    scroll-behavior: auto;
+  }
+  html[data-motion='off'] *,
+  html[data-motion='off'] *::before,
+  html[data-motion='off'] *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
 
