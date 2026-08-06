@@ -101,13 +101,15 @@ const jsonLd = [
     <div class="mx-auto grid max-w-6xl gap-14 px-6 py-16 md:grid-cols-2 md:py-32">
       <div>
         <p class="readout md:text-[13px] text-ink-2" data-reveal>01 — Overview</p>
+        <h2 class="mt-5 font-display text-3xl font-bold leading-tight md:text-4xl" data-reveal>The system.</h2>
         <p class="mt-8 text-lg leading-relaxed text-ink-2" data-reveal>{product.summary}</p>
       </div>
 
       {
         product.features.length > 0 && (
           <div data-reveal>
-            <p class="readout text-ink-3">02 — Design features</p>
+            <p class="readout md:text-[13px] text-ink-2">02 — Design features</p>
+            <h2 class="mt-5 font-display text-3xl font-bold leading-tight md:text-4xl">Engineered in.</h2>
             <ul class="mt-8 space-y-4">
               {product.features.map((feature) => (
                 <li class="flex gap-4 border-b border-hairline pb-4 text-ink-2">
@@ -127,6 +129,7 @@ const jsonLd = [
     <NeuralField variant="lattice" seed={101} />
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="readout md:text-[13px] text-ink-2" data-reveal>03 — Specification</p>
+      <h2 class="mt-5 font-display text-3xl font-bold leading-tight md:text-4xl" data-reveal>On the label.</h2>
 
       <!-- Bordered cells rather than a gap-background grid: spec counts vary
            per product (2–4), so empty cells must not render as grey blocks -->
@@ -176,6 +179,7 @@ const jsonLd = [
       <section class="relative bg-raised text-ink">
         <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
           <p class="readout md:text-[13px] text-ink-2" data-reveal>04 — Catalogue</p>
+          <h2 class="mt-5 font-display text-3xl font-bold leading-tight md:text-4xl" data-reveal>Reference numbers.</h2>
 
           <div class="mt-10 space-y-14">
             {product.tables.map((table) => (
@@ -261,7 +265,7 @@ const jsonLd = [
     related.length > 0 && (
       <section class="relative bg-raised text-ink">
         <div class="mx-auto max-w-6xl px-6 py-24">
-          <p class="readout text-ink-3" data-reveal>Related systems</p>
+          <p class="readout md:text-[13px] text-ink-2" data-reveal>Related systems</p>
           <div class="mt-10 grid gap-6 sm:grid-cols-3">
             {related.map((item) => (
               <a
