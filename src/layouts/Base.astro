@@ -7,6 +7,7 @@ import '@fontsource/rajdhani/700.css';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import BrandMark from '../components/ui/BrandMark.astro';
+import NeuralField from '../components/ui/NeuralField.astro';
 
 interface Props {
   title?: string;
@@ -146,77 +147,120 @@ const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph
       <slot />
     </main>
 
-    <footer id="contact" data-contrast class="relative bg-base text-ink">
-      <div class="mx-auto max-w-6xl px-6 pb-16 pt-28 text-center md:pt-36">
-        <h2 class="font-display text-4xl font-bold leading-tight md:text-6xl" data-reveal>
-          Partner with Integrant.
-        </h2>
-        <p class="mx-auto mt-6 max-w-xl text-lg text-ink-2" data-reveal>
-          Surgeons, hospitals, distributors and research partners — start the
-          conversation.
-        </p>
-        <div class="mt-10" data-reveal>
-          <a href="/contact" class="cta-solid" data-magnetic>Get in touch</a>
+    <footer id="contact" data-contrast class="relative overflow-hidden bg-base text-ink">
+      <NeuralField variant="edge" seed={271} />
+      <span class="corner corner-tr border-hairline-strong" aria-hidden="true"></span>
+
+      <div class="relative mx-auto max-w-6xl px-6 pt-28 md:pt-36">
+        <!-- The close: one statement, one action -->
+        <div class="text-center">
+          <h2 class="font-display text-4xl font-bold leading-tight md:text-6xl" data-reveal>
+            Partner with Integrant.
+          </h2>
+          <p class="mx-auto mt-6 max-w-xl text-lg text-ink-2" data-reveal>
+            Surgeons, hospitals, distributors and research partners — start the
+            conversation.
+          </p>
+          <div class="mt-10" data-reveal>
+            <a href="/contact" class="cta-solid" data-magnetic>Get in touch</a>
+          </div>
         </div>
 
-        <!-- Footer navigation: every route reachable from every page. The
-             footer is a contrast band, so the scoped ink tokens style the
-             links correctly in both site themes. -->
-        <nav aria-label="Footer" class="mt-24 grid gap-10 border-t border-hairline pt-12 text-left sm:grid-cols-3">
-          {
-            [
-              {
-                heading: 'Products',
-                links: [
-                  { href: '/products', label: 'All systems' },
-                  { href: '/products#med-tech', label: 'Med-Tech' },
-                  { href: '/products#bio-tech', label: 'Bio-Tech' },
-                ],
-              },
-              {
-                heading: 'Company',
-                links: [
-                  { href: '/about', label: 'About' },
-                  { href: '/innovation', label: 'Innovation' },
-                  { href: '/partners', label: 'Partners' },
-                  { href: '/contact', label: 'Contact' },
-                ],
-              },
-              {
-                heading: 'Clinical',
-                links: [
-                  { href: '/for-surgeons', label: 'For surgeons' },
-                  { href: '/research', label: 'Research' },
-                  { href: '/clinical-images', label: 'Clinical images' },
-                ],
-              },
-            ].map((column) => (
-              <div>
-                <p class="readout text-[10px] text-ink-3">{column.heading}</p>
-                <ul class="mt-5 space-y-1">
-                  {column.links.map((link) => (
-                    <li>
-                      <a href={link.href} class="tap-target-sm text-sm text-ink-2 transition-colors duration-300 hover:text-ink">
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))
-          }
-        </nav>
-
-        <div class="mt-16 flex flex-col items-start justify-between gap-8 border-t border-hairline pt-10 text-left md:flex-row md:items-center">
-          <div class="flex items-center gap-4">
-            <BrandMark size={28} class="text-ink" />
-            <p class="font-display text-sm font-semibold uppercase text-ink" style="letter-spacing: var(--tracking-nav);">
-              Integrant
+        <!-- The register: brand anchor + full route map. Contrast band, so
+             the scoped ink tokens hold in both site themes. -->
+        <div class="mt-24 grid gap-12 border-t border-hairline pt-14 text-left md:grid-cols-[1.3fr_1fr_1fr_1fr] md:gap-10">
+          <div>
+            <a href="/" class="tap-target inline-flex items-center gap-3" aria-label="Integrant — home">
+              <BrandMark size={30} class="text-ink" />
+              <span class="font-display text-[15px] font-semibold uppercase text-ink" style="letter-spacing: var(--tracking-nav);">
+                Integrant
+              </span>
+            </a>
+            <p class="mt-6 max-w-[26ch] text-sm leading-relaxed text-ink-2">
+              Orthopaedic med-tech, bio-tech and AI — one platform, engineered
+              in Sydney.
             </p>
+            <address class="mt-8 space-y-2 not-italic">
+              <p class="readout text-[10px] leading-relaxed text-ink-3">
+                5 Ward Avenue · Potts Point NSW 2011
+              </p>
+              <p class="readout text-[10px] text-ink-3">33.87°S · 151.22°E</p>
+              <a
+                href="mailto:admin@integrant.com.au"
+                class="readout tap-target-sm text-[10px] text-ink-2 transition-colors duration-300 hover:text-ink"
+              >
+                admin@integrant.com.au
+              </a>
+            </address>
           </div>
-          <p class="readout text-ink-3">© 2026 Integrant Pty Ltd · Precision in every dimension</p>
+
+          <nav aria-label="Footer" class="contents">
+            {
+              [
+                {
+                  heading: 'Products',
+                  links: [
+                    { href: '/products', label: 'All systems' },
+                    { href: '/products#med-tech', label: 'Med-Tech' },
+                    { href: '/products#bio-tech', label: 'Bio-Tech' },
+                  ],
+                },
+                {
+                  heading: 'Company',
+                  links: [
+                    { href: '/about', label: 'About' },
+                    { href: '/innovation', label: 'Innovation' },
+                    { href: '/partners', label: 'Partners' },
+                    { href: '/contact', label: 'Contact' },
+                  ],
+                },
+                {
+                  heading: 'Clinical',
+                  links: [
+                    { href: '/for-surgeons', label: 'For surgeons' },
+                    { href: '/research', label: 'Research' },
+                    { href: '/clinical-images', label: 'Clinical images' },
+                  ],
+                },
+              ].map((column) => (
+                <div>
+                  <p class="readout text-[10px] text-ink-3">{column.heading}</p>
+                  <ul class="mt-5 space-y-1">
+                    {column.links.map((link) => (
+                      <li>
+                        <a href={link.href} class="tap-target-sm text-sm text-ink-2 transition-colors duration-300 hover:text-ink">
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            }
+          </nav>
+        </div>
+
+        <!-- Legal row -->
+        <div class="mt-16 flex flex-col items-start justify-between gap-6 border-t border-hairline pb-6 pt-8 md:flex-row md:items-center">
+          <p class="readout text-[10px] text-ink-3">© 2026 Integrant Pty Ltd · Sydney, Australia</p>
+          <div class="flex items-center gap-8">
+            <p class="readout hidden text-[10px] text-ink-3 sm:block">Precision in every dimension</p>
+            <a href="#main" class="readout tap-target-sm text-[10px] text-ink-2 transition-colors duration-300 hover:text-ink">
+              Top ↑
+            </a>
+          </div>
         </div>
       </div>
+
+      <!-- The signature: the wordmark as architecture, bleeding off the page.
+           Decorative; clipped by the footer's overflow-hidden. -->
+      <p
+        class="pointer-events-none relative -mb-[0.23em] select-none whitespace-nowrap text-center font-display font-bold leading-none text-ink/[0.05]"
+        style="font-size: clamp(90px, 16.5vw, 250px); letter-spacing: 0.02em;"
+        aria-hidden="true"
+      >
+        INTEGRANT
+      </p>
     </footer>
 
     <div class="grain" aria-hidden="true"></div>
