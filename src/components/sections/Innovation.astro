@@ -1,12 +1,11 @@
 ---
 import NeuralField from '../ui/NeuralField.astro';
+import OpNote from '../ui/OpNote.astro';
 // Dark interlude: the AI chapter. Everything here dramatises the claim in the
 // copy — a live vitals trace (bio), an op note writing itself line by line
 // (AI), and a listening level meter. All CSS-driven, all behind the global
 // reduced-motion gate. Copy stays claim-free.
 const chips = ['Neural documentation', 'AI-assisted', 'iOS', 'PDF reports'];
-// Widths mimic prose: full lines, a short one to close each paragraph.
-const noteLines = [92, 84, 58, 96, 88, 62, 90, 46];
 ---
 
 <section id="innovation" data-contrast class="relative overflow-hidden bg-base text-ink">
@@ -57,32 +56,7 @@ const noteLines = [92, 84, 58, 96, 88, 62, 90, 46];
     <!-- The app, writing. Lines fill in sequence, the caret follows, then the
          draft clears and the next case begins. -->
     <div class="relative mx-auto mt-12 w-full max-w-[17rem] md:mt-0 md:w-64" data-reveal aria-hidden="true">
-      <div class="op-note rounded-[28px] border border-hairline-strong bg-base p-6 pt-9">
-        <div class="flex items-center justify-between">
-          <p class="readout text-[9px] text-ink-2">Op note — draft</p>
-          <span class="readout text-[8px] text-ink-3">LIVE</span>
-        </div>
-
-        <div class="mt-6 space-y-3.5">
-          {
-            noteLines.map((w, i) => (
-              <div
-                class={`note-row h-1.5 ${i >= 6 ? 'hidden md:block' : ''}`}
-                style={`--i: ${i}; width: ${w}%`}
-              >
-                <span class="note-fill block h-full w-full bg-ink-3"></span>
-              </div>
-            ))
-          }
-        </div>
-
-        <div class="mt-8 flex items-center gap-2.5">
-          <span class="level" aria-hidden="true">
-            <i style="--i: 0"></i><i style="--i: 1"></i><i style="--i: 2"></i><i style="--i: 3"></i>
-          </span>
-          <p class="readout text-[9px] text-ink-3">Listening</p>
-        </div>
-      </div>
+      <OpNote />
     </div>
   </div>
 </section>

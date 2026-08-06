@@ -1,0 +1,46 @@
+---
+// The self-writing op note — extracted from the homepage Innovation band so
+// /innovation can run it at centrepiece scale without duplicating the markup.
+// All animation is CSS (.op-note rules in global.css) behind the single
+// reduced-motion gate. Decorative: callers keep it aria-hidden.
+interface Props {
+  /** Line widths in % — full lines with short paragraph closers reads as prose. */
+  lines?: number[];
+  /** Rows hidden below md when space is tight (index threshold). */
+  mobileRowCap?: number;
+  class?: string;
+}
+
+const {
+  lines = [92, 84, 58, 96, 88, 62, 90, 46],
+  mobileRowCap = 6,
+  class: className = '',
+} = Astro.props;
+---
+
+<div class:list={['op-note rounded-[28px] border border-hairline-strong bg-base p-6 pt-9', className]}>
+  <div class="flex items-center justify-between">
+    <p class="readout text-[9px] text-ink-2">Op note — draft</p>
+    <span class="readout text-[8px] text-ink-3">LIVE</span>
+  </div>
+
+  <div class="mt-6 space-y-3.5">
+    {
+      lines.map((w, i) => (
+        <div
+          class={`note-row h-1.5 ${i >= mobileRowCap ? 'hidden md:block' : ''}`}
+          style={`--i: ${i}; width: ${w}%`}
+        >
+          <span class="note-fill block h-full w-full bg-ink-3"></span>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="mt-8 flex items-center gap-2.5">
+    <span class="level" aria-hidden="true">
+      <i style="--i: 0"></i><i style="--i: 1"></i><i style="--i: 2"></i><i style="--i: 3"></i>
+    </span>
+    <p class="readout text-[9px] text-ink-3">Listening</p>
+  </div>
+</div>

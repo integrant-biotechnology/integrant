@@ -1,0 +1,103 @@
+---
+// Shared subpage hero — the dark identity strip every interior page opens
+// with, extracted from the product-detail pattern: contrast band, neural
+// field, breadcrumb readout, corner bracket, radial highlight. Pages differ
+// only in seed/variant (so neighbouring pages never share a constellation)
+// and in what they put in the optional aside slot.
+import NeuralField from './ui/NeuralField.astro';
+import type { FieldVariant } from '../lib/neural-field';
+
+interface Crumb {
+  label: string;
+  href?: string; // omit on the current page (last crumb)
+}
+
+interface Props {
+  title: string;
+  /** Short line under the title — a category or classification, not a slogan. */
+  kicker?: string;
+  /** Lede paragraph. */
+  lede?: string;
+  crumbs?: Crumb[];
+  chips?: string[];
+  seed?: number;
+  variant?: FieldVariant;
+  pulse?: boolean;
+}
+
+const {
+  title,
+  kicker,
+  lede,
+  crumbs = [],
+  chips = [],
+  seed = 7,
+  variant = 'dense',
+  pulse = false,
+} = Astro.props;
+
+const hasAside = Astro.slots.has('aside');
+---
+
+<section data-contrast class="relative overflow-hidden bg-base text-ink">
+  <NeuralField variant={variant} seed={seed} pulse={pulse} />
+  <div
+    class="pointer-events-none absolute inset-0"
+    style="background: radial-gradient(110% 120% at 78% -25%, rgb(255 255 255 / 0.15), transparent 62%);"
+    aria-hidden="true"
+  >
+  </div>
+  <span class="corner corner-tl border-hairline-strong" aria-hidden="true"></span>
+
+  <div
+    class:list={[
+      'relative mx-auto grid max-w-6xl gap-12 px-6 pb-20 pt-36 md:pb-24 md:pt-44',
+      hasAside && 'md:grid-cols-[1fr_320px]',
+    ]}
+  >
+    <div>
+      {
+        crumbs.length > 0 && (
+          <nav aria-label="Breadcrumb">
+            <ol class="readout flex flex-wrap items-center gap-2 text-[10px] text-ink-3">
+              {crumbs.map((crumb, i) => (
+                <>
+                  {i > 0 && <li aria-hidden="true">/</li>}
+                  <li>
+                    {crumb.href ? (
+                      <a href={crumb.href} class="tap-target-sm inline-block transition-colors hover:text-ink">
+                        {crumb.label}
+                      </a>
+                    ) : (
+                      <span class="text-ink-2" aria-current="page">
+                        {crumb.label}
+                      </span>
+                    )}
+                  </li>
+                </>
+              ))}
+            </ol>
+          </nav>
+        )
+      }
+
+      <h1
+        class="mt-8 max-w-[16ch] font-display text-5xl font-bold leading-[0.98] [text-wrap:balance] sm:text-6xl md:text-7xl"
+      >{title}</h1>
+      {kicker && <p class="mt-5 text-xl text-ink-2 md:text-2xl">{kicker}</p>}
+      {lede && <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2">{lede}</p>}
+
+      {
+        chips.length > 0 && (
+          <div class="mt-10 flex flex-wrap gap-3">
+            {chips.map((chip) => (
+              <span class="readout border border-hairline-strong px-4 py-2.5 text-[10px] text-ink-2">{chip}</span>
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    {hasAside && <slot name="aside" />}
+  </div>
+</section>
