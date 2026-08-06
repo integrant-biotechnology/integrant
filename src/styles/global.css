@@ -657,6 +657,16 @@
   .theme-toggle[aria-pressed='true'] .theme-aperture-core {
     transform: scale(0);
   }
+  /* Press acknowledgement: one aperture pulse, even when the surrounding
+     band is theme-immune. Transform-only; the motion kill switches zero it. */
+  .theme-toggle.is-pulsing .theme-aperture {
+    animation: aperture-pulse 350ms var(--ease-precise);
+  }
+  @keyframes aperture-pulse {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
 
   /* --- Mobile menu trigger: two bars that cross into an X --- */
   .nav-toggle {

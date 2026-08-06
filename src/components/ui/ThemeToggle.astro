@@ -54,8 +54,19 @@
 
   toggle?.addEventListener('click', () => {
     const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+    // The aperture acknowledges the press even when the surrounding band is
+    // a theme-immune contrast section. Killed by the motion gates.
+    toggle.classList.add('is-pulsing');
+    window.setTimeout(() => toggle.classList.remove('is-pulsing'), 400);
     try {
-      localStorage.setItem(KEY, next);
+      // If the choice lands back on the OS preference, release the override —
+      // the visitor silently resumes following their system setting.
+      const osLight = matchMedia('(prefers-color-scheme: light)').matches;
+      if ((next === 'light') === osLight) {
+        localStorage.removeItem(KEY);
+      } else {
+        localStorage.setItem(KEY, next);
+      }
     } catch {
       /* choice simply won't persist */
     }
@@ -66,6 +77,19 @@
   matchMedia('(prefers-color-scheme: light)').addEventListener('change', (event) => {
     if (read()) return;
     apply(event.matches ? 'light' : 'dark', true);
+  });
+
+  // Cross-tab sync: another tab's choice applies here immediately, without
+  // the transition (background tabs shouldn't flash).
+  window.addEventListener('storage', (event) => {
+    if (event.key !== KEY) return;
+    const value = event.newValue;
+    if (value === 'light' || value === 'dark') {
+      apply(value, false);
+    } else if (value === null) {
+      // Override released elsewhere — fall back to the OS preference.
+      apply(matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark', false);
+    }
   });
 
   sync();
