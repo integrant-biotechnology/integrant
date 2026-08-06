@@ -21,6 +21,7 @@ const markComponent = readFileSync(path.join(root, 'src/components/ui/BrandMark.
 const markD = markComponent.match(/<path d="([^"]+)"/)[1];
 
 const PAGES = [
+  { file: 'home.png', eyebrow: 'ORTHOPAEDIC MED-TECH · BIO-TECH · AI', title: 'Where biology becomes intelligence.' },
   { file: 'products.png', eyebrow: 'PRODUCT SYSTEMS · MED-TECH · BIO-TECH', title: 'The catalogue.' },
   { file: 'about.png', eyebrow: 'ORTHOPAEDIC MED-TECH · BIO-TECH · AI', title: 'About Integrant.' },
   { file: 'contact.png', eyebrow: 'SYDNEY · AUSTRALIA', title: 'Contact.' },
