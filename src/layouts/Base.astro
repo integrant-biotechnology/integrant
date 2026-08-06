@@ -25,6 +25,27 @@ const {
 } = Astro.props;
 
 const ogImage = new URL(ogImagePath, Astro.site ?? Astro.url);
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+
+// Site-wide Organization record; pages can append their own JSON-LD via the
+// jsonLd prop (e.g. BreadcrumbList + Product on product pages).
+const organization = {
+  '@type': 'Organization',
+  name: 'Integrant',
+  url: 'https://integrant.com.au',
+  logo: 'https://integrant.com.au/brand/mark-white.png',
+  email: 'admin@integrant.com.au',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '5 Ward Avenue',
+    addressLocality: 'Potts Point',
+    addressRegion: 'NSW',
+    postalCode: '2011',
+    addressCountry: 'AU',
+  },
+};
+const jsonLdBlocks = [organization, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
+const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph': jsonLdBlocks });
 ---
 
 <!doctype html>
@@ -40,13 +61,16 @@ const ogImage = new URL(ogImagePath, Astro.site ?? Astro.url);
     <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+    <link rel="canonical" href={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Integrant" />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="generator" content={Astro.generator} />
-    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    <script type="application/ld+json" set:html={jsonLdPayload} />
     <script is:inline>
       // Theme resolution runs FIRST and synchronously — this is the only
       // thing standing between the visitor and a flash of the wrong theme.

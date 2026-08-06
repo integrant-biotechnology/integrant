@@ -8,6 +8,10 @@
 //   CONTACT_FROM   — verified sender (default onboarding@resend.dev until
 //                    the client's domain is verified in Resend)
 
+// Vercel's function build has no @types/node — reach env via globalThis so
+// the TypeScript pass stays clean without adding a type dependency.
+const env: Record<string, string | undefined> = (globalThis as any).process?.env ?? {};
+
 const MIN_FILL_MS = 3000;
 const MAX_LEN = { name: 200, email: 320, subject: 300, message: 5000 } as const;
 
@@ -38,7 +42,7 @@ export default async function handler(req: any, res: any) {
     return res.status(400).json({ ok: false, error: 'validation' });
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = env.RESEND_API_KEY;
   if (!apiKey) return res.status(503).json({ ok: false, error: 'unprovisioned' });
 
   const escape = (s: string) =>
@@ -48,8 +52,8 @@ export default async function handler(req: any, res: any) {
     method: 'POST',
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from: process.env.CONTACT_FROM ?? 'Integrant website <onboarding@resend.dev>',
-      to: [process.env.CONTACT_INBOX ?? 'admin@integrant.com.au'],
+      from: env.CONTACT_FROM ?? 'Integrant website <onboarding@resend.dev>',
+      to: [env.CONTACT_INBOX ?? 'admin@integrant.com.au'],
       reply_to: email,
       subject: `[integrant.com.au] ${subject}`,
       html: `<p><strong>${escape(name)}</strong> &lt;${escape(email)}&gt;</p><p>${escape(message).replace(/\n/g, '<br/>')}</p>`,

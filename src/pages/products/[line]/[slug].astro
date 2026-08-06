@@ -17,11 +17,33 @@ interface Props {
 const { product } = Astro.props;
 const lineLabel = product.line === 'med-tech' ? 'Med-Tech' : 'Bio-Tech';
 const related = PRODUCTS.filter((p) => p.line === product.line && p.slug !== product.slug).slice(0, 3);
+
+// Minimal, claim-free structured data: name/brand/description only — no
+// medical properties, offers or ratings (TGA posture carries into metadata).
+const jsonLd = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Products', item: 'https://integrant.com.au/products' },
+      { '@type': 'ListItem', position: 2, name: lineLabel, item: `https://integrant.com.au/products#${product.line}` },
+      { '@type': 'ListItem', position: 3, name: product.name },
+    ],
+  },
+  {
+    '@type': 'Product',
+    name: product.name,
+    brand: { '@type': 'Brand', name: 'Integrant' },
+    description: product.summary.slice(0, 155),
+    category: product.category,
+  },
+];
 ---
 
 <Base
   title={`${product.name} — ${product.category} | Integrant`}
   description={product.summary.slice(0, 155)}
+  ogImage={`/og/product-${product.slug}.png`}
+  jsonLd={jsonLd}
 >
   <!-- Dark hero strip: product identity + engineering readout -->
   <section data-contrast class="relative overflow-hidden bg-base text-ink">

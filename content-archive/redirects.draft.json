@@ -1,117 +1,26 @@
 [
-  {
-    "source": "/home",
-    "destination": "/",
-    "permanent": true
-  },
-  {
-    "source": "/about-us",
-    "destination": "/about",
-    "permanent": true
-  },
-  {
-    "source": "/contact",
-    "destination": "/contact",
-    "permanent": true
-  },
-  {
-    "source": "/explore-products",
-    "destination": "/products",
-    "permanent": true
-  },
-  {
-    "source": "/bio-tech",
-    "destination": "/products/bio-tech",
-    "permanent": true
-  },
-  {
-    "source": "/supplier",
-    "destination": "/partners",
-    "permanent": true
-  },
-  {
-    "source": "/pricing",
-    "destination": "/for-surgeons",
-    "permanent": true
-  },
-  {
-    "source": "/amenities",
-    "destination": "/for-surgeons",
-    "permanent": true
-  },
-  {
-    "source": "/clinical-images",
-    "destination": "/clinical-images",
-    "permanent": true
-  },
-  {
-    "source": "/shop",
-    "destination": "/products",
-    "permanent": true
-  },
-  {
-    "source": "/arch-it",
-    "destination": "/products/med-tech/archit",
-    "permanent": true
-  },
-  {
-    "source": "/anchor-it",
-    "destination": "/products/med-tech/anchorit",
-    "permanent": true
-  },
-  {
-    "source": "/screwit",
-    "destination": "/products/med-tech/screwit",
-    "permanent": true
-  },
-  {
-    "source": "/nail-it",
-    "destination": "/products/med-tech/nailit",
-    "permanent": true
-  },
-  {
-    "source": "/fuse-it",
-    "destination": "/products/med-tech/fuseit",
-    "permanent": true
-  },
-  {
-    "source": "/loopit",
-    "destination": "/products/med-tech/loopit",
-    "permanent": true
-  },
-  {
-    "source": "/integrant-screw-sets",
-    "destination": "/products/med-tech/screw-sets",
-    "permanent": true
-  },
-  {
-    "source": "/integrant-screw-removal-set",
-    "destination": "/products/med-tech/screw-removal-set",
-    "permanent": true
-  },
-  {
-    "source": "/integrant-2-5mm-screw",
-    "destination": "/products/med-tech/2-5mm-screw",
-    "permanent": true
-  },
-  {
-    "source": "/anterior-ankle-fusion-set",
-    "destination": "/products/med-tech/ankle-fusion-set",
-    "permanent": true
-  },
-  {
-    "source": "/integrant-anterior-ankle-fusion-set",
-    "destination": "/products/med-tech/ankle-fusion-set",
-    "permanent": true
-  },
-  {
-    "source": "/frame-it",
-    "destination": "/products/bio-tech/frameit",
-    "permanent": true
-  },
-  {
-    "source": "/graft-it",
-    "destination": "/products/bio-tech/graftit",
-    "permanent": true
-  }
+  { "source": "/home", "destination": "/", "permanent": true },
+  { "source": "/about-us", "destination": "/about", "permanent": true },
+  { "source": "/amenities", "destination": "/about#careers", "permanent": true },
+  { "source": "/explore-products", "destination": "/products", "permanent": true },
+  { "source": "/bio-tech", "destination": "/products#bio-tech", "permanent": true },
+  { "source": "/supplier", "destination": "/partners", "permanent": true },
+  { "source": "/pricing", "destination": "/for-surgeons", "permanent": true },
+  { "source": "/shop", "destination": "/products", "permanent": true },
+  { "source": "/shop/page/:page", "destination": "/products", "permanent": true },
+  { "source": "/product/:slug", "destination": "/products", "permanent": true },
+  { "source": "/category/:slug*", "destination": "/", "permanent": true },
+  { "source": "/arch-it", "destination": "/products/med-tech/archit", "permanent": true },
+  { "source": "/anchor-it", "destination": "/products/med-tech/anchorit", "permanent": true },
+  { "source": "/screwit", "destination": "/products/med-tech/screwit", "permanent": true },
+  { "source": "/nail-it", "destination": "/products/med-tech/nailit", "permanent": true },
+  { "source": "/fuse-it", "destination": "/products/med-tech/fuseit", "permanent": true },
+  { "source": "/loopit", "destination": "/products/med-tech/loopit", "permanent": true },
+  { "source": "/integrant-screw-sets", "destination": "/products/med-tech/screw-sets", "permanent": true },
+  { "source": "/integrant-screw-removal-set", "destination": "/products/med-tech/screw-removal-set", "permanent": true },
+  { "source": "/integrant-2-5mm-screw", "destination": "/products/med-tech/2-5mm-screw", "permanent": true },
+  { "source": "/anterior-ankle-fusion-set", "destination": "/products/med-tech/ankle-fusion-set", "permanent": true },
+  { "source": "/integrant-anterior-ankle-fusion-set", "destination": "/products/med-tech/ankle-fusion-set", "permanent": true },
+  { "source": "/frame-it", "destination": "/products/bio-tech/frameit", "permanent": true },
+  { "source": "/graft-it", "destination": "/products/bio-tech/graftit", "permanent": true }
 ]
