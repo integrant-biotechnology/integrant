@@ -28,25 +28,25 @@ import { publishedResearch } from '../data/research';
 
   <section class="relative bg-raised text-ink">
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="readout md:text-xs text-ink-3" data-reveal>01 — The ledger</p>
+      <p class="readout md:text-[13px] text-ink-2" data-reveal>01 — The ledger</p>
 
       {
         publishedResearch.length > 0 ? (
           <div class="mt-10 border-t border-hairline-strong">
             <div class="hidden grid-cols-[6rem_1fr_10rem_14rem] gap-6 border-b border-hairline py-4 md:grid" aria-hidden="true">
-              <span class="readout text-[10px] text-ink-3">REF</span>
-              <span class="readout text-[10px] text-ink-3">TITLE</span>
-              <span class="readout text-[10px] text-ink-3">STATUS</span>
-              <span class="readout text-[10px] text-ink-3">PARTNERS</span>
+              <span class="readout text-[11px] text-ink-3">REF</span>
+              <span class="readout text-[11px] text-ink-3">TITLE</span>
+              <span class="readout text-[11px] text-ink-3">STATUS</span>
+              <span class="readout text-[11px] text-ink-3">PARTNERS</span>
             </div>
             {publishedResearch.map((item) => (
               <details class="plate border-b border-hairline">
                 <summary class="tap-target grid gap-3 py-6 md:grid-cols-[6rem_1fr_10rem_14rem] md:items-baseline md:gap-6">
-                  <span class="readout text-[10px] text-ink-3">{item.ref}</span>
+                  <span class="readout text-[11px] text-ink-3">{item.ref}</span>
                   <span class="font-display text-xl font-semibold text-ink">{item.title}</span>
-                  <span class="readout text-[10px] text-ink-2">[ {item.status.toUpperCase()} ]</span>
+                  <span class="readout text-[11px] text-ink-2">[ {item.status.toUpperCase()} ]</span>
                   <span class="flex items-center justify-between gap-4">
-                    <span class="readout text-[10px] text-ink-3">{item.partners.join(' · ') || '—'}</span>
+                    <span class="readout text-[11px] text-ink-3">{item.partners.join(' · ') || '—'}</span>
                     <span class="plate-toggle font-display text-xl font-semibold text-ink-2" aria-hidden="true">+</span>
                   </span>
                 </summary>
@@ -55,7 +55,7 @@ import { publishedResearch } from '../data/research';
                   <div>
                     {item.methodology && <p class="leading-relaxed text-ink-2">{item.methodology}</p>}
                     {item.doi && (
-                      <a href={item.doi} rel="noopener" class="readout tap-target-sm mt-4 inline-block text-[10px] text-ink-2 transition-colors hover:text-ink">
+                      <a href={item.doi} rel="noopener" class="readout tap-target-sm mt-4 inline-block text-[11px] text-ink-2 transition-colors hover:text-ink">
                         PUBLISHER RECORD →
                       </a>
                     )}
@@ -66,7 +66,7 @@ import { publishedResearch } from '../data/research';
           </div>
         ) : (
           <div class="mt-10 border border-hairline bg-base p-10 md:p-14" data-reveal>
-            <p class="readout text-[10px] text-ink-3">LEDGER — IN PREPARATION</p>
+            <p class="readout text-[11px] text-ink-3">LEDGER — IN PREPARATION</p>
             <p class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
               Research activity is documented here as each program completes
               review for publication. Entries list what is being studied, the
@@ -76,7 +76,7 @@ import { publishedResearch } from '../data/research';
         )
       }
 
-      <p class="readout mt-16 max-w-3xl border-t border-hairline pt-8 text-[10px] leading-relaxed text-ink-3" data-reveal>
+      <p class="readout mt-16 max-w-3xl border-t border-hairline pt-8 text-[11px] leading-relaxed text-ink-3" data-reveal>
         THIS PAGE DESCRIBES RESEARCH ACTIVITY. IT DOES NOT REPORT CLINICAL OUTCOMES.
       </p>
     </div>

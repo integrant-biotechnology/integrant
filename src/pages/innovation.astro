@@ -47,7 +47,7 @@ const workflow = [
   <section class="relative overflow-hidden bg-base text-ink">
     <NeuralField variant="dense" seed={227} />
     <div class="relative mx-auto max-w-6xl px-6 py-20 md:py-36">
-      <p class="readout md:text-xs text-ink-3" data-reveal>01 — The notebook</p>
+      <p class="readout md:text-[13px] text-ink-2" data-reveal>01 — The notebook</p>
 
       <div class="mt-14 flex justify-center" data-reveal aria-hidden="true">
         <div class="w-full max-w-xs md:max-w-sm">
@@ -82,7 +82,7 @@ const workflow = [
     <NeuralField variant="lattice" seed={229} />
     <div class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 md:py-32">
       <div>
-        <p class="readout md:text-xs text-ink-3" data-reveal>02 — The app</p>
+        <p class="readout md:text-[13px] text-ink-2" data-reveal>02 — The app</p>
         <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>{app.title}</h2>
         <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{app.summary}</p>
         <div class="mt-10" data-reveal>
@@ -92,7 +92,7 @@ const workflow = [
                 Download on the App Store
               </a>
             ) : (
-              <p class="readout inline-block border border-hairline-strong px-5 py-3 text-[10px] text-ink-2">
+              <p class="readout inline-block border border-hairline-strong px-5 py-3 text-[11px] text-ink-2">
                 IN REVIEW — APP STORE
               </p>
             )
@@ -104,7 +104,7 @@ const workflow = [
           {
             (app.body ?? []).map((paragraph, i) => (
               <li class="flex gap-5 border-b border-hairline pb-6" data-reveal>
-                <span class="readout mt-1 text-[10px] text-ink-3">{String(i + 1).padStart(2, '0')}</span>
+                <span class="readout mt-1 text-[11px] text-ink-3">{String(i + 1).padStart(2, '0')}</span>
                 <p class="leading-relaxed text-ink-2">{paragraph}</p>
               </li>
             ))
@@ -117,7 +117,7 @@ const workflow = [
   <!-- 03 · The workflow, drawn — theme-responsive -->
   <section class="relative bg-base text-ink">
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="readout md:text-xs text-ink-3" data-reveal>03 — From audio to signed note</p>
+      <p class="readout md:text-[13px] text-ink-2" data-reveal>03 — From audio to signed note</p>
 
       <div class="mt-14" data-reveal>
         <svg viewBox="0 0 900 60" class="w-full text-ink" fill="none" data-draw aria-hidden="true">
@@ -136,7 +136,7 @@ const workflow = [
         </div>
       </div>
 
-      <p class="readout mt-14 max-w-3xl text-[10px] leading-relaxed text-ink-3" data-reveal>
+      <p class="readout mt-14 max-w-3xl text-[11px] leading-relaxed text-ink-3" data-reveal>
         EVERY DRAFT REMAINS A DRAFT UNTIL THE SURGEON SIGNS IT
       </p>
     </div>
@@ -146,7 +146,7 @@ const workflow = [
   <section data-contrast class="relative bg-base text-ink">
     <NeuralField variant="dense" seed={233} />
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="readout md:text-xs text-ink-3" data-reveal>04 — In development</p>
+      <p class="readout md:text-[13px] text-ink-2" data-reveal>04 — In development</p>
       <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{rd.summary}</p>
 
       <div class="mt-12 grid gap-px border border-hairline bg-hairline sm:grid-cols-3">
@@ -154,7 +154,7 @@ const workflow = [
           ['IMPLANT SYSTEMS', 'CLINICAL SOFTWARE', 'BIOLOGICS'].map((area) => (
             <div class="relative flex min-h-48 flex-col justify-between bg-base p-7" data-reveal>
               <p class="font-display text-xl font-semibold text-ink-2">{area}</p>
-              <p class="readout text-[10px] text-ink-3">GATED · DISCLOSED ON RELEASE</p>
+              <p class="readout text-[11px] text-ink-3">GATED · DISCLOSED ON RELEASE</p>
               <span class="corner corner-tr border-hairline-strong" aria-hidden="true" />
             </div>
           ))

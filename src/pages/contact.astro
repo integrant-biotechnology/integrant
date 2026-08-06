@@ -33,7 +33,7 @@ const map = buildDotMap();
     <div class="relative mx-auto grid max-w-6xl gap-16 px-6 py-16 md:grid-cols-[1fr_minmax(320px,420px)] md:py-28">
       <!-- The console -->
       <div>
-        <p class="readout md:text-xs text-ink-3" data-reveal>01 — Transmission</p>
+        <p class="readout md:text-[13px] text-ink-2" data-reveal>01 — Transmission</p>
 
         <form
           id="enquiry"
@@ -44,19 +44,19 @@ const map = buildDotMap();
           data-reveal
         >
           <label class="console-field">
-            <span class="readout block text-[10px] text-ink-3">Name</span>
+            <span class="readout block text-[11px] text-ink-3">Name</span>
             <input type="text" name="name" autocomplete="name" required disabled={!formEnabled} />
           </label>
           <label class="console-field">
-            <span class="readout block text-[10px] text-ink-3">Email</span>
+            <span class="readout block text-[11px] text-ink-3">Email</span>
             <input type="email" name="email" autocomplete="email" required disabled={!formEnabled} />
           </label>
           <label class="console-field">
-            <span class="readout block text-[10px] text-ink-3">Subject</span>
+            <span class="readout block text-[11px] text-ink-3">Subject</span>
             <input type="text" name="subject" required disabled={!formEnabled} />
           </label>
           <label class="console-field">
-            <span class="readout block text-[10px] text-ink-3">Message</span>
+            <span class="readout block text-[11px] text-ink-3">Message</span>
             <textarea name="message" rows="5" required disabled={!formEnabled}></textarea>
           </label>
 
@@ -73,11 +73,11 @@ const map = buildDotMap();
                 <button type="submit" class="cta-solid" data-magnetic>
                   Transmit
                 </button>
-                <p class="readout text-[10px] text-ink-3">Response within 2 business days</p>
+                <p class="readout text-[11px] text-ink-3">Response within 2 business days</p>
               </div>
             ) : (
               <div class="border border-hairline bg-base p-6">
-                <p class="readout text-[10px] text-ink-3">CONSOLE PROVISIONING</p>
+                <p class="readout text-[11px] text-ink-3">CONSOLE PROVISIONING</p>
                 <p class="mt-3 text-ink-2">
                   Direct transmission is being connected. Until then, email reaches the same desk:
                 </p>
@@ -95,7 +95,7 @@ const map = buildDotMap();
       <!-- The location plate -->
       <aside class="md:pt-14">
         <div class="border border-hairline bg-base p-8" data-reveal>
-          <p class="readout text-[10px] text-ink-3">02 — Location</p>
+          <p class="readout text-[11px] text-ink-3">02 — Location</p>
 
           <svg
             viewBox={`0 0 ${map.width} ${map.height}`}
@@ -117,7 +117,7 @@ const map = buildDotMap();
           <div class="mt-8 border-t border-hairline pt-6">
             <p class="font-display text-lg font-semibold text-ink">{CONTACT.address.line1}</p>
             <p class="text-ink-2">{CONTACT.address.line2} · {CONTACT.address.country}</p>
-            <p class="readout mt-4 text-[10px] text-ink-3">{CONTACT.address.coordinates}</p>
+            <p class="readout mt-4 text-[11px] text-ink-3">{CONTACT.address.coordinates}</p>
           </div>
         </div>
 
@@ -127,7 +127,7 @@ const map = buildDotMap();
             CONTACT.channels.map((channel) => (
               <li>
                 <a href={channel.href} class="group flex items-center justify-between gap-4 p-5 transition-colors duration-300">
-                  <span class="readout text-[10px] text-ink-3 transition-colors duration-300 group-hover:text-ink">
+                  <span class="readout text-[11px] text-ink-3 transition-colors duration-300 group-hover:text-ink">
                     {channel.label}
                   </span>
                   <span class="font-display text-sm font-semibold text-ink-2 transition-colors duration-300 group-hover:text-ink">
@@ -139,7 +139,7 @@ const map = buildDotMap();
           }
         </ul>
 
-        <p class="readout mt-6 text-[10px] leading-relaxed text-ink-3" data-reveal>
+        <p class="readout mt-6 text-[11px] leading-relaxed text-ink-3" data-reveal>
           NO SWITCHBOARD · WRITTEN CHANNELS ONLY — EVERY ENQUIRY IS READ BY THE TEAM
         </p>
       </aside>

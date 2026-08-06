@@ -22,8 +22,8 @@
   --color-void: #000000;
 
   --color-ink: #f5f5f5;
-  --color-ink-2: rgb(255 255 255 / 0.62);
-  --color-ink-3: rgb(255 255 255 / 0.48);
+  --color-ink-2: rgb(255 255 255 / 0.7);
+  --color-ink-3: rgb(255 255 255 / 0.56);
   --color-hairline: rgb(255 255 255 / 0.1);
   --color-hairline-strong: rgb(255 255 255 / 0.22);
 
@@ -48,8 +48,8 @@
   --color-raised: #0a0a0a;
   --color-inset: #0f0f0f;
   --color-ink: #f5f5f5;
-  --color-ink-2: rgb(255 255 255 / 0.62);
-  --color-ink-3: rgb(255 255 255 / 0.48);
+  --color-ink-2: rgb(255 255 255 / 0.7);
+  --color-ink-3: rgb(255 255 255 / 0.56);
   --color-hairline: rgb(255 255 255 / 0.1);
   --color-hairline-strong: rgb(255 255 255 / 0.22);
   --motif: #ffffff;
@@ -64,8 +64,8 @@
   --color-raised: #fafafa;
   --color-inset: #f2f2f2;
   --color-ink: #0a0a0a;
-  --color-ink-2: rgb(10 10 10 / 0.68);
-  --color-ink-3: rgb(10 10 10 / 0.58);
+  --color-ink-2: rgb(10 10 10 / 0.74);
+  --color-ink-3: rgb(10 10 10 / 0.64);
   --color-hairline: rgb(10 10 10 / 0.12);
   --color-hairline-strong: rgb(10 10 10 / 0.24);
   --motif: #000000;
@@ -86,8 +86,8 @@
   --color-raised: #050505;
   --color-inset: #0d0d0d;
   --color-ink: #f5f5f5;
-  --color-ink-2: rgb(255 255 255 / 0.62);
-  --color-ink-3: rgb(255 255 255 / 0.48);
+  --color-ink-2: rgb(255 255 255 / 0.7);
+  --color-ink-3: rgb(255 255 255 / 0.56);
   --color-hairline: rgb(255 255 255 / 0.1);
   --color-hairline-strong: rgb(255 255 255 / 0.22);
   --motif: #ffffff;

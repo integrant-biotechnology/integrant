@@ -29,7 +29,7 @@ import { PARTNER_MODELS } from '../data/pages/partners';
   <section data-contrast class="relative overflow-hidden bg-base text-ink">
     <NeuralField variant="lattice" seed={179} pulse />
     <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="readout md:text-xs text-ink-3" data-reveal>01 — The network</p>
+      <p class="readout md:text-[13px] text-ink-2" data-reveal>01 — The network</p>
 
       <div class="mt-12 grid gap-5 md:grid-cols-2">
         {
@@ -37,18 +37,18 @@ import { PARTNER_MODELS } from '../data/pages/partners';
             <details class="plate group relative border border-hairline bg-base/60 backdrop-blur-[2px]" data-reveal>
               <summary class="tap-target flex items-center justify-between gap-6 p-7">
                 <span class="flex items-baseline gap-5">
-                  <span class="readout text-[10px] text-ink-3">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="readout text-[11px] text-ink-3">{String(i + 1).padStart(2, '0')}</span>
                   <span class="font-display text-2xl font-bold text-ink md:text-3xl">{model.label}</span>
                 </span>
                 <span class="plate-toggle font-display text-2xl font-semibold text-ink-2" aria-hidden="true">+</span>
               </summary>
               <div class="grid gap-8 border-t border-hairline p-7 md:grid-cols-2">
                 <div>
-                  <p class="readout text-[10px] text-ink-3">We look for</p>
+                  <p class="readout text-[11px] text-ink-3">We look for</p>
                   <p class="mt-4 leading-relaxed text-ink-2">{model.seeks}</p>
                 </div>
                 <div>
-                  <p class="readout text-[10px] text-ink-3">We provide</p>
+                  <p class="readout text-[11px] text-ink-3">We provide</p>
                   <p class="mt-4 leading-relaxed text-ink-2">{model.provides}</p>
                 </div>
               </div>
