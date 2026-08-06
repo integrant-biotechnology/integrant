@@ -145,7 +145,55 @@ const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph
           <a href="/contact" class="cta-solid" data-magnetic>Get in touch</a>
         </div>
 
-        <div class="mt-24 flex flex-col items-start justify-between gap-8 border-t border-hairline pt-10 text-left md:flex-row md:items-center">
+        <!-- Footer navigation: every route reachable from every page. The
+             footer is a contrast band, so the scoped ink tokens style the
+             links correctly in both site themes. -->
+        <nav aria-label="Footer" class="mt-24 grid gap-10 border-t border-hairline pt-12 text-left sm:grid-cols-3">
+          {
+            [
+              {
+                heading: 'Products',
+                links: [
+                  { href: '/products', label: 'All systems' },
+                  { href: '/products#med-tech', label: 'Med-Tech' },
+                  { href: '/products#bio-tech', label: 'Bio-Tech' },
+                ],
+              },
+              {
+                heading: 'Company',
+                links: [
+                  { href: '/about', label: 'About' },
+                  { href: '/innovation', label: 'Innovation' },
+                  { href: '/partners', label: 'Partners' },
+                  { href: '/contact', label: 'Contact' },
+                ],
+              },
+              {
+                heading: 'Clinical',
+                links: [
+                  { href: '/for-surgeons', label: 'For surgeons' },
+                  { href: '/research', label: 'Research' },
+                  { href: '/clinical-images', label: 'Clinical images' },
+                ],
+              },
+            ].map((column) => (
+              <div>
+                <p class="readout text-[10px] text-ink-3">{column.heading}</p>
+                <ul class="mt-5 space-y-1">
+                  {column.links.map((link) => (
+                    <li>
+                      <a href={link.href} class="tap-target-sm text-sm text-ink-2 transition-colors duration-300 hover:text-ink">
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </nav>
+
+        <div class="mt-16 flex flex-col items-start justify-between gap-8 border-t border-hairline pt-10 text-left md:flex-row md:items-center">
           <div class="flex items-center gap-4">
             <BrandMark size={28} class="text-ink" />
             <p class="font-display text-sm font-semibold uppercase text-ink" style="letter-spacing: var(--tracking-nav);">
