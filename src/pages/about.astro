@@ -1,0 +1,175 @@
+---
+// /about — "The Record". The company rendered as a technical document:
+// thesis, founder plate, the BIO+AI formula, careers, verifiable facts.
+// The milestone rail (ABOUT.milestones) renders only client-verified
+// entries — with none verified yet, the section is absent by design.
+// Legacy /about-us content is deliberately unused: it was Elementor demo
+// content with a fabricated team (content-archive/INDEX.md).
+import Base from '../layouts/Base.astro';
+import SubpageHero from '../components/SubpageHero.astro';
+import NeuralField from '../components/ui/NeuralField.astro';
+import { ABOUT, verifiedMilestones } from '../data/pages/about';
+---
+
+<Base
+  title="About — Integrant"
+  description="Integrant is a Sydney-based orthopaedic med-tech, bio-tech and AI company — implant systems, biologics and clinical software under one roof."
+>
+  <SubpageHero
+    title="About."
+    kicker="Orthopaedic Med-Tech · Bio-Tech · AI"
+    lede="A Sydney company building the instruments, biologics and software of orthopaedic care — as one system, not three products."
+    crumbs={[{ label: 'Integrant', href: '/' }, { label: 'About' }]}
+    seed={149}
+    variant="organic"
+  />
+
+  <!-- 01 · Thesis -->
+  <section class="relative bg-raised text-ink">
+    <NeuralField variant="organic" seed={151} />
+    <span class="corner corner-br border-hairline-strong" aria-hidden="true"></span>
+    <div class="mx-auto max-w-6xl px-6 py-20 md:py-40">
+      <p class="readout md:text-xs text-ink-3" data-reveal>01 — Thesis</p>
+      <h2
+        class="sweep mt-6 max-w-4xl font-display text-4xl font-bold leading-[1.08] text-ink sm:text-5xl md:text-6xl lg:text-7xl"
+        data-sweep
+      >
+        {ABOUT.thesis}
+      </h2>
+    </div>
+  </section>
+
+  <!-- The record rail — renders only client-verified milestones -->
+  {
+    verifiedMilestones.length > 0 && (
+      <section class="relative bg-base text-ink">
+        <div class="mx-auto max-w-6xl px-6 py-20 md:py-32">
+          <p class="readout md:text-xs text-ink-3" data-reveal>
+            The record
+          </p>
+          <ol class="mt-12 space-y-0">
+            {verifiedMilestones.map((m) => (
+              <li class="grid grid-cols-[6rem_1fr] gap-6 border-t border-hairline py-8 last:border-b" data-reveal>
+                <span class="font-display text-3xl font-bold tabular-nums text-ink">{m.year}</span>
+                <div>
+                  <p class="readout text-ink-2">{m.label}</p>
+                  {m.detail && <p class="mt-3 max-w-xl text-ink-2">{m.detail}</p>}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- 02 · Founder -->
+  <section class="relative bg-base text-ink">
+    <NeuralField variant="edge" seed={157} />
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="readout md:text-xs text-ink-3" data-reveal>02 — Founder</p>
+
+      <div class="mt-10 grid gap-10 md:grid-cols-[280px_1fr] md:items-stretch" data-reveal>
+        <!-- Portrait plate: typographic monogram until the portrait arrives -->
+        <div class="relative flex aspect-square items-center justify-center border border-hairline bg-raised">
+          {
+            ABOUT.founder.portrait ? (
+              <img src={ABOUT.founder.portrait} alt={ABOUT.founder.name} class="h-full w-full object-cover grayscale" />
+            ) : (
+              <span class="font-display text-[9rem] font-bold leading-none text-ink" aria-hidden="true">
+                {ABOUT.founder.monogram}
+              </span>
+            )
+          }
+          <span class="corner corner-tl border-hairline-strong" aria-hidden="true"></span>
+          <span class="corner corner-br border-hairline-strong" aria-hidden="true"></span>
+        </div>
+
+        <div class="flex flex-col justify-center">
+          <h3 class="font-display text-4xl font-bold text-ink md:text-5xl">{ABOUT.founder.name}</h3>
+          <p class="readout mt-4 text-ink-3">{ABOUT.founder.role} · Surgeon-led design</p>
+          <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2">
+            {
+              ABOUT.founder.bio ??
+                'Integrant’s systems are specified, instrumented and refined under the direction of its founding surgeon — engineering decisions made against theatre reality, not around it.'
+            }
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · The formula — dark restatement of the BIO+AI arc -->
+  <section data-contrast class="relative overflow-hidden bg-base text-ink">
+    <NeuralField variant="lattice" seed={163} />
+    <div class="mx-auto max-w-6xl px-6 py-20 md:py-32">
+      <p class="readout md:text-xs text-ink-3" data-reveal>03 — The formula</p>
+      <h2 class="mt-6 max-w-3xl font-display text-4xl font-bold leading-tight sm:text-5xl md:text-6xl" data-reveal>
+        Biology, engineered. Intelligence, applied.
+      </h2>
+
+      <!-- Drawn convergence: two disciplines meeting one line -->
+      <svg viewBox="0 0 800 120" class="mt-14 w-full max-w-3xl" fill="none" data-draw aria-hidden="true" data-reveal>
+        <path d="M 0 20 C 220 20, 300 60, 400 60" stroke="currentColor" stroke-width="1.5" class="text-ink-2"></path>
+        <path d="M 0 100 C 220 100, 300 60, 400 60" stroke="currentColor" stroke-width="1.5" class="text-ink-2"></path>
+        <path d="M 400 60 L 800 60" stroke="currentColor" stroke-width="1.5" class="text-ink"></path>
+        <circle cx="400" cy="60" r="4" fill="currentColor" class="text-ink"></circle>
+      </svg>
+      <div class="mt-6 flex max-w-3xl items-start justify-between">
+        <div>
+          <p class="readout text-ink-3">BIO — implants &amp; biologics</p>
+          <p class="readout mt-2 text-ink-3">AI — clinical software</p>
+        </div>
+        <p class="readout text-ink-2">ONE PLATFORM</p>
+      </div>
+
+      <div class="mt-14" data-reveal>
+        <a href="/innovation" class="cta-ghost">The innovation program</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · Careers -->
+  <section id="careers" class="relative bg-raised text-ink">
+    <NeuralField variant="edge" seed={167} />
+    <div class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 md:py-32">
+      <div>
+        <p class="readout md:text-xs text-ink-3" data-reveal>04 — Careers</p>
+        <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>
+          {ABOUT.careers.heading}
+        </h2>
+      </div>
+      <div class="md:pt-16">
+        <p class="max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{ABOUT.careers.body}</p>
+        <div class="mt-8" data-reveal>
+          <a href={`mailto:${ABOUT.careers.email}`} class="cta-solid" data-magnetic>{ABOUT.careers.email}</a>
+        </div>
+        <p class="readout mt-10 text-[10px] text-ink-3" data-reveal>
+          {ABOUT.location.label} · {ABOUT.location.coordinates}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Verifiable facts strip -->
+  <section class="relative bg-raised text-ink">
+    <div class="mx-auto max-w-6xl border-t border-hairline px-6 py-20 md:py-24">
+      <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-4" data-reveal>
+        {
+          ABOUT.facts.map((fact) => (
+            <div>
+              <p class="font-display text-5xl font-bold tabular-nums text-ink md:text-6xl">
+                <span data-count={fact.value}>{fact.value}</span>
+              </p>
+              <p class="readout mt-3 text-ink-3">{fact.label}</p>
+            </div>
+          ))
+        }
+        <div>
+          <p class="font-display text-5xl font-bold text-ink md:text-6xl">AU·NZ</p>
+          <p class="readout mt-3 text-ink-3">Regulated supply</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
