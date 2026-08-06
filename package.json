@@ -7,6 +7,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "og": "node --experimental-strip-types scripts/generate-og.mjs",
+    "audit:contrast": "node scripts/audit-contrast.mjs",
+    "validate:redirects": "node scripts/validate-redirects.mjs",
+    "qa": "npm run build && npm run audit:contrast && npm run validate:redirects",
     "scrape": "node scripts/scrape-legacy.mjs",
     "scrape:diff": "node scripts/scrape-legacy.mjs --diff"
   },
@@ -23,6 +27,8 @@
   },
   "devDependencies": {
     "cheerio": "^1.2.0",
+    "playwright": "^1.62.1",
+    "sharp": "^0.35.3",
     "turndown": "^7.2.4",
     "turndown-plugin-gfm": "^1.0.2"
   },
