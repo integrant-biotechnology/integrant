@@ -1,0 +1,104 @@
+---
+// /research — "The Ledger". The most austere page on the site, deliberately:
+// research ACTIVITY as a ruled table. Rows come exclusively from
+// publishedResearch (complianceReviewed === true, enforced in data/research
+// .ts) — an unreviewed row cannot render. No hosted PDFs, ever; citations
+// link out to publisher DOIs once cleared. With zero reviewed rows the
+// ledger shows its designed preparation state, so the URL can exist (and
+// be linked) before the first row clears review.
+import Base from '../layouts/Base.astro';
+import SubpageHero from '../components/SubpageHero.astro';
+import NeuralField from '../components/ui/NeuralField.astro';
+import { publishedResearch } from '../data/research';
+---
+
+<Base
+  title="Clinical Research — Integrant"
+  description="Integrant's clinical research activity — programs, methodology and partnerships. This page describes activity; it does not report clinical outcomes."
+>
+  <SubpageHero
+    title="Research."
+    kicker="Activity · Methodology · Partnerships"
+    lede="A ledger of research activity around the platform. Descriptions cover what is being studied and how — never results."
+    crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Research' }]}
+    seed={239}
+    variant="edge"
+  />
+
+  <section class="relative bg-raised text-ink">
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="readout md:text-xs text-ink-3" data-reveal>01 — The ledger</p>
+
+      {
+        publishedResearch.length > 0 ? (
+          <div class="mt-10 border-t border-hairline-strong">
+            <div class="hidden grid-cols-[6rem_1fr_10rem_14rem] gap-6 border-b border-hairline py-4 md:grid" aria-hidden="true">
+              <span class="readout text-[10px] text-ink-3">REF</span>
+              <span class="readout text-[10px] text-ink-3">TITLE</span>
+              <span class="readout text-[10px] text-ink-3">STATUS</span>
+              <span class="readout text-[10px] text-ink-3">PARTNERS</span>
+            </div>
+            {publishedResearch.map((item) => (
+              <details class="plate border-b border-hairline">
+                <summary class="tap-target grid gap-3 py-6 md:grid-cols-[6rem_1fr_10rem_14rem] md:items-baseline md:gap-6">
+                  <span class="readout text-[10px] text-ink-3">{item.ref}</span>
+                  <span class="font-display text-xl font-semibold text-ink">{item.title}</span>
+                  <span class="readout text-[10px] text-ink-2">[ {item.status.toUpperCase()} ]</span>
+                  <span class="flex items-center justify-between gap-4">
+                    <span class="readout text-[10px] text-ink-3">{item.partners.join(' · ') || '—'}</span>
+                    <span class="plate-toggle font-display text-xl font-semibold text-ink-2" aria-hidden="true">+</span>
+                  </span>
+                </summary>
+                <div class="grid gap-8 pb-8 md:grid-cols-2">
+                  <p class="leading-relaxed text-ink-2">{item.summary}</p>
+                  <div>
+                    {item.methodology && <p class="leading-relaxed text-ink-2">{item.methodology}</p>}
+                    {item.doi && (
+                      <a href={item.doi} rel="noopener" class="readout tap-target-sm mt-4 inline-block text-[10px] text-ink-2 transition-colors hover:text-ink">
+                        PUBLISHER RECORD →
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </details>
+            ))}
+          </div>
+        ) : (
+          <div class="mt-10 border border-hairline bg-base p-10 md:p-14" data-reveal>
+            <p class="readout text-[10px] text-ink-3">LEDGER — IN PREPARATION</p>
+            <p class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+              Research activity is documented here as each program completes
+              review for publication. Entries list what is being studied, the
+              methodology and the partners involved.
+            </p>
+          </div>
+        )
+      }
+
+      <p class="readout mt-16 max-w-3xl border-t border-hairline pt-8 text-[10px] leading-relaxed text-ink-3" data-reveal>
+        THIS PAGE DESCRIBES RESEARCH ACTIVITY. IT DOES NOT REPORT CLINICAL OUTCOMES.
+      </p>
+    </div>
+  </section>
+
+  <!-- Collaboration close -->
+  <section class="relative bg-raised text-ink">
+    <NeuralField variant="edge" seed={241} />
+    <div class="mx-auto max-w-6xl border-t border-hairline px-6 py-16 md:py-28">
+      <div class="grid gap-10 md:grid-cols-[1fr_auto] md:items-end">
+        <div>
+          <h2 class="font-display text-3xl font-bold leading-tight md:text-5xl" data-reveal>
+            Research collaboration.
+          </h2>
+          <p class="mt-6 max-w-xl text-lg text-ink-2" data-reveal>
+            Institutions and clinical teams interested in investigator-led work
+            with the platform can reach the team directly.
+          </p>
+        </div>
+        <div data-reveal>
+          <a href="/contact?channel=research" class="cta-solid" data-magnetic>Research enquiry</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

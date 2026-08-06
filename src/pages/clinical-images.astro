@@ -1,0 +1,155 @@
+---
+// /clinical-images — "Case File". Two layers: an HCP interstitial (the
+// aperture, scaled up) and the archive itself. The archive renders only
+// publishableCases — consentConfirmed === true, enforced in the data module
+// — so this page launches as a gated shell with a designed empty state and
+// fills automatically as consent documents verify. All 22 legacy photos are
+// modelled in data/clinical-images.ts and CANNOT render until then. The
+// legacy URL stays live at cutover without publishing one unconsented pixel.
+import Base from '../layouts/Base.astro';
+import NeuralField from '../components/ui/NeuralField.astro';
+import { publishableCases } from '../data/clinical-images';
+import { getAnatomyArea } from '../data/anatomy-areas';
+import { getProduct } from '../data/products';
+---
+
+<Base
+  title="Clinical Images — Integrant"
+  description="Integrant's clinical case archive for healthcare professionals. Consented case imagery is added as documentation is verified."
+>
+  <!-- Layer 1: the gate. Full-viewport, dark, deliberate. -->
+  <section
+    id="hcp-gate"
+    data-contrast
+    class="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-base text-ink"
+  >
+    <NeuralField variant="dense" seed={251} />
+    <span class="corner corner-tl border-hairline-strong" aria-hidden="true"></span>
+    <span class="corner corner-br border-hairline-strong" aria-hidden="true"></span>
+
+    <div class="relative mx-auto max-w-2xl px-6 py-32 text-center">
+      <!-- The aperture: ThemeToggle's visual language at plate scale -->
+      <svg viewBox="0 0 120 120" class="mx-auto h-24 w-24 text-ink" fill="none" aria-hidden="true">
+        <circle cx="60" cy="60" r="54" stroke="currentColor" stroke-width="1" class="text-ink-3"></circle>
+        <circle cx="60" cy="60" r="34" stroke="currentColor" stroke-width="1.5"></circle>
+        <circle cx="60" cy="60" r="10" fill="currentColor"></circle>
+      </svg>
+
+      <p class="readout mt-10 text-[10px] text-ink-3">CLINICAL IMAGE ARCHIVE · ACCESS CONTROL</p>
+      <h1 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl">
+        This section contains surgical imagery.
+      </h1>
+      <p class="mx-auto mt-6 max-w-md text-lg leading-relaxed text-ink-2">
+        The case archive is intended for healthcare professionals. Please
+        confirm before continuing.
+      </p>
+
+      <div class="mt-12 flex flex-wrap items-center justify-center gap-4">
+        <button type="button" id="hcp-confirm" class="cta-solid" data-magnetic>
+          I am a healthcare professional
+        </button>
+        <a href="/" class="cta-ghost">Return</a>
+      </div>
+
+      <noscript>
+        <p class="readout mt-10 text-[10px] text-ink-3">
+          ENABLE JAVASCRIPT TO OPEN THE ARCHIVE
+        </p>
+      </noscript>
+    </div>
+  </section>
+
+  <!-- Layer 2: the archive -->
+  <section id="case-archive" class="relative bg-raised text-ink" hidden>
+    <NeuralField variant="dense" seed={257} />
+    <div class="mx-auto max-w-6xl px-6 pb-24 pt-36 md:pb-32 md:pt-44">
+      <nav aria-label="Breadcrumb">
+        <ol class="readout flex flex-wrap items-center gap-2 text-[10px] text-ink-3">
+          <li><a href="/" class="tap-target-sm inline-block transition-colors hover:text-ink">Integrant</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="text-ink-2" aria-current="page">Clinical images</li>
+        </ol>
+      </nav>
+
+      <h1 class="mt-8 font-display text-5xl font-bold leading-[0.98] md:text-6xl">Case file.</h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2">
+        Operative sequences and case imagery, published with documented
+        patient consent and indexed by anatomy and system.
+      </p>
+
+      {
+        publishableCases.length > 0 ? (
+          <div class="mt-16 space-y-10">
+            {publishableCases.map((c) => (
+              <article class="relative border border-hairline bg-base p-8" data-reveal>
+                <div class="flex flex-wrap items-baseline justify-between gap-4">
+                  <h2 class="font-display text-2xl font-semibold text-ink">{c.title}</h2>
+                  <p class="readout text-[10px] text-ink-3">
+                    {c.id} · {getAnatomyArea(c.anatomyAreaSlug)?.name.toUpperCase()}
+                    {c.productSlug && ` · ${getProduct(c.productSlug)?.name.toUpperCase()}`} · CONSENT ON FILE
+                  </p>
+                </div>
+                <p class="mt-4 max-w-2xl leading-relaxed text-ink-2">{c.caseSummary}</p>
+                {c.images.length > 0 && (
+                  <div class="mt-8 grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
+                    {c.images.map((img, i) => (
+                      <figure class="border border-hairline">
+                        <img src={`/clinical/${img.file}`} alt={img.caption} loading="lazy" class="aspect-square w-full object-cover grayscale" />
+                        <figcaption class="readout p-3 text-[9px] text-ink-3">
+                          {String(i + 1).padStart(2, '0')} — {img.caption}
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                )}
+                <span class="corner corner-br border-hairline-strong" aria-hidden="true" />
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div class="mt-16 border border-hairline bg-base p-10 md:p-14" data-reveal>
+            <p class="readout text-[10px] text-ink-3">ARCHIVE IN PREPARATION</p>
+            <p class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+              Consented case imagery is added as documentation is verified.
+              Each case will carry its operative sequence, the systems used
+              and an anatomy index.
+            </p>
+            <p class="readout mt-8 text-[10px] text-ink-3">
+              HCPs CAN REQUEST CASE MATERIAL DIRECTLY —
+              <a href="/contact?channel=clinical" class="tap-target-sm text-ink-2 transition-colors hover:text-ink">VIA THE CONTACT DESK</a>
+            </p>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</Base>
+
+<script>
+  // The gate: sessionStorage-held confirmation, per plan. No personal data,
+  // no cookie — a per-tab acknowledgement.
+  const gate = document.getElementById('hcp-gate');
+  const archive = document.getElementById('case-archive');
+  const confirmBtn = document.getElementById('hcp-confirm');
+
+  const open = () => {
+    gate?.setAttribute('hidden', '');
+    archive?.removeAttribute('hidden');
+    window.scrollTo(0, 0);
+  };
+
+  try {
+    if (sessionStorage.getItem('integrant-hcp') === '1') open();
+  } catch {
+    /* storage unavailable — gate stays; confirm still works for the session */
+  }
+
+  confirmBtn?.addEventListener('click', () => {
+    try {
+      sessionStorage.setItem('integrant-hcp', '1');
+    } catch {
+      /* ignore */
+    }
+    open();
+  });
+</script>

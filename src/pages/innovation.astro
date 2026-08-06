@@ -1,0 +1,165 @@
+---
+// /innovation — "The Notebook". Dark-first page (the inverse of the rest of
+// the site: data-contrast is the resting state, as the homepage's dark AI
+// interlude given a full page). Copy discipline is absolute: function only —
+// no time-saved, accuracy or error claims anywhere (substantiation + possible
+// device-classification exposure). The App Store CTA renders only when the
+// client supplies a URL; R&D detail stays behind locked plates until
+// disclosed.
+import Base from '../layouts/Base.astro';
+import SubpageHero from '../components/SubpageHero.astro';
+import NeuralField from '../components/ui/NeuralField.astro';
+import OpNote from '../components/ui/OpNote.astro';
+import { INNOVATION_ITEMS } from '../data/innovation';
+
+const app = INNOVATION_ITEMS.find((i) => i.category === 'App')!;
+const rd = INNOVATION_ITEMS.find((i) => i.category === 'R&D')!;
+
+const workflow = [
+  { label: 'CAPTURE', detail: 'Theatre audio' },
+  { label: 'STRUCTURE', detail: 'Sections & findings' },
+  { label: 'DRAFT', detail: 'The note, written' },
+  { label: 'SIGN', detail: 'The surgeon decides' },
+];
+---
+
+<Base
+  title="Innovation — Integrant"
+  description="The Integrant innovation program — AI clinical documentation for the operating theatre and the engineering pipeline behind it."
+>
+  <SubpageHero
+    title="Innovation."
+    kicker="AI clinical software · R&D"
+    lede="The notebook that writes itself: clinical documentation drafted from the case, signed by the surgeon."
+    crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Innovation' }]}
+    chips={app.chips}
+    seed={223}
+    variant="dense"
+    pulse
+  />
+
+  <!-- 01 · The notebook, centre stage -->
+  <section data-contrast class="relative overflow-hidden bg-base text-ink">
+    <NeuralField variant="dense" seed={227} pulse />
+    <div class="relative mx-auto max-w-6xl px-6 py-20 md:py-36">
+      <p class="readout md:text-xs text-ink-3" data-reveal>01 — The notebook</p>
+
+      <div class="mt-14 flex justify-center" data-reveal aria-hidden="true">
+        <div class="w-full max-w-xs md:max-w-sm">
+          <OpNote mobileRowCap={8} />
+        </div>
+      </div>
+
+      <!-- The vitals trace runs beneath the note — bio under the AI -->
+      <div class="vitals relative mx-auto mt-16 max-w-3xl" data-reveal>
+        <svg viewBox="0 0 800 140" class="w-full" fill="none" data-draw aria-hidden="true">
+          <path
+            class="vitals-base text-ink-3"
+            d="M 0 70 L 300 70 L 330 70 L 350 34 L 372 116 L 394 10 L 416 128 L 436 50 L 456 70 L 800 70"
+            stroke="currentColor"
+            stroke-width="1.5"
+          ></path>
+          <path
+            class="vitals-pulse text-ink"
+            d="M 0 70 L 300 70 L 330 70 L 350 34 L 372 116 L 394 10 L 416 128 L 436 50 L 456 70 L 800 70"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            data-no-draw
+          ></path>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · The app -->
+  <section data-contrast class="relative bg-base text-ink">
+    <NeuralField variant="lattice" seed={229} />
+    <div class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 md:py-32">
+      <div>
+        <p class="readout md:text-xs text-ink-3" data-reveal>02 — The app</p>
+        <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>{app.title}</h2>
+        <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{app.summary}</p>
+        <div class="mt-10" data-reveal>
+          {
+            app.appStoreUrl ? (
+              <a href={app.appStoreUrl} class="cta-solid" data-magnetic>
+                Download on the App Store
+              </a>
+            ) : (
+              <p class="readout inline-block border border-hairline-strong px-5 py-3 text-[10px] text-ink-2">
+                IN REVIEW — APP STORE
+              </p>
+            )
+          }
+        </div>
+      </div>
+      <div class="md:pt-16">
+        <ul class="space-y-6">
+          {
+            (app.body ?? []).map((paragraph, i) => (
+              <li class="flex gap-5 border-b border-hairline pb-6" data-reveal>
+                <span class="readout mt-1 text-[10px] text-ink-3">{String(i + 1).padStart(2, '0')}</span>
+                <p class="leading-relaxed text-ink-2">{paragraph}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · The workflow, drawn -->
+  <section data-contrast class="relative bg-base text-ink">
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="readout md:text-xs text-ink-3" data-reveal>03 — From audio to signed note</p>
+
+      <div class="mt-14" data-reveal>
+        <svg viewBox="0 0 900 60" class="w-full text-ink" fill="none" data-draw aria-hidden="true">
+          <path d="M 30 30 H 870" stroke="currentColor" stroke-width="1.5" class="text-ink-3"></path>
+          {[30, 310, 590, 870].map((x) => <circle cx={x} cy="30" r="5" fill="currentColor" />)}
+        </svg>
+        <div class="mt-6 grid grid-cols-2 gap-6 md:grid-cols-4">
+          {
+            workflow.map((step) => (
+              <div>
+                <p class="readout text-ink">{step.label}</p>
+                <p class="mt-2 text-sm text-ink-2">{step.detail}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <p class="readout mt-14 max-w-3xl text-[10px] leading-relaxed text-ink-3" data-reveal>
+        EVERY DRAFT REMAINS A DRAFT UNTIL THE SURGEON SIGNS IT
+      </p>
+    </div>
+  </section>
+
+  <!-- 04 · R&D — locked plates -->
+  <section data-contrast class="relative bg-base text-ink">
+    <NeuralField variant="dense" seed={233} />
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="readout md:text-xs text-ink-3" data-reveal>04 — In development</p>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{rd.summary}</p>
+
+      <div class="mt-12 grid gap-px border border-hairline bg-hairline sm:grid-cols-3">
+        {
+          ['IMPLANT SYSTEMS', 'CLINICAL SOFTWARE', 'BIOLOGICS'].map((area) => (
+            <div class="relative flex min-h-48 flex-col justify-between bg-base p-7" data-reveal>
+              <p class="font-display text-xl font-semibold text-ink-2">{area}</p>
+              <p class="readout text-[10px] text-ink-3">GATED · DISCLOSED ON RELEASE</p>
+              <span class="corner corner-tr border-hairline-strong" aria-hidden="true" />
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-14 flex flex-wrap gap-4" data-reveal>
+        <a href="/for-surgeons" class="cta-ghost">For surgeons</a>
+        <a href="/research" class="cta-ghost">Research activity</a>
+      </div>
+    </div>
+  </section>
+</Base>
