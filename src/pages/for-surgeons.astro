@@ -1,0 +1,220 @@
+---
+// /for-surgeons — "The Tray". The surgeon's journey as information
+// architecture: 01 CONSULT → 02 SPECIFY (anatomy index) → 03 THEATRE
+// (line-drawn instruments — deliberate: stronger than renders, and the
+// portfolio's photography gap never blocks this page) → 04 DOCUMENT.
+// Public page addressed to HCPs: activity language only, no outcomes.
+// The pricing plate exists but renders nothing until FOR_SURGEONS
+// .showPricing flips (cms page.ts contract). Absorbs the legacy
+// /pricing URL at cutover; the legacy page body contributed nothing
+// (Elementor demo content).
+import Base from '../layouts/Base.astro';
+import SubpageHero from '../components/SubpageHero.astro';
+import NeuralField from '../components/ui/NeuralField.astro';
+import OpNote from '../components/ui/OpNote.astro';
+import { FOR_SURGEONS } from '../data/pages/for-surgeons';
+import { ANATOMY_AREAS } from '../data/anatomy-areas';
+import { getProduct } from '../data/products';
+
+const [consult, specify, theatre, doc] = FOR_SURGEONS.steps;
+
+const instruments = [
+  {
+    label: 'Screw systems',
+    caption: 'ScrewIT · 2.5–6.5 mm',
+    paths: [
+      'M 42 12 H 78 L 72 40 H 48 Z',
+      'M 52 12 V 6 H 68 V 12',
+      'M 52 40 L 52 252 L 60 286 L 68 252 L 68 40',
+      'M 50 64 L 70 74', 'M 50 92 L 70 102', 'M 50 120 L 70 130',
+      'M 50 148 L 70 158', 'M 50 176 L 70 186', 'M 50 204 L 70 214', 'M 50 232 L 70 242',
+    ],
+    dashed: 'M 60 0 V 300',
+  },
+  {
+    label: 'Anchors',
+    caption: 'AnchorIT · small + large',
+    paths: [
+      'M 60 96 m -13 0 a 13 13 0 1 0 26 0 a 13 13 0 1 0 -26 0',
+      'M 48 118 H 72 L 72 248 L 60 282 L 48 248 Z',
+      'M 48 140 L 72 150', 'M 48 168 L 72 178', 'M 48 196 L 72 206', 'M 48 224 L 72 234',
+      'M 54 86 C 40 48, 52 30, 44 8',
+      'M 66 86 C 80 48, 68 30, 76 8',
+    ],
+    dashed: 'M 60 60 V 300',
+  },
+  {
+    label: 'Fusion',
+    caption: 'FuseIT · arthrodesis plug',
+    paths: [
+      'M 42 70 H 78 V 262 C 78 276, 42 276, 42 262 Z',
+      'M 42 70 C 42 58, 78 58, 78 70',
+      'M 52 106 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0',
+      'M 68 140 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0',
+      'M 52 174 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0',
+      'M 68 208 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0',
+      'M 52 242 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0',
+    ],
+    dashed: 'M 60 40 V 300',
+  },
+];
+---
+
+<Base
+  title="For Surgeons — Integrant"
+  description="How surgeons work with Integrant — consultation, anatomy-indexed specification, complete tray systems and AI-drafted documentation."
+>
+  <SubpageHero
+    title="For surgeons."
+    kicker="Consult · Specify · Theatre · Document"
+    lede="Four steps between your first enquiry and a signed operation note — each one handled by the team that engineers the systems."
+    crumbs={[{ label: 'Integrant', href: '/' }, { label: 'For surgeons' }]}
+    chips={['Loan sets', 'Direct engineering access', 'AU · NZ']}
+    seed={191}
+    variant="dense"
+  />
+
+  <!-- 01 · Consult -->
+  <section class="relative bg-raised text-ink">
+    <NeuralField variant="edge" seed={193} />
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="font-display text-8xl font-bold text-ink/[0.08]" aria-hidden="true">{consult.index}</p>
+      <div class="mt-4 grid gap-10 md:grid-cols-2">
+        <div>
+          <p class="readout md:text-xs text-ink-3" data-reveal>{consult.index} — {consult.label}</p>
+          <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>{consult.heading}</h2>
+        </div>
+        <div class="md:pt-14">
+          <p class="max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{consult.body}</p>
+          <div class="mt-8" data-reveal>
+            <a href="/contact?channel=surgeons" class="cta-ghost">Arrange a consult</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · Specify — the anatomy index -->
+  <section class="relative bg-base text-ink">
+    <NeuralField variant="organic" seed={197} />
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="font-display text-8xl font-bold text-ink/[0.08]" aria-hidden="true">{specify.index}</p>
+      <p class="mt-4 readout md:text-xs text-ink-3" data-reveal>{specify.index} — {specify.label}</p>
+      <h2 class="mt-6 max-w-2xl font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>{specify.heading}</h2>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{specify.body}</p>
+
+      <div class="mt-14 grid gap-px border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-4">
+        {
+          ANATOMY_AREAS.map((area) => {
+            const products = area.productSlugs.map((slug) => getProduct(slug)).filter(Boolean);
+            const active = products.length > 0;
+            return active ? (
+              <a href="/products" class="group relative flex min-h-64 flex-col justify-between bg-raised p-7 transition-colors duration-300 hover:bg-base" data-reveal>
+                <div>
+                  <h3 class="font-display text-2xl font-semibold text-ink">{area.name}</h3>
+                  <p class="mt-3 text-sm leading-relaxed text-ink-2">{area.summary}</p>
+                </div>
+                <div class="mt-8">
+                  <p class="readout text-[10px] text-ink-3">
+                    {products.length} {products.length === 1 ? 'system' : 'systems'}
+                  </p>
+                  <p class="readout mt-3 text-[10px] leading-relaxed text-ink-3 transition-colors duration-300 group-hover:text-ink">
+                    View catalogue →
+                  </p>
+                </div>
+              </a>
+            ) : (
+              <div class="relative flex min-h-64 flex-col justify-between bg-raised p-7" data-reveal>
+                <div>
+                  <h3 class="font-display text-2xl font-semibold text-ink-3">{area.name}</h3>
+                </div>
+                <p class="readout text-[10px] text-ink-3">Portfolio in development</p>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · Theatre — the tray, drawn -->
+  <section class="relative bg-raised text-ink">
+    <NeuralField variant="edge" seed={199} />
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="font-display text-8xl font-bold text-ink/[0.08]" aria-hidden="true">{theatre.index}</p>
+      <div class="mt-4 grid gap-10 md:grid-cols-2">
+        <div>
+          <p class="readout md:text-xs text-ink-3" data-reveal>{theatre.index} — {theatre.label}</p>
+          <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>{theatre.heading}</h2>
+        </div>
+        <p class="max-w-xl text-lg leading-relaxed text-ink-2 md:pt-14" data-reveal>{theatre.body}</p>
+      </div>
+
+      <!-- Technical line drawings, drawn in on scroll. Deliberately schematic:
+           these are engineering sketches of the system families, not renders
+           of specific devices. -->
+      <div class="mt-16 grid gap-px border border-hairline bg-hairline sm:grid-cols-3">
+        {
+          instruments.map((inst) => (
+            <figure class="bg-raised p-8" data-reveal>
+              <svg viewBox="0 0 120 300" class="mx-auto h-56 text-ink" fill="none" data-draw aria-hidden="true">
+                <path d={inst.dashed} stroke="currentColor" stroke-width="0.75" stroke-dasharray="3 7" class="text-ink-3" data-no-draw />
+                {inst.paths.map((d) => (
+                  <path d={d} stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                ))}
+              </svg>
+              <figcaption class="mt-6 border-t border-hairline pt-4">
+                <p class="font-display text-lg font-semibold text-ink">{inst.label}</p>
+                <p class="readout mt-2 text-[10px] text-ink-3">{inst.caption}</p>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+
+      <div class="mt-10 flex flex-wrap items-center justify-between gap-6" data-reveal>
+        <p class="readout text-[10px] text-ink-3">{FOR_SURGEONS.ifuNote} · SPECIFICATIONS IN THE CATALOGUE</p>
+        <a href="/products" class="cta-ghost">Full catalogue</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · Document — the app, in the dark band -->
+  <section data-contrast class="relative overflow-hidden bg-base text-ink">
+    <NeuralField variant="dense" seed={211} pulse />
+    <div class="mx-auto grid max-w-6xl gap-16 px-6 py-20 md:grid-cols-[1fr_280px] md:py-32">
+      <div>
+        <p class="font-display text-8xl font-bold text-ink/[0.08]" aria-hidden="true">{doc.index}</p>
+        <p class="mt-4 readout md:text-xs text-ink-3" data-reveal>{doc.index} — {doc.label}</p>
+        <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>{doc.heading}</h2>
+        <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{doc.body}</p>
+        <div class="mt-10" data-reveal>
+          <a href="/innovation" class="cta-ghost">The innovation program</a>
+        </div>
+      </div>
+      <div class="relative mx-auto mt-4 w-full max-w-[17rem] md:mt-16 md:w-64" data-reveal aria-hidden="true">
+        <OpNote />
+      </div>
+    </div>
+  </section>
+
+  {
+    FOR_SURGEONS.showPricing && FOR_SURGEONS.pricing.rows.length > 0 && (
+      <section class="relative bg-raised text-ink">
+        <div class="mx-auto max-w-6xl px-6 py-16 md:py-28">
+          <p class="readout md:text-xs text-ink-3" data-reveal>
+            {FOR_SURGEONS.pricing.heading}
+          </p>
+          <div class="mt-8 border border-hairline bg-base">
+            {FOR_SURGEONS.pricing.rows.map((row) => (
+              <div class="grid grid-cols-[1fr_auto] gap-6 border-b border-hairline p-6 last:border-0">
+                <p class="text-ink-2">{row.item}</p>
+                <p class="font-display font-semibold text-ink">{row.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</Base>
