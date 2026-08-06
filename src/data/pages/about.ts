@@ -37,7 +37,7 @@ export const ABOUT = {
   ] as Milestone[],
   careers: {
     heading: 'Work at Integrant.',
-    body: 'We hire slowly and deliberately — engineering, clinical support and operations, in Sydney. Send a résumé and a note on what you want to build.',
+    body: 'We hire slowly and deliberately — engineering, clinical support and operations, in Sydney. Send a CV and a note on what you want to build.',
     email: 'admin@integrant.com.au',
   },
   location: {

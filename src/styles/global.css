@@ -498,7 +498,7 @@
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
     --nav-fg: #ffffff;
-    --nav-fg-dim: rgb(255 255 255 / 0.55);
+    --nav-fg-dim: rgb(255 255 255 / 0.78);
     --nav-bg: transparent;
     --nav-border: transparent;
     --nav-rule: rgb(255 255 255 / 0.25);
@@ -514,7 +514,7 @@
   }
   .site-nav[data-theme='light'] {
     --nav-fg: #0a0a0a;
-    --nav-fg-dim: rgb(10 10 10 / 0.55);
+    --nav-fg-dim: rgb(10 10 10 / 0.72);
     --nav-rule: rgb(10 10 10 / 0.22);
   }
   .site-nav[data-scrolled='true'] {
@@ -536,9 +536,15 @@
 
   .site-nav .nav-wordmark {
     color: var(--nav-fg);
+    font-size: 0.9375rem; /* 15px — the lockup leads the bar */
   }
+  /* Primary links run larger and brighter than the readout base: 11px of
+     wide-tracked caps at 55% opacity was failing the glance test. 13px,
+     slightly tighter tracking, 78% ink. */
   .site-nav nav a {
     color: var(--nav-fg-dim);
+    font-size: 0.8125rem;
+    letter-spacing: 0.24em;
   }
   @media (hover: hover) {
     .site-nav nav a:hover {
