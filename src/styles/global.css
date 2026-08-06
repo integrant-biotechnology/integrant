@@ -818,4 +818,74 @@
     55% { transform: translateY(100%); }
     100% { transform: translateY(100%); }
   }
+
+  /* --- Contact console -------------------------------------------------
+     Form as a technical instrument: hairline-underline fields whose focus
+     state is a drawn line. Tokens only, so the console works in both themes
+     and inside contrast bands. The drawn line is transform-based (scaleX)
+     and collapses to a plain colour change under reduced motion. */
+  .console-field {
+    position: relative;
+    display: block;
+  }
+  .console-field input,
+  .console-field textarea {
+    width: 100%;
+    min-height: 44px; /* touch contract */
+    padding: 10px 0 12px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--color-hairline);
+    border-radius: 0;
+    color: var(--color-ink);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 300ms var(--ease-precise);
+  }
+  .console-field textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  .console-field input::placeholder,
+  .console-field textarea::placeholder {
+    color: var(--color-ink-3);
+  }
+  /* The drawn focus line */
+  .console-field::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--color-ink);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 420ms var(--ease-precise);
+  }
+  .console-field:focus-within::after {
+    transform: scaleX(1);
+  }
+  html[data-motion='off'] .console-field::after {
+    transition: none;
+  }
+  .console-field input:focus-visible,
+  .console-field textarea:focus-visible {
+    border-color: var(--color-hairline-strong);
+  }
+  /* Sydney marker on the location plate: a slow aperture ring. Decorative,
+     compositor-only, disabled under reduced motion with the static dot kept. */
+  .map-marker-ring {
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: marker-ring 3.2s var(--ease-precise) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .map-marker-ring { animation: none; opacity: 0; }
+  }
+  @keyframes marker-ring {
+    0% { transform: scale(0.4); opacity: 0.9; }
+    70% { transform: scale(1.6); opacity: 0; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
 }
