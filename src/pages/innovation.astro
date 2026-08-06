@@ -1,7 +1,9 @@
 ---
-// /innovation — "The Notebook". Dark-first page (the inverse of the rest of
-// the site: data-contrast is the resting state, as the homepage's dark AI
-// interlude given a full page). Copy discipline is absolute: function only —
+// /innovation — "The Notebook". The hero, the notebook (01) and the R&D
+// vault (04) are permanent dark interludes; the app (02) and workflow (03)
+// follow the theme — a page that is ALL contrast bands makes the theme
+// toggle look broken (that bug shipped once). Copy discipline is absolute:
+// function only —
 // no time-saved, accuracy or error claims anywhere (substantiation + possible
 // device-classification exposure). The App Store CTA renders only when the
 // client supplies a URL; R&D detail stays behind locked plates until
@@ -73,8 +75,8 @@ const workflow = [
     </div>
   </section>
 
-  <!-- 02 · The app -->
-  <section data-contrast class="relative bg-base text-ink">
+  <!-- 02 · The app — theme-responsive: the toggle must visibly work here -->
+  <section class="relative bg-raised text-ink">
     <NeuralField variant="lattice" seed={229} />
     <div class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 md:py-32">
       <div>
@@ -110,8 +112,8 @@ const workflow = [
     </div>
   </section>
 
-  <!-- 03 · The workflow, drawn -->
-  <section data-contrast class="relative bg-base text-ink">
+  <!-- 03 · The workflow, drawn — theme-responsive -->
+  <section class="relative bg-base text-ink">
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="readout md:text-xs text-ink-3" data-reveal>03 — From audio to signed note</p>
 
