@@ -50,7 +50,7 @@ for (const c of publishableCases) {
         <circle cx="60" cy="60" r="10" fill="currentColor"></circle>
       </svg>
 
-      <p class="readout mt-10 text-[11px] text-ink-3">CLINICAL IMAGE ARCHIVE · ACCESS CONTROL</p>
+      <p class="readout mt-10 text-xs text-ink-3">CLINICAL IMAGE ARCHIVE · ACCESS CONTROL</p>
       <h1 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl">
         This section contains surgical imagery.
       </h1>
@@ -67,7 +67,7 @@ for (const c of publishableCases) {
       </div>
 
       <noscript>
-        <p class="readout mt-10 text-[11px] text-ink-3">
+        <p class="readout mt-10 text-xs text-ink-3">
           ENABLE JAVASCRIPT TO OPEN THE ARCHIVE
         </p>
       </noscript>
@@ -79,7 +79,7 @@ for (const c of publishableCases) {
     <NeuralField variant="dense" seed={257} />
     <div class="mx-auto max-w-6xl px-6 pb-24 pt-36 md:pb-32 md:pt-44">
       <nav aria-label="Breadcrumb">
-        <ol class="readout flex flex-wrap items-center gap-2 text-[11px] text-ink-3">
+        <ol class="readout flex flex-wrap items-center gap-2 text-xs text-ink-3">
           <li><a href="/" class="tap-target-sm inline-block transition-colors hover:text-ink">Integrant</a></li>
           <li aria-hidden="true">/</li>
           <li class="text-ink-2" aria-current="page">Clinical images</li>
@@ -99,7 +99,7 @@ for (const c of publishableCases) {
               <article class="relative border border-hairline bg-base p-8" data-reveal>
                 <div class="flex flex-wrap items-baseline justify-between gap-4">
                   <h2 class="font-display text-2xl font-semibold text-ink">{c.title}</h2>
-                  <p class="readout text-[11px] text-ink-3">
+                  <p class="readout text-xs text-ink-3">
                     {c.id} · {getAnatomyArea(c.anatomyAreaSlug)?.name.toUpperCase()}
                     {c.productSlug && ` · ${getProduct(c.productSlug)?.name.toUpperCase()}`} · CONSENT ON FILE
                   </p>
@@ -123,13 +123,13 @@ for (const c of publishableCases) {
           </div>
         ) : (
           <div class="mt-16 border border-hairline bg-base p-10 md:p-14" data-reveal>
-            <p class="readout text-[11px] text-ink-3">ARCHIVE IN PREPARATION</p>
+            <p class="readout text-xs text-ink-3">ARCHIVE IN PREPARATION</p>
             <p class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
               Consented case imagery is added as documentation is verified.
               Each case will carry its operative sequence, the systems used
               and an anatomy index.
             </p>
-            <p class="readout mt-8 text-[11px] text-ink-3">
+            <p class="readout mt-8 text-xs text-ink-3">
               HCPs CAN REQUEST CASE MATERIAL DIRECTLY —
               <a href="/contact?channel=clinical" class="tap-target-sm text-ink-2 transition-colors hover:text-ink">VIA THE CONTACT DESK</a>
             </p>

@@ -59,7 +59,7 @@ const hasAside = Astro.slots.has('aside');
       {
         crumbs.length > 0 && (
           <nav aria-label="Breadcrumb">
-            <ol class="readout flex flex-wrap items-center gap-2 text-[11px] text-ink-3">
+            <ol class="readout flex flex-wrap items-center gap-2 text-xs text-ink-3">
               {crumbs.map((crumb, i) => (
                 <>
                   {i > 0 && <li aria-hidden="true">/</li>}
@@ -91,7 +91,7 @@ const hasAside = Astro.slots.has('aside');
         chips.length > 0 && (
           <div class="mt-10 flex flex-wrap gap-3">
             {chips.map((chip) => (
-              <span class="readout border border-hairline-strong px-4 py-2.5 text-[11px] text-ink-2">{chip}</span>
+              <span class="readout border border-hairline-strong px-4 py-2.5 text-xs text-ink-2">{chip}</span>
             ))}
           </div>
         )

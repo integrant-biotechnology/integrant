@@ -186,17 +186,14 @@
   /* Technical readout — the HUD/engineering voice from the brand board.
      Bumped a step on small screens: 11px of wide-tracked uppercase is hard
      to read at arm's length on a phone. */
+  /* One size at every breakpoint: 12px is the floor a global audience
+     reads tracked caps at comfortably (client-verified, repeatedly). */
   .readout {
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: var(--tracking-eyebrow);
-  }
-  @media (min-width: 768px) {
-    .readout {
-      font-size: 0.6875rem;
-    }
   }
 
   /* A ≥44px hit area (Apple HIG / WCAG 2.5.8) without changing visual size:
