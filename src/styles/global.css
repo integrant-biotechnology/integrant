@@ -873,6 +873,25 @@
   .console-field textarea:focus-visible {
     border-color: var(--color-hairline-strong);
   }
+  /* --- Partner plates: CSS-only expansion ------------------------------ */
+  .plate summary {
+    cursor: pointer;
+    list-style: none;
+  }
+  .plate summary::-webkit-details-marker {
+    display: none;
+  }
+  .plate-toggle {
+    display: inline-block;
+    transition: transform 320ms var(--ease-precise);
+  }
+  .plate[open] .plate-toggle {
+    transform: rotate(45deg);
+  }
+  html[data-motion='off'] .plate-toggle {
+    transition: none;
+  }
+
   /* Sydney marker on the location plate: a slow aperture ring. Decorative,
      compositor-only, disabled under reduced motion with the static dot kept. */
   .map-marker-ring {

@@ -1,0 +1,83 @@
+---
+// /partners — "Topology". One idea executed hard: the four partnership
+// models as named nodes on the lattice, each a bracket-framed plate that
+// expands (native <details>, zero JS) into what Integrant looks for and
+// what it provides. Rewritten from the intent of legacy /supplier; the
+// legacy Partners@ address is unused until the client confirms the
+// mailbox exists — every CTA routes through /contact.
+import Base from '../layouts/Base.astro';
+import SubpageHero from '../components/SubpageHero.astro';
+import NeuralField from '../components/ui/NeuralField.astro';
+import { PARTNER_MODELS } from '../data/pages/partners';
+---
+
+<Base
+  title="Partners — Integrant"
+  description="Distribution, hospital procurement, manufacturing and research partnerships with Integrant — Sydney-based orthopaedic med-tech and bio-tech."
+>
+  <SubpageHero
+    title="Partners."
+    kicker="Distribution · Hospitals · Suppliers · Research"
+    lede="Integrant works through a small, deliberate network. Four ways in."
+    crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Partners' }]}
+    seed={173}
+    variant="lattice"
+  />
+
+  <!-- The topology: four nodes on the lattice -->
+  <section data-contrast class="relative overflow-hidden bg-base text-ink">
+    <NeuralField variant="lattice" seed={179} pulse />
+    <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="readout md:text-xs text-ink-3" data-reveal>01 — The network</p>
+
+      <div class="mt-12 grid gap-5 md:grid-cols-2">
+        {
+          PARTNER_MODELS.map((model, i) => (
+            <details class="plate group relative border border-hairline bg-base/60 backdrop-blur-[2px]" data-reveal>
+              <summary class="tap-target flex items-center justify-between gap-6 p-7">
+                <span class="flex items-baseline gap-5">
+                  <span class="readout text-[10px] text-ink-3">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="font-display text-2xl font-bold text-ink md:text-3xl">{model.label}</span>
+                </span>
+                <span class="plate-toggle font-display text-2xl font-semibold text-ink-2" aria-hidden="true">+</span>
+              </summary>
+              <div class="grid gap-8 border-t border-hairline p-7 md:grid-cols-2">
+                <div>
+                  <p class="readout text-[10px] text-ink-3">We look for</p>
+                  <p class="mt-4 leading-relaxed text-ink-2">{model.seeks}</p>
+                </div>
+                <div>
+                  <p class="readout text-[10px] text-ink-3">We provide</p>
+                  <p class="mt-4 leading-relaxed text-ink-2">{model.provides}</p>
+                </div>
+              </div>
+              <span class="corner corner-tl border-hairline-strong" aria-hidden="true" />
+              <span class="corner corner-br border-hairline-strong" aria-hidden="true" />
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Close -->
+  <section class="relative bg-raised text-ink">
+    <NeuralField variant="edge" seed={181} />
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-28">
+      <div class="grid gap-10 md:grid-cols-[1fr_auto] md:items-end">
+        <div>
+          <h2 class="font-display text-3xl font-bold leading-tight md:text-5xl" data-reveal>
+            Start the conversation.
+          </h2>
+          <p class="mt-6 max-w-xl text-lg text-ink-2" data-reveal>
+            Tell us which of the four models fits. A member of the team — not
+            a pipeline — reads every enquiry.
+          </p>
+        </div>
+        <div data-reveal>
+          <a href="/contact?channel=partners" class="cta-solid" data-magnetic>Partner enquiry</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
