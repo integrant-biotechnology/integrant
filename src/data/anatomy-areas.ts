@@ -13,11 +13,19 @@ export interface AnatomyArea {
   summary: string;
   order: number;
   productSlugs: string[];
+  /**
+   * First-party anatomy illustration (legacy homepage art, regraded to
+   * grayscale WebP in public/photo/anatomy/). Descriptive anatomy with
+   * device-placement markers only — captions stay generic (TGA). Regions
+   * without one render the existing text-only plate.
+   */
+  illustration?: string;
 }
 
 export const ANATOMY_AREAS: AnatomyArea[] = [
   {
     slug: 'foot-ankle',
+    illustration: '/photo/anatomy/foot-ankle.webp',
     name: 'Foot & Ankle',
     summary:
       'The core of the portfolio — fixation, fusion, ligament repair and external fixation systems developed for foot and ankle surgery.',
@@ -37,6 +45,7 @@ export const ANATOMY_AREAS: AnatomyArea[] = [
   },
   {
     slug: 'hand-wrist',
+    illustration: '/photo/anatomy/hand-wrist.webp',
     name: 'Hand & Wrist',
     summary:
       'Small-bone fixation and ligament reconstruction instrumentation sized for hand and wrist anatomy.',
@@ -45,6 +54,7 @@ export const ANATOMY_AREAS: AnatomyArea[] = [
   },
   {
     slug: 'shoulder',
+    illustration: '/photo/anatomy/shoulder.webp',
     name: 'Shoulder',
     summary: 'Suture anchor configurations sized for larger joint capsules.',
     order: 3,
@@ -52,6 +62,7 @@ export const ANATOMY_AREAS: AnatomyArea[] = [
   },
   {
     slug: 'knee',
+    illustration: '/photo/anatomy/knee.webp',
     name: 'Knee',
     summary: 'Anchor configurations rated for the loads of knee ligament work.',
     order: 4,
@@ -59,6 +70,7 @@ export const ANATOMY_AREAS: AnatomyArea[] = [
   },
   {
     slug: 'spine',
+    illustration: '/photo/anatomy/spine.webp',
     name: 'Spine',
     summary: 'Portfolio in development.',
     order: 5,
@@ -66,6 +78,7 @@ export const ANATOMY_AREAS: AnatomyArea[] = [
   },
   {
     slug: 'hip',
+    illustration: '/photo/anatomy/hip.webp',
     name: 'Hip',
     summary: 'Portfolio in development.',
     order: 6,
@@ -73,6 +86,7 @@ export const ANATOMY_AREAS: AnatomyArea[] = [
   },
   {
     slug: 'elbow',
+    illustration: '/photo/anatomy/elbow.webp',
     name: 'Elbow',
     summary: 'Portfolio in development.',
     order: 7,

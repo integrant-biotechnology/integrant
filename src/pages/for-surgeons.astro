@@ -123,6 +123,19 @@ const instruments = [
             return active ? (
               <a href="/products" class="group relative flex min-h-64 flex-col justify-between bg-raised p-7 transition-colors duration-300 hover:bg-base" data-reveal>
                 <div>
+                  {/* first-party anatomy plate art (legacy capture, regraded) —
+                      image and text never overlap (rendered-contrast contract) */}
+                  {area.illustration && (
+                    <img
+                      src={area.illustration}
+                      alt=""
+                      width="900"
+                      height="900"
+                      loading="lazy"
+                      class="mb-6 h-36 w-full object-contain opacity-75 transition-opacity duration-300 group-hover:opacity-100"
+                      aria-hidden="true"
+                    />
+                  )}
                   <h3 class="font-display text-2xl font-semibold text-ink">{area.name}</h3>
                   <p class="mt-3 text-sm leading-relaxed text-ink-2">{area.summary}</p>
                 </div>
@@ -138,9 +151,20 @@ const instruments = [
             ) : (
               <div class="relative flex min-h-64 flex-col justify-between bg-raised p-7" data-reveal>
                 <div>
+                  {area.illustration && (
+                    <img
+                      src={area.illustration}
+                      alt=""
+                      width="900"
+                      height="900"
+                      loading="lazy"
+                      class="mb-6 h-36 w-full object-contain opacity-55"
+                      aria-hidden="true"
+                    />
+                  )}
                   <h3 class="font-display text-2xl font-semibold text-ink-3">{area.name}</h3>
                 </div>
-                <p class="readout text-xs text-ink-3">Portfolio in development</p>
+                <p class="readout mt-8 text-xs text-ink-3">Portfolio in development</p>
               </div>
             );
           })

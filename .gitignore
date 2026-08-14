@@ -16,3 +16,4 @@ node_modules/
 # os
 .DS_Store
 .vercel
+stat-valuation/

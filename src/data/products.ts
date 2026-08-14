@@ -40,6 +40,12 @@ export interface Product {
   /** Kit or system contents, where the legacy page documented them. */
   contents?: string[];
   tables?: SpecTable[];
+  /**
+   * First-party product photography (graded cutouts in public/photo/products/).
+   * Captions in the viewer stay generic ("Configuration 0N") — never invented
+   * clinical configuration names. Provenance in src/data/photography.ts.
+   */
+  views?: { src: string; alt: string; small?: string }[];
   /** Reference documents present in the archive (not yet published). */
   archiveDocuments?: number;
   /** Legacy page this was derived from, for traceability. */
@@ -309,6 +315,11 @@ export const PRODUCTS: Product[] = [
         ],
       },
     ],
+    views: [
+      { src: '/photo/products/screw-sets-01.webp', alt: 'Integrant 3.0 mm cannulated screw with guide wire' },
+      { src: '/photo/products/screw-sets-02.webp', alt: 'Integrant 4.0 mm cannulated screw with guide wires' },
+      { src: '/photo/products/screw-sets-03.webp', alt: 'Integrant 6.5 mm cannulated screw with guide wires' },
+    ],
     legacyPath: '/integrant-screw-sets/',
     reviewStatus: 'pending',
     reviewNotes:
@@ -340,6 +351,11 @@ export const PRODUCTS: Product[] = [
       'Locking screws',
       'Locking bolts',
     ],
+    views: [
+      { src: '/photo/products/screw-removal-01.webp', small: '/photo/products/screw-removal-01-700.webp', alt: 'Integrant screw removal instruments — sterilisation case' },
+      { src: '/photo/products/screw-removal-02.webp', small: '/photo/products/screw-removal-02-700.webp', alt: 'Screw removal instrument tray — extraction instruments' },
+      { src: '/photo/products/screw-removal-03.webp', small: '/photo/products/screw-removal-03-700.webp', alt: 'Screw removal instrument tray — driver and extractor range' },
+    ],
     legacyPath: '/integrant-screw-removal-set/',
     reviewStatus: 'pending',
   },
@@ -365,6 +381,9 @@ export const PRODUCTS: Product[] = [
       { label: 'Application', value: 'Primary and revision' },
     ],
     applications: ['Anterior ankle arthrodesis'],
+    views: [
+      { src: '/photo/products/ankle-fusion-01.webp', alt: 'Anterior ankle fusion plate — contoured profile' },
+    ],
     legacyPath: '/anterior-ankle-fusion-set/',
     reviewStatus: 'pending',
     reviewNotes:
@@ -416,6 +435,12 @@ export const PRODUCTS: Product[] = [
       'Foot and ankle realignment',
       'Advanced ankle arthrodesis',
     ],
+    views: [
+      { src: '/photo/products/frameit-01.webp', small: '/photo/products/frameit-01-700.webp', alt: 'FrameIT external fixation frame — ring assembly with connection hardware' },
+      { src: '/photo/products/frameit-02.webp', small: '/photo/products/frameit-02-700.webp', alt: 'FrameIT external fixation frame — tower assembly, side elevation' },
+      { src: '/photo/products/frameit-03.webp', small: '/photo/products/frameit-03-700.webp', alt: 'FrameIT external fixation frame — U-frame with foot plate' },
+      { src: '/photo/products/frameit-04.webp', small: '/photo/products/frameit-04-700.webp', alt: 'FrameIT external fixation frame — stacked multi-ring configuration' },
+    ],
     legacyPath: '/frame-it/',
     reviewStatus: 'pending',
     reviewNotes:
@@ -444,6 +469,9 @@ export const PRODUCTS: Product[] = [
       { label: 'Storage', value: 'Room temperature' },
     ],
     archiveDocuments: 9,
+    views: [
+      { src: '/photo/products/graftit-01.webp', alt: 'GraftIT syringe delivery apparatus' },
+    ],
     legacyPath: '/graft-it/',
     reviewStatus: 'pending',
     reviewNotes:

@@ -11,15 +11,52 @@
 
 export interface PhotoRecord {
   file: string; // public/photo/<file>
-  role: 'backdrop' | 'plate';
+  role: 'backdrop' | 'plate' | 'product' | 'illustration';
   usedOn: string;
   subject: string;
   photographer: string;
   source: string;
-  license: 'Unsplash License';
+  license: 'Unsplash License' | 'First party (Integrant)';
 }
 
+// First-party assets salvaged from the legacy site capture
+// (brand/legacy-capture/ — see its README for the dedupe record). These are
+// Integrant's own product photography and commissioned illustration; the
+// ambience-only rule above does not apply to them, but the TGA rules do:
+// generic captions, no outcome or indication language.
+const FIRST_PARTY: PhotoRecord[] = [
+  ...[1, 2, 3, 4].map((n) => ({
+    file: `products/frameit-0${n}.webp`,
+    role: 'product' as const,
+    usedOn: '/products/bio-tech/frameit (+ catalogue thumbnail)',
+    subject: `FrameIT external fixator, assembly ${n} of 4 (mark visible on parts)`,
+    photographer: 'Integrant (legacy site capture)',
+    source: 'brand/legacy-capture/' + n + '.png',
+    license: 'First party (Integrant)' as const,
+  })),
+  ...(
+    [
+      ['foot-ankle', 'Foot & ankle'],
+      ['shoulder', 'Shoulder'],
+      ['hand-wrist', 'Hand & wrist'],
+      ['spine', 'Spine'],
+      ['hip', 'Hip'],
+      ['knee', 'Knee'],
+      ['elbow', 'Elbow'],
+    ] as const
+  ).map(([slug, name]) => ({
+    file: `anatomy/${slug}.webp`,
+    role: 'illustration' as const,
+    usedOn: '/for-surgeons (02 — Specify)',
+    subject: `${name} anatomy illustration with device-placement markers (legacy homepage art)`,
+    photographer: 'Integrant (legacy site capture)',
+    source: 'brand/legacy-capture/',
+    license: 'First party (Integrant)' as const,
+  })),
+];
+
 export const PHOTOGRAPHY: PhotoRecord[] = [
+  ...FIRST_PARTY,
   {
     file: 'theatre.jpg',
     role: 'backdrop',
