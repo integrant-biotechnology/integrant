@@ -26,6 +26,10 @@
   --color-ink-3: rgb(255 255 255 / 0.56);
   --color-hairline: rgb(255 255 255 / 0.1);
   --color-hairline-strong: rgb(255 255 255 / 0.22);
+  /* Interactive-control boundaries (inputs, ghost buttons): >=3:1 against
+     every surface — WCAG 1.4.11 non-text contrast. Layout hairlines stay
+     subtle; controls must be findable. */
+  --color-hairline-control: rgb(255 255 255 / 0.42);
 
   --font-display: 'Rajdhani', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Titillium Web', ui-sans-serif, system-ui, sans-serif;
@@ -52,6 +56,7 @@
   --color-ink-3: rgb(255 255 255 / 0.56);
   --color-hairline: rgb(255 255 255 / 0.1);
   --color-hairline-strong: rgb(255 255 255 / 0.22);
+  --color-hairline-control: rgb(255 255 255 / 0.42);
   --motif: #ffffff;
   --motif-opacity: 0.03;
   --grain-blend: overlay;
@@ -68,6 +73,7 @@
   --color-ink-3: rgb(10 10 10 / 0.64);
   --color-hairline: rgb(10 10 10 / 0.12);
   --color-hairline-strong: rgb(10 10 10 / 0.24);
+  --color-hairline-control: rgb(10 10 10 / 0.45);
   --motif: #000000;
   --motif-opacity: 0.045;
   --grain-blend: multiply;
@@ -90,6 +96,7 @@
   --color-ink-3: rgb(255 255 255 / 0.56);
   --color-hairline: rgb(255 255 255 / 0.1);
   --color-hairline-strong: rgb(255 255 255 / 0.22);
+  --color-hairline-control: rgb(255 255 255 / 0.42);
   --motif: #ffffff;
   --motif-opacity: 0.035;
 }
@@ -289,7 +296,7 @@
   .cta-ghost {
     @apply inline-flex items-center px-5 py-2.5 font-display text-[13px] font-semibold uppercase;
     min-height: 44px;
-    border: 1px solid var(--color-hairline-strong);
+    border: 1px solid var(--color-hairline-control);
     color: var(--color-ink);
     letter-spacing: 0.18em;
     transition:
@@ -900,7 +907,7 @@
     padding: 10px 0 12px;
     background: transparent;
     border: 0;
-    border-bottom: 1px solid var(--color-hairline);
+    border-bottom: 1px solid var(--color-hairline-control);
     border-radius: 0;
     color: var(--color-ink);
     font-size: 1rem;
