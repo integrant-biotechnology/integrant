@@ -19,13 +19,15 @@ export const ABOUT = {
   thesis:
     'Integrant exists to close the distance between the operating theatre and the workshop — implant systems, biologics and clinical software designed by the people who use them.',
   founder: {
-    name: 'Dr Slater',
+    name: 'Dr Gordon Slater',
     role: 'Founder',
     monogram: 'S',
     // Bio renders only after the client questionnaire returns; until then the
     // plate carries role + discipline lines only.
     bio: null as string | null,
-    portrait: null as string | null, // public path when the portrait arrives
+    // Client-supplied portrait (source original in brand/, grayscale web
+    // derivative generated via sharp — regenerate at 680x907 q82 if replaced).
+    portrait: '/founder/gordon-slater.jpg',
   },
   milestones: [
     // Populated from the client questionnaire (docs/client-inputs.md).

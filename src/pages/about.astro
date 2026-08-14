@@ -70,12 +70,20 @@ import { ABOUT, verifiedMilestones } from '../data/pages/about';
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="readout md:text-sm text-ink-2" data-reveal>02 — Founder</p>
 
-      <div class="mt-10 grid gap-10 md:grid-cols-[280px_1fr] md:items-stretch" data-reveal>
-        <!-- Portrait plate: typographic monogram until the portrait arrives -->
-        <div class="relative flex aspect-square items-center justify-center border border-hairline bg-raised">
+      <div class="mt-10 grid gap-10 md:grid-cols-[340px_1fr] md:items-center" data-reveal>
+        <!-- Portrait plate — 3:4, engraved-plate treatment. Falls back to the
+             typographic monogram if the portrait path is ever cleared. -->
+        <div class="relative flex aspect-[3/4] items-center justify-center overflow-hidden border border-hairline bg-raised">
           {
             ABOUT.founder.portrait ? (
-              <img src={ABOUT.founder.portrait} alt={ABOUT.founder.name} class="h-full w-full object-cover grayscale" />
+              <img
+                src={ABOUT.founder.portrait}
+                alt={`${ABOUT.founder.name}, founder of Integrant`}
+                width="680"
+                height="907"
+                loading="lazy"
+                class="h-full w-full object-cover grayscale"
+              />
             ) : (
               <span class="font-display text-[9rem] font-bold leading-none text-ink" aria-hidden="true">
                 {ABOUT.founder.monogram}

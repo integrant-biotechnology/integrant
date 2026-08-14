@@ -13,7 +13,7 @@ unlocks a section that is currently held back.
 | 3 | Is **partners@integrant.com.au** a live mailbox? (it appears on the old site) | Direct partner contact channel | All partner enquiries route to admin@ |
 | 4 | **Publish a fee structure for surgeons?** (yes/no — and the structure if yes) | Pricing section on /for-surgeons | Section stays off; nothing renders |
 | 5 | **ARTG inclusion numbers** per product + IFU documents | Regulatory references on product pages | "IFU — on request" |
-| 6 | **Founder portrait** (high-res, B&W-friendly) | Portrait on /about | Designed typographic monogram |
+| 6 | ~~Founder portrait~~ **RECEIVED Aug 2026** — live on /about (grayscale derivative; original archived in brand/) | — | — |
 | 7 | **App Store URL** for the Integrant app | Download CTA on /innovation | "In review — App Store" plate |
 | 8 | **Research activity list**: title, status, partners, DOI per item — each row needs your regulatory adviser's sign-off before it renders | Rows on /research | Page shows a designed "documented as programs are reviewed" state |
 | 9 | **Patient consent documents** for the 22 archived surgical photos (incl. the Modified Broström sequence) — or a consent process for new cases | Case imagery on /clinical-images | HCP-gated page with "archive in preparation" state |
