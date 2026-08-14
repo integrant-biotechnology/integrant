@@ -964,6 +964,32 @@
     transition: none;
   }
 
+  /* --- Formula convergence diagram (about page) ------------------------ */
+  .formula-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: 0.3em;
+  }
+  .formula-sublabel {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.32em;
+  }
+  /* A light impulse travelling the merged line — starts after the draw,
+     repeats slowly. Zeroed by the motion kill switches. */
+  .formula-pulse {
+    stroke-dasharray: 46 436;
+    stroke-dashoffset: 482;
+    stroke-linecap: round;
+    animation: formula-run 3.4s linear infinite;
+    animation-delay: 1.6s;
+  }
+  @keyframes formula-run {
+    to { stroke-dashoffset: 0; }
+  }
+
   /* Sydney marker on the location plate: a slow aperture ring. Decorative,
      compositor-only, disabled under reduced motion with the static dot kept. */
   .map-marker-ring {

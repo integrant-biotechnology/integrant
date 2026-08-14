@@ -16,9 +16,8 @@ const font = (file) =>
 const rajdhani700 = font('rajdhani-latin-700-normal.woff2');
 const rajdhani500 = font('rajdhani-latin-500-normal.woff2');
 
-// The mark path, read from the component so there is exactly one source.
-const markComponent = readFileSync(path.join(root, 'src/components/ui/BrandMark.astro'), 'utf8');
-const markD = markComponent.match(/<path d="([^"]+)"/)[1];
+// The mark path — single source of truth in src/lib/brand-mark-path.ts.
+const { BRAND_MARK_PATH: markD } = await import(path.join(root, 'src/lib/brand-mark-path.ts'));
 
 const PAGES = [
   { file: 'home.png', eyebrow: 'ORTHOPAEDIC MED-TECH · BIO-TECH · AI', title: 'Where biology becomes intelligence.' },

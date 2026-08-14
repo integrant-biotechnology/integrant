@@ -9,6 +9,7 @@ import Base from '../layouts/Base.astro';
 import SubpageHero from '../components/SubpageHero.astro';
 import NeuralField from '../components/ui/NeuralField.astro';
 import { ABOUT, verifiedMilestones } from '../data/pages/about';
+import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
 ---
 
 <Base
@@ -118,20 +119,31 @@ import { ABOUT, verifiedMilestones } from '../data/pages/about';
         Biology, engineered. Intelligence, applied.
       </h2>
 
-      <!-- Drawn convergence: two disciplines meeting one line -->
-      <svg viewBox="0 0 800 120" class="mt-14 w-full max-w-3xl" fill="none" data-draw aria-hidden="true" data-reveal>
-        <path d="M 0 20 C 220 20, 300 60, 400 60" stroke="currentColor" stroke-width="1.5" class="text-ink-2"></path>
-        <path d="M 0 100 C 220 100, 300 60, 400 60" stroke="currentColor" stroke-width="1.5" class="text-ink-2"></path>
-        <path d="M 400 60 L 800 60" stroke="currentColor" stroke-width="1.5" class="text-ink"></path>
-        <circle cx="400" cy="60" r="4" fill="currentColor" class="text-ink"></circle>
+      <!-- The convergence, drawn: BIO and AI stream into the mark itself,
+           and leave as one line. After the draw completes, a light impulse
+           runs the merged line (motion-gated, decorative). -->
+      <svg viewBox="0 0 900 320" class="mt-16 w-full" fill="none" data-draw aria-hidden="true" data-reveal>
+        <!-- source streams -->
+        <path d="M 10 70 C 260 70, 330 160, 415 160" stroke="currentColor" stroke-width="1.5" class="text-ink-2"></path>
+        <path d="M 10 250 C 260 250, 330 160, 415 160" stroke="currentColor" stroke-width="1.5" class="text-ink-2"></path>
+        <!-- origin nodes -->
+        <circle cx="10" cy="70" r="4" fill="currentColor" class="text-ink-2"></circle>
+        <circle cx="10" cy="250" r="4" fill="currentColor" class="text-ink-2"></circle>
+        <!-- the mark at the point of convergence -->
+        <g transform="translate(423 128) scale(0.0417)" data-no-draw>
+          <path d={BRAND_MARK_PATH} fill="currentColor" fill-rule="evenodd" class="text-ink"></path>
+        </g>
+        <!-- one platform out -->
+        <path d="M 492 160 H 882" stroke="currentColor" stroke-width="2" class="text-ink"></path>
+        <path d="M 492 160 H 882" stroke="currentColor" stroke-width="2" class="formula-pulse text-ink" data-no-draw></path>
+        <circle cx="886" cy="160" r="5" fill="currentColor" class="text-ink"></circle>
+        <!-- geometry-mounted labels -->
+        <text x="10" y="44" fill="currentColor" class="text-ink formula-label">BIO</text>
+        <text x="10" y="292" fill="currentColor" class="text-ink formula-label">AI</text>
+        <text x="70" y="44" fill="currentColor" class="hidden text-ink-3 formula-sublabel md:block">— IMPLANTS &amp; BIOLOGICS</text>
+        <text x="52" y="292" fill="currentColor" class="hidden text-ink-3 formula-sublabel md:block">— CLINICAL SOFTWARE</text>
+        <text x="886" y="132" text-anchor="end" fill="currentColor" class="text-ink formula-label">ONE PLATFORM</text>
       </svg>
-      <div class="mt-6 flex max-w-3xl items-start justify-between">
-        <div>
-          <p class="readout text-ink-3">BIO — implants &amp; biologics</p>
-          <p class="readout mt-2 text-ink-3">AI — clinical software</p>
-        </div>
-        <p class="readout text-ink-2">ONE PLATFORM</p>
-      </div>
 
       <div class="mt-14" data-reveal>
         <a href="/innovation" class="cta-ghost">The innovation program</a>
