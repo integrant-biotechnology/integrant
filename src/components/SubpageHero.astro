@@ -23,6 +23,10 @@ interface Props {
   seed?: number;
   variant?: FieldVariant;
   pulse?: boolean;
+  /** Root-relative graded photo (public/photo/*) painted beneath a ≥60%
+   *  black scrim; the neural field and radial gradient render on top so
+   *  the motif owns every hero. Ambience only — see src/data/photography.ts. */
+  backdrop?: string;
 }
 
 const {
@@ -34,12 +38,35 @@ const {
   seed = 7,
   variant = 'dense',
   pulse = false,
+  backdrop,
 } = Astro.props;
 
 const hasAside = Astro.slots.has('aside');
 ---
 
 <section data-contrast class="relative overflow-hidden bg-base text-ink">
+  {
+    backdrop && (
+      <>
+        <img
+          src={backdrop}
+          alt=""
+          aria-hidden="true"
+          loading="eager"
+          fetchpriority="low"
+          decoding="async"
+          class="absolute inset-0 h-full w-full object-cover grayscale"
+        />
+        {/* Scrim: keeps every headline on near-black regardless of the
+            photograph; deepens toward the text column */}
+        <div
+          class="absolute inset-0"
+          style="background: linear-gradient(100deg, rgb(0 0 0 / 0.88) 0%, rgb(0 0 0 / 0.72) 55%, rgb(0 0 0 / 0.6) 100%);"
+          aria-hidden="true"
+        />
+      </>
+    )
+  }
   <NeuralField variant={variant} seed={seed} pulse={pulse} />
   <div
     class="pointer-events-none absolute inset-0"

@@ -11,6 +11,22 @@ const description =
 <Base title={title} description={description} ogImage="/og/products.png">
   <!-- Dark bookend: keeps the fixed nav legible and anchors the catalogue -->
   <section data-contrast class="relative overflow-hidden bg-base text-ink">
+    <!-- Material ambience: spun-metal macro under the scrim (photography.ts) -->
+    <img
+      src="/photo/metal.jpg"
+      alt=""
+      aria-hidden="true"
+      loading="eager"
+      fetchpriority="low"
+      decoding="async"
+      class="absolute inset-0 h-full w-full object-cover grayscale"
+    />
+    <div
+      class="absolute inset-0"
+      style="background: linear-gradient(100deg, rgb(0 0 0 / 0.88) 0%, rgb(0 0 0 / 0.72) 55%, rgb(0 0 0 / 0.62) 100%);"
+      aria-hidden="true"
+    >
+    </div>
     <NeuralField variant="dense" seed={83} />
     <div
       class="pointer-events-none absolute inset-0"

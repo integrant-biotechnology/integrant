@@ -12,6 +12,7 @@ import Base from '../layouts/Base.astro';
 import SubpageHero from '../components/SubpageHero.astro';
 import NeuralField from '../components/ui/NeuralField.astro';
 import OpNote from '../components/ui/OpNote.astro';
+import PhotoPlate from '../components/ui/PhotoPlate.astro';
 import { INNOVATION_ITEMS } from '../data/innovation';
 
 const app = INNOVATION_ITEMS.find((i) => i.category === 'App')!;
@@ -39,6 +40,7 @@ const workflow = [
     seed={223}
     variant="dense"
     pulse
+    backdrop="/photo/theatre-lights.jpg"
   />
 
   <!-- 01 · The notebook, centre stage. Theme-responsive: in light mode the
@@ -113,6 +115,9 @@ const workflow = [
             ))
           }
         </ul>
+        <div class="mt-10" data-reveal>
+          <PhotoPlate src="/photo/phone.jpg" alt="Hands using a phone in low light" width={1200} height={800} />
+        </div>
       </div>
     </div>
   </section>

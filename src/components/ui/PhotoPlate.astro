@@ -1,0 +1,36 @@
+---
+// Photography mounted in the site's frame language: hairline border, corner
+// brackets, grayscale image, optional readout caption on the plate chrome
+// BELOW the image (never overlaid on pixels — the rendered-contrast gate
+// can't measure text over photographs, so we never create that case).
+// Captions state only what an image generically is; ambience, not claims.
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  caption?: string;
+  class?: string;
+}
+
+const { src, alt, width, height, caption, class: className = '' } = Astro.props;
+---
+
+<figure class:list={['relative border border-hairline bg-raised', className]}>
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading="lazy"
+    decoding="async"
+    class="block h-auto w-full grayscale"
+  />
+  {
+    caption && (
+      <figcaption class="readout border-t border-hairline px-5 py-4 text-xs text-ink-3">{caption}</figcaption>
+    )
+  }
+  <span class="corner corner-tl border-hairline-strong" aria-hidden="true"></span>
+  <span class="corner corner-br border-hairline-strong" aria-hidden="true"></span>
+</figure>

@@ -34,4 +34,5 @@ unlocks a section that is currently held back.
 | 14 | Vector logo source files | Site currently uses a high-fidelity trace of the brand PNG |
 | 15 | Nexa font license decision | Brand board lists Nexa (commercial); site uses licensed Rajdhani/Titillium until confirmed |
 | 16 | Product photography / CAD renders | ArchIT, FuseIT and the 2.5 mm screw have none; the site design covers this with technical line drawings |
+| 18 | Commissioned site photography (optional) | The site currently uses licensed free-stock ambience (credits: src/data/photography.ts) — theatre, Sydney, materials. Any commissioned shot can replace an entry 1:1 via scripts/grade-photo.mjs |
 | 17 | Sanity CMS login | Content is code-managed and import-ready whenever the CMS is provisioned |
