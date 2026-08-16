@@ -16,48 +16,16 @@ import PhotoPlate from '../components/ui/PhotoPlate.astro';
 import { FOR_SURGEONS } from '../data/pages/for-surgeons';
 import { ANATOMY_AREAS } from '../data/anatomy-areas';
 import { getProduct } from '../data/products';
+import { PRODUCT_DRAWINGS } from '../data/product-drawings';
 
 const [consult, specify, theatre, doc] = FOR_SURGEONS.steps;
 
+// One source of truth for the drawing language: these three seeded the full
+// per-product set in src/data/product-drawings.ts and now import from it.
 const instruments = [
-  {
-    label: 'Screw systems',
-    caption: 'ScrewIT · 2.5–6.5 mm',
-    paths: [
-      'M 42 12 H 78 L 72 40 H 48 Z',
-      'M 52 12 V 6 H 68 V 12',
-      'M 52 40 L 52 252 L 60 286 L 68 252 L 68 40',
-      'M 50 64 L 70 74', 'M 50 92 L 70 102', 'M 50 120 L 70 130',
-      'M 50 148 L 70 158', 'M 50 176 L 70 186', 'M 50 204 L 70 214', 'M 50 232 L 70 242',
-    ],
-    dashed: 'M 60 0 V 300',
-  },
-  {
-    label: 'Anchors',
-    caption: 'AnchorIT · small + large',
-    paths: [
-      'M 60 96 m -13 0 a 13 13 0 1 0 26 0 a 13 13 0 1 0 -26 0',
-      'M 48 118 H 72 L 72 248 L 60 282 L 48 248 Z',
-      'M 48 140 L 72 150', 'M 48 168 L 72 178', 'M 48 196 L 72 206', 'M 48 224 L 72 234',
-      'M 54 86 C 40 48, 52 30, 44 8',
-      'M 66 86 C 80 48, 68 30, 76 8',
-    ],
-    dashed: 'M 60 60 V 300',
-  },
-  {
-    label: 'Fusion',
-    caption: 'FuseIT · arthrodesis plug',
-    paths: [
-      'M 42 70 H 78 V 262 C 78 276, 42 276, 42 262 Z',
-      'M 42 70 C 42 58, 78 58, 78 70',
-      'M 52 106 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0',
-      'M 68 140 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0',
-      'M 52 174 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0',
-      'M 68 208 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0',
-      'M 52 242 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0',
-    ],
-    dashed: 'M 60 40 V 300',
-  },
+  { label: 'Screw systems', caption: 'ScrewIT · 2.5–6.5 mm', drawing: PRODUCT_DRAWINGS['screwit']! },
+  { label: 'Anchors', caption: 'AnchorIT · small + large', drawing: PRODUCT_DRAWINGS['anchorit']! },
+  { label: 'Fusion', caption: 'FuseIT · arthrodesis plug', drawing: PRODUCT_DRAWINGS['fuseit']! },
 ];
 ---
 
@@ -71,6 +39,7 @@ const instruments = [
     kicker="Consult · Specify · Theatre · Document"
     lede="Four steps between your first enquiry and a signed operation note — each one handled by the team that engineers the systems."
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'For surgeons' }]}
+    docRef="Doc 02 — For Surgeons"
     chips={['Loan sets', 'Direct engineering access', 'AU · NZ']}
     seed={191}
     variant="dense"
@@ -85,7 +54,7 @@ const instruments = [
       <div class="mt-4 grid gap-10 md:grid-cols-2">
         <div>
           <p class="readout md:text-sm text-ink-2" data-reveal>{consult.index} — {consult.label}</p>
-          <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>{consult.heading}</h2>
+          <h2 class="display-1 mt-6" data-reveal>{consult.heading}</h2>
         </div>
         <div class="md:pt-14">
           <p class="max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{consult.body}</p>
@@ -112,7 +81,7 @@ const instruments = [
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="font-display text-8xl font-bold text-ink-3" aria-hidden="true">{specify.index}</p>
       <p class="mt-4 readout md:text-sm text-ink-2" data-reveal>{specify.index} — {specify.label}</p>
-      <h2 class="mt-6 max-w-2xl font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>{specify.heading}</h2>
+      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>{specify.heading}</h2>
       <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{specify.body}</p>
 
       <div class="mt-14 grid gap-px border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-4">
@@ -140,8 +109,9 @@ const instruments = [
                   <p class="mt-3 text-sm leading-relaxed text-ink-2">{area.summary}</p>
                 </div>
                 <div class="mt-8">
-                  <p class="readout text-xs text-ink-3">
-                    {products.length} {products.length === 1 ? 'system' : 'systems'}
+                  {/* The systems themselves, not a bare count */}
+                  <p class="readout text-xs leading-relaxed text-ink-3">
+                    {products.map((p) => p!.name).join(' · ')}
                   </p>
                   <p class="readout mt-3 text-xs leading-relaxed text-ink-3 transition-colors duration-300 group-hover:text-ink">
                     View catalogue →
@@ -149,7 +119,11 @@ const instruments = [
                 </div>
               </a>
             ) : (
-              <div class="relative flex min-h-64 flex-col justify-between bg-raised p-7" data-reveal>
+              <div
+                class="relative flex min-h-64 flex-col justify-between bg-raised p-7"
+                style="background-image: repeating-linear-gradient(45deg, var(--color-hairline) 0 1px, transparent 1px 12px);"
+                data-reveal
+              >
                 <div>
                   {area.illustration && (
                     <img
@@ -181,7 +155,7 @@ const instruments = [
       <div class="mt-4 grid gap-10 md:grid-cols-2">
         <div>
           <p class="readout md:text-sm text-ink-2" data-reveal>{theatre.index} — {theatre.label}</p>
-          <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>{theatre.heading}</h2>
+          <h2 class="display-1 mt-6" data-reveal>{theatre.heading}</h2>
         </div>
         <p class="max-w-xl text-lg leading-relaxed text-ink-2 md:pt-14" data-reveal>{theatre.body}</p>
       </div>
@@ -193,9 +167,11 @@ const instruments = [
         {
           instruments.map((inst) => (
             <figure class="bg-raised p-8" data-reveal>
-              <svg viewBox="0 0 120 300" class="mx-auto h-56 text-ink" fill="none" data-draw aria-hidden="true">
-                <path d={inst.dashed} stroke="currentColor" stroke-width="0.75" stroke-dasharray="3 7" class="text-ink-3" data-no-draw />
-                {inst.paths.map((d) => (
+              <svg viewBox={inst.drawing.viewBox} class="mx-auto h-56 text-ink" fill="none" data-draw aria-hidden="true">
+                {inst.drawing.dashed && (
+                  <path d={inst.drawing.dashed} stroke="currentColor" stroke-width="0.75" stroke-dasharray="3 7" class="text-ink-3" data-no-draw />
+                )}
+                {inst.drawing.paths.map((d) => (
                   <path d={d} stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                 ))}
               </svg>
@@ -222,7 +198,7 @@ const instruments = [
       <div>
         <p class="font-display text-8xl font-bold text-ink-3" aria-hidden="true">{doc.index}</p>
         <p class="mt-4 readout md:text-sm text-ink-2" data-reveal>{doc.index} — {doc.label}</p>
-        <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>{doc.heading}</h2>
+        <h2 class="display-1 mt-6" data-reveal>{doc.heading}</h2>
         <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{doc.body}</p>
         <div class="mt-10" data-reveal>
           <a href="/innovation" class="cta-ghost">The innovation program</a>

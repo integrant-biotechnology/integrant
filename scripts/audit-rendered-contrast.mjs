@@ -116,6 +116,13 @@ const browser = await chromium.launch();
 let total = 0;
 for (const theme of ['dark', 'light']) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, colorScheme: theme });
+  // Dark-first (Aug 2026): the site ignores prefers-color-scheme — only an
+  // explicit stored choice yields light. Seed it before any page script runs.
+  await ctx.addInitScript((t) => {
+    try {
+      localStorage.setItem('integrant-theme', t);
+    } catch {}
+  }, theme);
   const page = await ctx.newPage();
   for (const route of ROUTES) {
     await page.goto(BASE + route + '?motion=off', { waitUntil: 'load' });

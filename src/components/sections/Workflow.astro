@@ -1,0 +1,124 @@
+---
+// The workflow — the surgeon's journey with Integrant as four stations on a
+// measuring rail: CONSULT → SPECIFY → THEATRE → DOCUMENT. Hand-drawn
+// pictograms draw in on scroll (svg[data-draw]); the rail is the grid's own
+// hairline with a platinum node per station, so nothing can drift out of
+// alignment at any breakpoint. Activity language only — the closing readout
+// is the section's compliance thesis. Zero client JS.
+import NeuralField from '../ui/NeuralField.astro';
+
+const stations = [
+  {
+    index: '01',
+    label: 'Consult',
+    title: 'Direct access, not a call centre.',
+    detail: 'Cases are discussed with the engineers who design the systems.',
+    href: '/contact',
+    link: 'Arrange a consult',
+    // Two voices meeting: dialogue strokes converging on a point
+    icon: [
+      'M 8 14 H 32 V 30 H 18 L 12 36 V 30 H 8 Z',
+      'M 24 26 H 44 V 40 H 40 V 46 L 34 40 H 24 Z',
+    ],
+  },
+  {
+    index: '02',
+    label: 'Specify',
+    title: 'Browse by anatomy.',
+    detail: 'The catalogue is indexed the way surgeons think — region first.',
+    href: '/for-surgeons',
+    link: 'The anatomy index',
+    // Registration crosshair over an index cell
+    icon: [
+      'M 10 10 H 42 V 42 H 10 Z',
+      'M 26 4 V 18', 'M 26 34 V 48', 'M 4 26 H 18', 'M 34 26 H 48',
+      'M 26 26 m -3 0 a 3 3 0 1 0 6 0 a 3 3 0 1 0 -6 0',
+    ],
+  },
+  {
+    index: '03',
+    label: 'Theatre',
+    title: 'Sets that arrive complete.',
+    detail: 'Loan trays configured for the listed procedure, sterile-field ready.',
+    href: '/products',
+    link: 'The systems',
+    // A screw profile — the tray's contents, reduced to one instrument
+    icon: [
+      'M 20 6 H 32 L 30 14 H 22 Z',
+      'M 22 14 L 22 38 L 26 46 L 30 38 L 30 14',
+      'M 21 20 L 31 24', 'M 21 28 L 31 32',
+    ],
+  },
+  {
+    index: '04',
+    label: 'Document',
+    title: 'The note writes itself. You sign it.',
+    detail: 'The app drafts the operation note from the case; the surgeon signs.',
+    href: '/innovation',
+    link: 'The notebook',
+    // Ruled note + signature stroke
+    icon: [
+      'M 10 6 H 42 V 46 H 10 Z',
+      'M 16 14 H 36', 'M 16 21 H 36', 'M 16 28 H 30',
+      'M 15 38 C 20 32, 24 42, 29 36 C 32 32, 34 38, 38 35',
+    ],
+  },
+];
+---
+
+<section class="relative bg-base text-ink">
+  <NeuralField variant="edge" seed={59} />
+  <div class="mx-auto max-w-6xl px-6 py-20 md:py-36">
+    <p class="readout md:text-sm text-ink-2" data-reveal>04 — The workflow</p>
+    <h2 class="display-1 mt-6" data-reveal>From consultation to signed note.</h2>
+    <p class="mt-8 max-w-2xl text-lg leading-relaxed text-ink-2" data-reveal>
+      One continuum — the same platform carries a case from the first
+      conversation to the signed operation note.
+    </p>
+
+    <ol class="mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4" data-reveal-group>
+      {
+        stations.map((s) => (
+          <li class="relative border-t border-hairline pt-9" data-reveal-item>
+            <span
+              class="absolute -top-[3px] left-0 h-[5px] w-[5px] rounded-full bg-platinum"
+              aria-hidden="true"
+            />
+            <svg
+              viewBox="0 0 52 52"
+              class="h-12 w-12 text-ink-2"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              data-draw
+              aria-hidden="true"
+            >
+              {s.icon.map((d) => (
+                <path d={d} />
+              ))}
+            </svg>
+            <p class="readout mt-7 text-xs text-platinum">
+              {s.index} — {s.label}
+            </p>
+            <h3 class="mt-3 font-display text-2xl font-semibold text-ink">{s.title}</h3>
+            <p class="mt-3 text-[1rem] leading-relaxed text-ink-2">{s.detail}</p>
+            <p class="mt-5">
+              <a
+                href={s.href}
+                class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink"
+              >
+                {s.link} →
+              </a>
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="readout mt-16 border-t border-hairline pt-8 text-xs leading-relaxed text-ink-3" data-reveal>
+      Every draft remains a draft until the surgeon signs it.
+    </p>
+  </div>
+</section>

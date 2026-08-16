@@ -1,0 +1,88 @@
+---
+// Engineering specification plate — the universal no-photo product visual.
+// A hand-authored technical line drawing (src/data/product-drawings.ts) in a
+// registration-cornered frame with a catalogue readout. Reads as an
+// intentional engineering document, not a missing image, and any product
+// swaps to real photography the day it exists (callers branch on
+// product.views?.length).
+//
+// Modes: 'hero' (detail-page aside, draws on via data-draw) · 'card'
+// (catalogue/showcase visual region, draws on) · 'thumb' (static — grids of
+// draw-on SVGs would stack getTotalLength calls and scroll triggers).
+// Zero client JS; currentColor keeps it correct in both themes and inside
+// contrast bands.
+import type { Product } from '../../data/products';
+import { getDrawing } from '../../data/product-drawings';
+
+interface Props {
+  product: Product;
+  mode?: 'hero' | 'card' | 'thumb';
+  class?: string;
+}
+
+const { product, mode = 'card', class: className = '' } = Astro.props;
+const drawing = getDrawing(product.slug);
+
+// Catalogue-flavoured edge readout: prefer an explicit catalogue range,
+// fall back to the first spec value. Objective attributes only (TGA).
+const catalogue =
+  product.specs.find((s) => /catalogue|range/i.test(s.label))?.value ??
+  product.specs[0]?.value ??
+  '';
+
+const draw = mode !== 'thumb';
+const aspect = mode === 'hero' ? 'aspect-[4/5]' : mode === 'card' ? 'aspect-[4/3]' : '';
+const pad = mode === 'thumb' ? 'p-1.5' : 'py-8 md:py-10';
+---
+
+{
+  drawing && (
+    <figure
+      class={`product-plate relative flex flex-col overflow-hidden border border-hairline bg-inset ${aspect} ${className}`}
+      data-mode={mode}
+    >
+      {mode !== 'thumb' && (
+        <>
+          <span class="corner corner-tl border-hairline-strong" aria-hidden="true" />
+          <span class="corner corner-br border-hairline-strong" aria-hidden="true" />
+        </>
+      )}
+
+      <div class={`flex min-h-0 flex-1 items-center justify-center ${pad}`}>
+        <svg
+          viewBox={drawing.viewBox}
+          class="h-full max-h-full w-auto text-ink-2"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+          focusable="false"
+          {...draw ? { 'data-draw': true } : {}}
+        >
+          {drawing.dashed && (
+            <path
+              d={drawing.dashed}
+              data-no-draw
+              stroke-dasharray="4 7"
+              stroke-width="1"
+              opacity="0.35"
+            />
+          )}
+          {drawing.paths.map((d) => (
+            <path d={d} />
+          ))}
+        </svg>
+      </div>
+
+      {mode !== 'thumb' && (
+        <figcaption class="relative flex items-center justify-between gap-4 border-t border-hairline px-5 py-3">
+          <span class="readout text-xs text-ink-3">Technical specification</span>
+          {catalogue && <span class="readout text-xs text-platinum">{catalogue}</span>}
+        </figcaption>
+      )}
+      {mode === 'thumb' && <span class="sr-only">{product.name} — technical drawing</span>}
+    </figure>
+  )
+}

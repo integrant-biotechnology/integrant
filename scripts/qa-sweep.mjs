@@ -26,6 +26,12 @@ const browser = await chromium.launch();
 for (const theme of ['dark', 'light']) {
   for (const width of WIDTHS) {
     const ctx = await browser.newContext({ viewport: { width, height: 844 }, colorScheme: theme });
+    // Dark-first: the site ignores prefers-color-scheme — seed the explicit choice
+    await ctx.addInitScript((t) => {
+      try {
+        localStorage.setItem('integrant-theme', t);
+      } catch {}
+    }, theme);
     const page = await ctx.newPage();
     const pageIssues = [];
     page.on('console', (m) => m.type() === 'error' && pageIssues.push(`console: ${m.text().slice(0, 120)}`));

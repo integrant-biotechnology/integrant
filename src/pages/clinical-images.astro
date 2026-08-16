@@ -51,7 +51,7 @@ for (const c of publishableCases) {
       </svg>
 
       <p class="readout mt-10 text-xs text-ink-3">CLINICAL IMAGE ARCHIVE · ACCESS CONTROL</p>
-      <h1 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl">
+      <h1 class="display-1 mt-6">
         This section contains surgical imagery.
       </h1>
       <p class="mx-auto mt-6 max-w-md text-lg leading-relaxed text-ink-2">
@@ -86,7 +86,7 @@ for (const c of publishableCases) {
         </ol>
       </nav>
 
-      <h1 class="mt-8 font-display text-5xl font-bold leading-[0.98] md:text-6xl">Case file.</h1>
+      <h1 class="display-hero mt-8">Case file.</h1>
       <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2">
         Operative sequences and case imagery, published with documented
         patient consent and indexed by anatomy and system.
@@ -110,7 +110,7 @@ for (const c of publishableCases) {
                     {c.images.map((img, i) => (
                       <figure class="border border-hairline">
                         <img src={`/clinical/${img.file}`} alt={img.caption} loading="lazy" class="aspect-square w-full object-cover grayscale" />
-                        <figcaption class="readout p-3 text-[9px] text-ink-3">
+                        <figcaption class="readout p-3 text-xs text-ink-3">
                           {String(i + 1).padStart(2, '0')} — {img.caption}
                         </figcaption>
                       </figure>
@@ -122,11 +122,19 @@ for (const c of publishableCases) {
             ))}
           </div>
         ) : (
-          <div class="mt-16 border border-hairline bg-base p-10 md:p-14" data-reveal>
-            <p class="readout text-xs text-ink-3">ARCHIVE IN PREPARATION</p>
-            <p class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
-              Consented case imagery is added as documentation is verified.
-              Each case will carry its operative sequence, the systems used
+          <div class="mt-16 border-t border-hairline-strong" data-reveal>
+            {/* The register exists; its first case is simply still in
+                consent verification — same treatment as the research ledger */}
+            <div class="grid gap-3 border-b border-hairline py-6 md:grid-cols-[6rem_1fr_12rem] md:items-baseline md:gap-6">
+              <span class="readout text-xs text-ink-3">—</span>
+              <span class="font-display text-xl font-semibold text-ink-2">
+                First cases in consent verification
+              </span>
+              <span class="readout text-xs text-ink-2">[ PENDING ]</span>
+            </div>
+            <p class="mt-8 max-w-2xl text-[1rem] leading-relaxed text-ink-2">
+              Every case publishes only with documented patient consent on
+              file. Each will carry its operative sequence, the systems used
               and an anatomy index.
             </p>
             <p class="readout mt-8 text-xs text-ink-3">

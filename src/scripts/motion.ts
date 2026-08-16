@@ -6,6 +6,18 @@
  * shader's lamp warm-up envelope), then pins and hands off to the story
  * section under scroll control (beam sweep + dim via hero-bridge).
  *
+ * Opt-in attribute API (the whole surface — nothing else is wired up):
+ *   [data-reveal]        fade/rise on scroll entry
+ *   [data-reveal-group]  parent whose [data-reveal-item] children stagger in
+ *                        as one timeline (use instead of N separate reveals)
+ *   [data-sweep]         clip-reveal + light band across a .sweep headline
+ *   svg[data-draw]       stroke draw-on (opt out per element: data-no-draw)
+ *   [data-count]         numeral count-up
+ *   [data-magnetic]      pointer-follow on CTAs (fine pointers only)
+ *   [data-parallax="s"]  scrubbed vertical drift, speed s (e.g. 0.1);
+ *                        transform-only, never on NeuralField (it drifts
+ *                        via CSS already)
+ *
  * FOUC guard: an inline head script sets html[data-motion="pending"], which
  * hides .boot-hide elements via CSS until GSAP owns their inline styles.
  * Debug: ?motion=off forces the static experience.
@@ -82,15 +94,16 @@ export async function initMotion(): Promise<void> {
     const h1 = q('.hero-h1');
     const sub = q('.hero-sub');
     const ctaWrap = q('.hero-cta-wrap');
-    const cue = q('.hero-cue');
+    const metrics = q('.hero-metrics');
 
     if (h1) split = new SplitText(h1, { type: 'lines', mask: 'lines', linesClass: 'hero-line' });
 
     // Claim initial states with inline styles, then release the CSS guard —
     // no frame exists where unstyled content flashes.
-    gsap.set([logo, eyebrow, sub, ctaWrap, cue], { autoAlpha: 0 });
+    gsap.set([logo, eyebrow, sub, ctaWrap, metrics], { autoAlpha: 0 });
     gsap.set(logo, { y: 14, scale: 0.96 });
-    gsap.set(eyebrow, { letterSpacing: '0.55em' });
+    // Compression lands exactly on the resting --tracking-eyebrow value
+    gsap.set(eyebrow, { letterSpacing: '0.38em' });
     gsap.set([sub, ctaWrap], { y: 18 });
     if (split) {
       gsap.set(h1, { autoAlpha: 1 });
@@ -110,11 +123,11 @@ export async function initMotion(): Promise<void> {
     });
     boot
       .to(logo, { autoAlpha: 1, y: 0, scale: 1, duration: 1.1 }, 0.55)
-      .to(eyebrow, { autoAlpha: 1, letterSpacing: '0.35em', duration: 1.0 }, 0.75)
+      .to(eyebrow, { autoAlpha: 1, letterSpacing: '0.22em', duration: 1.0 }, 0.75)
       .to(split ? split.lines : h1, { yPercent: 0, autoAlpha: 1, duration: 1.15, stagger: 0.12, ease: 'power4.out' }, 0.9)
       .to(sub, { autoAlpha: 1, y: 0, duration: 0.9 }, 1.35)
       .to(ctaWrap, { autoAlpha: 1, y: 0, duration: 0.9 }, 1.5)
-      .to(cue, { autoAlpha: 1, duration: 0.8 }, 1.85);
+      .to(metrics, { autoAlpha: 1, duration: 0.9 }, 1.7);
 
     // QA override: inspect the lattice state without scrolling
     if (params.get('morph') === '1') heroMorph.value = 1;
@@ -145,7 +158,9 @@ export async function initMotion(): Promise<void> {
         },
       })
       .to('.hero-content', { yPercent: -16, autoAlpha: 0, ease: 'none', duration: 0.5 }, 0)
-      .to('.hero-cue', { autoAlpha: 0, ease: 'none', duration: 0.15 }, 0)
+      // The metrics strip exits faster than the headline so it never overlaps
+      // the morph's visual peak; pin length / morph / bloom are untouched.
+      .to('.hero-metrics', { autoAlpha: 0, yPercent: 30, ease: 'none', duration: 0.3 }, 0)
       .to(heroScroll, { value: 1, ease: 'none', duration: 1 }, 0)
       .to(heroMorph, { value: 1, ease: 'none', duration: 0.7 }, 0.15)
       .fromTo(
@@ -169,7 +184,9 @@ export async function initMotion(): Promise<void> {
       heroMorph.value = 0;
       split?.revert();
       document
-        .querySelectorAll<HTMLElement>('[data-reveal], .boot-hide, .sweep, .hero-content, .hero-bloom')
+        .querySelectorAll<HTMLElement>(
+          '[data-reveal], [data-reveal-item], [data-parallax], .boot-hide, .sweep, .hero-content, .hero-bloom'
+        )
         .forEach((el) => gsap.set(el, { clearProps: 'all' }));
       document
         .querySelectorAll<SVGElement>('svg[data-draw] path, svg[data-draw] line, svg[data-draw] circle')
@@ -191,6 +208,43 @@ export async function initMotion(): Promise<void> {
         duration: 0.9,
         ease: 'power3.out',
         scrollTrigger: { trigger: el, start: 'top 86%', once: true },
+      }
+    );
+  });
+
+  // --- Grouped reveals: one staggered timeline per parent, not N triggers ---
+  document.querySelectorAll<HTMLElement>('[data-reveal-group]').forEach((group) => {
+    const items = group.querySelectorAll<HTMLElement>('[data-reveal-item]');
+    if (!items.length) return;
+    gsap.fromTo(
+      items,
+      { autoAlpha: 0, y: 30 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        stagger: 0.08,
+        scrollTrigger: { trigger: group, start: 'top 84%', once: true },
+      }
+    );
+  });
+
+  // --- Parallax drift: transform-only, scrubbed against the parent ---
+  document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+    const speed = parseFloat(el.dataset.parallax ?? '0.1') || 0.1;
+    gsap.fromTo(
+      el,
+      { yPercent: 8 * speed * 10 },
+      {
+        yPercent: -8 * speed * 10,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el.parentElement ?? el,
+          scrub: true,
+          start: 'top bottom',
+          end: 'bottom top',
+        },
       }
     );
   });

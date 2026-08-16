@@ -3,13 +3,12 @@ import ThemeToggle from './ui/ThemeToggle.astro';
 import BrandMark from './ui/BrandMark.astro';
 
 // Absolute paths so the nav works from every route, not just the homepage.
-// Links only appear here once their destination actually exists — a nav item
-// that scrolls nowhere is worse than one that isn't there yet. Research,
-// Partners and Clinical Images live in the footer nav rather than here:
-// four links + the CTA is the ceiling before the bar crowds at 1280.
+// Four links + the CTA is the ceiling before the bar crowds at 1280.
+// For Surgeons, Partners and Clinical Images live in the footer nav; Contact
+// is carried by the Request Meeting CTA itself (premium-redesign IA, Aug 2026).
 const links = [
   { href: '/products', label: 'Products', match: '/products' },
-  { href: '/for-surgeons', label: 'For Surgeons', match: '/for-surgeons' },
+  { href: '/research', label: 'Research', match: '/research' },
   { href: '/innovation', label: 'Innovation', match: '/innovation' },
   { href: '/about', label: 'About', match: '/about' },
 ];
@@ -20,53 +19,55 @@ const isCurrent = (link: (typeof links)[number]) =>
 ---
 
 <header class="site-nav fixed inset-x-0 top-0 z-50" data-scrolled="false" data-theme="dark" data-hidden="false">
-  <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:py-5">
-    <a href="/" class="nav-link tap-target flex items-center gap-3" aria-label="Integrant — home">
-      <BrandMark size={28} class="nav-mark" />
-      <span
-        class="nav-wordmark font-display text-sm font-semibold uppercase"
-        style="letter-spacing: var(--tracking-nav);"
-      >
-        Integrant
-      </span>
-    </a>
+  <div class="nav-shell">
+    <div class="flex items-center justify-between px-6 py-3 md:py-3.5">
+      <a href="/" class="nav-link tap-target flex items-center gap-3" aria-label="Integrant — home">
+        <BrandMark size={28} class="nav-mark" />
+        <span
+          class="nav-wordmark font-display text-sm font-semibold uppercase"
+          style="letter-spacing: var(--tracking-nav);"
+        >
+          Integrant
+        </span>
+      </a>
 
-    <nav aria-label="Primary" class="hidden items-center gap-8 xl:flex">
-      {
-        links.map((link) => (
-          <a
-            href={link.href}
-            {/* colour comes from the nav theme vars — a hardcoded text-*
-                utility would outrank them and stay white on light sections */}
-            class="nav-link tap-target readout transition-colors duration-300"
-            aria-current={isCurrent(link) ? 'page' : undefined}
-            data-current={isCurrent(link) ? 'true' : undefined}
-          >
-            {link.label}
-          </a>
-        ))
-      }
-    </nav>
+      <nav aria-label="Primary" class="hidden items-center gap-8 xl:flex">
+        {
+          links.map((link) => (
+            <a
+              href={link.href}
+              {/* colour comes from the nav theme vars — a hardcoded text-*
+                  utility would outrank them and stay white on light sections */}
+              class="nav-link tap-target readout transition-colors duration-300"
+              aria-current={isCurrent(link) ? 'page' : undefined}
+              data-current={isCurrent(link) ? 'true' : undefined}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
 
-    <div class="flex items-center gap-2 sm:gap-4">
-      <ThemeToggle />
-      <a href="/contact" class="cta-ghost hidden sm:inline-flex">Enquire</a>
+      <div class="flex items-center gap-2 sm:gap-4">
+        <ThemeToggle />
+        <a href="/contact" class="nav-cta hidden sm:inline-flex">Request Meeting</a>
 
-      <!-- Mobile menu trigger -->
-      <button
-        type="button"
-        class="nav-toggle xl:hidden"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-        aria-label="Open menu"
-      >
-        <span class="nav-toggle-bar" aria-hidden="true"></span>
-        <span class="nav-toggle-bar" aria-hidden="true"></span>
-      </button>
+        <!-- Mobile menu trigger -->
+        <button
+          type="button"
+          class="nav-toggle xl:hidden"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Open menu"
+        >
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
+      </div>
     </div>
-  </div>
 
-  <span class="nav-progress" aria-hidden="true"></span>
+    <span class="nav-progress" aria-hidden="true"></span>
+  </div>
 </header>
 
 <!-- Mobile menu: full-viewport panel, hidden from AT until opened -->
@@ -88,15 +89,23 @@ const isCurrent = (link: (typeof links)[number]) =>
       }
       <li class="mobile-menu-item overflow-hidden" style={`--i: ${links.length}`}>
         <a
+          href="/for-surgeons"
+          class="block border-b border-hairline py-5 font-display text-4xl font-bold text-ink"
+        >
+          For Surgeons
+        </a>
+      </li>
+      <li class="mobile-menu-item overflow-hidden" style={`--i: ${links.length + 1}`}>
+        <a
           href="/contact"
           class="block border-b border-hairline py-5 font-display text-4xl font-bold text-ink"
         >
-          Enquire
+          Request Meeting
         </a>
       </li>
     </ul>
 
-    <p class="readout mobile-menu-item text-ink-3" style={`--i: ${links.length + 1}`}>
+    <p class="readout mobile-menu-item text-ink-3" style={`--i: ${links.length + 2}`}>
       Orthopaedic Med-Tech · Bio-Tech · AI
     </p>
   </nav>

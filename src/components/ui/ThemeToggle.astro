@@ -25,14 +25,6 @@
   const root = document.documentElement;
   const toggle = document.querySelector<HTMLButtonElement>('.theme-toggle');
 
-  const read = (): string | null => {
-    try {
-      return localStorage.getItem(KEY);
-    } catch {
-      return null;
-    }
-  };
-
   const sync = () => {
     const light = root.dataset.theme === 'light';
     toggle?.setAttribute('aria-checked', String(light));
@@ -43,7 +35,7 @@
     root.dataset.theme = theme;
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', theme === 'light' ? '#ffffff' : '#000000');
+      ?.setAttribute('content', theme === 'light' ? '#ffffff' : '#050505');
     sync();
     // Let the hero shader repaint for the new palette
     window.dispatchEvent(new CustomEvent('integrant:themechange', { detail: { theme } }));
@@ -77,35 +69,26 @@
   toggle?.addEventListener('click', () => {
     const next = root.dataset.theme === 'light' ? 'dark' : 'light';
     try {
-      // If the choice lands back on the OS preference, release the override —
-      // the visitor silently resumes following their system setting.
-      const osLight = matchMedia('(prefers-color-scheme: light)').matches;
-      if ((next === 'light') === osLight) {
-        localStorage.removeItem(KEY);
-      } else {
-        localStorage.setItem(KEY, next);
-      }
+      // Dark-first: the site never follows the OS scheme, so every press is
+      // an explicit, persisted choice (removing the key would silently fall
+      // back to dark and contradict a chosen light theme).
+      localStorage.setItem(KEY, next);
     } catch {
       /* choice simply won't persist */
     }
     apply(next, true);
   });
 
-  // Follow the OS only until the visitor has made an explicit choice
-  matchMedia('(prefers-color-scheme: light)').addEventListener('change', (event) => {
-    if (read()) return;
-    apply(event.matches ? 'light' : 'dark', true);
-  });
-
   // Cross-tab sync: another tab's choice applies here immediately, without
-  // the transition (background tabs shouldn't flash).
+  // the transition (background tabs shouldn't flash). A cleared key resolves
+  // to the dark-first default.
   window.addEventListener('storage', (event) => {
     if (event.key !== KEY) return;
     const value = event.newValue;
     if (value === 'light' || value === 'dark') {
       apply(value, false);
     } else if (value === null) {
-      apply(matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark', false);
+      apply('dark', false);
     }
   });
 

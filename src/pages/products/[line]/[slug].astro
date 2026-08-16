@@ -3,6 +3,7 @@ import Base from '../../../layouts/Base.astro';
 import { PRODUCTS, type Product } from '../../../data/products';
 import NeuralField from '../../../components/ui/NeuralField.astro';
 import ProductViewer from '../../../components/ui/ProductViewer.astro';
+import ProductPlate from '../../../components/ui/ProductPlate.astro';
 
 export function getStaticPaths() {
   return PRODUCTS.map((product) => ({
@@ -18,6 +19,22 @@ interface Props {
 const { product } = Astro.props;
 const lineLabel = product.line === 'med-tech' ? 'Med-Tech' : 'Bio-Tech';
 const related = PRODUCTS.filter((p) => p.line === product.line && p.slug !== product.slug).slice(0, 3);
+
+// Continuous catalogue index — same numbering as /products and the homepage
+const position = PRODUCTS.findIndex((p) => p.slug === product.slug);
+const folio = `System ${String(position + 1).padStart(2, '0')} / ${PRODUCTS.length}`;
+const pad = (i: number) => String(i + 1).padStart(2, '0');
+// Pager wraps at the ends so the walk-through never dead-ends
+const prev = PRODUCTS[(position - 1 + PRODUCTS.length) % PRODUCTS.length];
+const next = PRODUCTS[(position + 1) % PRODUCTS.length];
+
+// Spec grid adapts to the count (2–4) so no product renders orphan whitespace
+const specCols =
+  product.specs.length <= 2
+    ? 'sm:grid-cols-2'
+    : product.specs.length === 3
+      ? 'sm:grid-cols-2 lg:grid-cols-3'
+      : 'sm:grid-cols-2 lg:grid-cols-4';
 
 // Minimal, claim-free structured data: name/brand/description only — no
 // medical properties, offers or ratings (TGA posture carries into metadata).
@@ -57,8 +74,9 @@ const jsonLd = [
     </div>
     <span class="corner corner-tl border-hairline-strong" aria-hidden="true"></span>
 
-    <div class="relative mx-auto grid max-w-6xl gap-12 px-6 pb-20 pt-36 md:grid-cols-[1fr_320px] md:pb-24 md:pt-44">
-      <div>
+    <div class="relative mx-auto max-w-6xl px-6 pb-16 pt-32 md:pb-20 md:pt-44">
+      <!-- Ruled bar: breadcrumbs left, folio right -->
+      <div class="flex items-baseline justify-between gap-6 border-b border-hairline pb-5">
         <nav aria-label="Breadcrumb">
           <ol class="readout flex flex-wrap items-center gap-2 text-xs text-ink-3">
             <li><a href="/products" class="tap-target-sm inline-block transition-colors hover:text-ink">Products</a></li>
@@ -68,40 +86,45 @@ const jsonLd = [
             <li class="text-ink-2" aria-current="page">{product.name}</li>
           </ol>
         </nav>
-
-        <h1
-          class="mt-8 max-w-[14ch] font-display text-5xl font-bold leading-[0.98] [text-wrap:balance] sm:text-6xl md:text-7xl xl:text-8xl"
-        >{product.name}</h1>
-        <p class="mt-5 text-xl text-ink-2 md:text-2xl">{product.category}</p>
-        <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2">{product.tagline}</p>
-
-        <div class="mt-10 flex flex-wrap gap-3">
-          <span class="readout border border-hairline-strong px-4 py-2.5 text-xs text-ink-2">{lineLabel}</span>
-          {
-            product.specs.slice(0, 2).map((spec) => (
-              <span class="readout border border-hairline-strong px-4 py-2.5 text-xs text-ink-2">{spec.value}</span>
-            ))
-          }
-        </div>
+        <p class="readout shrink-0 text-xs text-platinum md:text-sm">{folio}</p>
       </div>
 
-      {
-        /* Real first-party photography → interactive view cycling; otherwise
-           the visual well stand-in (photography/render pending, CLAUDE.md) */
-        product.views && product.views.length > 0 ? (
-          <div class="self-center">
-            <ProductViewer name={product.name} views={product.views} />
-          </div>
-        ) : (
-          <div class="relative hidden aspect-square border border-hairline md:block" aria-hidden="true">
-            <span
-              class="absolute left-1/2 top-1/2 block h-40 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full"
-              style="background: linear-gradient(180deg, #e6e6e6, #2a2a2a); transform: translate(-50%, -50%) rotate(16deg);"
-            />
-            <span class="corner corner-br border-hairline-strong" />
-          </div>
-        )
-      }
+      <div class="mt-10 grid gap-12 md:mt-14 md:grid-cols-[minmax(0,7fr)_minmax(300px,5fr)] md:gap-16">
+        <div>
+          <p class="readout text-xs text-ink-2 md:text-sm">{product.category}</p>
+          <h1 class="display-hero mt-5 max-w-[14ch]">{product.name}</h1>
+          <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2 md:text-xl">{product.tagline}</p>
+        </div>
+
+        {
+          /* Real first-party photography → interactive view cycling; otherwise
+             the engineering specification plate — every system has a defined
+             premium visual, on every viewport */
+          product.views && product.views.length > 0 ? (
+            <div class="self-center">
+              <ProductViewer name={product.name} views={product.views} />
+            </div>
+          ) : (
+            <ProductPlate product={product} mode="hero" class="self-center w-full max-h-[26rem]" />
+          )
+        }
+      </div>
+
+      <!-- The spec rail: the label's first line, Apple tech-specs voice -->
+      <dl class="mt-14 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-hairline pt-6 md:mt-20 md:grid-cols-4">
+        <div>
+          <dt class="readout text-xs text-ink-3">Division</dt>
+          <dd class="mt-1.5 font-display text-[1rem] font-semibold text-ink">{lineLabel}</dd>
+        </div>
+        {
+          product.specs.slice(0, 3).map((spec) => (
+            <div>
+              <dt class="readout text-xs text-ink-3">{spec.label}</dt>
+              <dd class="mt-1.5 font-display text-[1rem] font-semibold text-ink">{spec.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
     </div>
   </section>
 
@@ -111,23 +134,27 @@ const jsonLd = [
     <div class="mx-auto grid max-w-6xl gap-14 px-6 py-16 md:grid-cols-2 md:py-32">
       <div>
         <p class="readout md:text-sm text-ink-2" data-reveal>01 — Overview</p>
-        <h2 class="mt-5 font-display text-3xl font-bold leading-tight md:text-4xl" data-reveal>The system.</h2>
-        <p class="mt-8 text-lg leading-relaxed text-ink-2" data-reveal>{product.summary}</p>
+        <h2 class="display-2 mt-5" data-reveal>The system.</h2>
+        <p class="mt-8 text-xl leading-relaxed text-ink-2 md:text-2xl md:leading-relaxed" data-reveal>
+          {product.summary}
+        </p>
       </div>
 
       {
         product.features.length > 0 && (
           <div data-reveal>
             <p class="readout md:text-sm text-ink-2">02 — Design features</p>
-            <h2 class="mt-5 font-display text-3xl font-bold leading-tight md:text-4xl">Engineered in.</h2>
-            <ul class="mt-8 space-y-4">
-              {product.features.map((feature) => (
-                <li class="flex gap-4 border-b border-hairline pb-4 text-ink-2">
-                  <span class="readout mt-1 text-xs text-ink-3" aria-hidden="true">—</span>
-                  <span class="leading-relaxed">{feature}</span>
+            <h2 class="display-2 mt-5">Engineered in.</h2>
+            <ol class="mt-8">
+              {product.features.map((feature, i) => (
+                <li class="flex gap-5 border-b border-hairline py-4 text-ink-2 first:border-t">
+                  <span class="readout mt-1 text-xs tabular-nums text-platinum" aria-hidden="true">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span class="text-[1rem] leading-relaxed">{feature}</span>
                 </li>
               ))}
-            </ul>
+            </ol>
           </div>
         )
       }
@@ -139,16 +166,19 @@ const jsonLd = [
     <NeuralField variant="lattice" seed={101} />
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="readout md:text-sm text-ink-2" data-reveal>03 — Specification</p>
-      <h2 class="mt-5 font-display text-3xl font-bold leading-tight md:text-4xl" data-reveal>On the label.</h2>
+      <h2 class="display-2 mt-5" data-reveal>On the label.</h2>
 
       <!-- Bordered cells rather than a gap-background grid: spec counts vary
-           per product (2–4), so empty cells must not render as grey blocks -->
-      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
+           per product (2–4) — the column count adapts, so no orphan cells -->
+      <div class={`mt-10 grid gap-4 ${specCols}`} data-reveal>
         {
-          product.specs.map((spec) => (
-            <div class="border border-hairline bg-base p-6">
+          product.specs.map((spec, i) => (
+            <div class="relative border border-hairline bg-base p-6">
+              {i === 0 && <span class="corner corner-tl border-hairline-strong" aria-hidden="true" />}
               <p class="readout text-xs text-ink-3">{spec.label}</p>
-              <p class="mt-3 font-display text-xl font-semibold leading-snug text-ink">{spec.value}</p>
+              <p class="mt-3 font-display text-2xl font-bold leading-snug tabular-nums text-ink md:text-3xl">
+                {spec.value}
+              </p>
             </div>
           ))
         }
@@ -189,13 +219,18 @@ const jsonLd = [
       <section class="relative bg-raised text-ink">
         <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
           <p class="readout md:text-sm text-ink-2" data-reveal>04 — Catalogue</p>
-          <h2 class="mt-5 font-display text-3xl font-bold leading-tight md:text-4xl" data-reveal>Reference numbers.</h2>
+          <h2 class="display-2 mt-5" data-reveal>Reference numbers.</h2>
 
           <div class="mt-10 space-y-14">
             {product.tables.map((table) => (
               <div data-reveal>
                 {table.caption && (
-                  <h3 class="font-display text-2xl font-semibold text-ink">{table.caption}</h3>
+                  <div class="flex items-baseline justify-between gap-6">
+                    <h3 class="font-display text-2xl font-semibold text-ink">{table.caption}</h3>
+                    <p class="readout text-xs text-ink-3">
+                      {table.rows.length} reference{table.rows.length === 1 ? '' : 's'}
+                    </p>
+                  </div>
                 )}
                 <!-- Scrollable regions need to be reachable by keyboard, and
                      need to *look* scrollable — hence tabindex + edge fade -->
@@ -217,12 +252,12 @@ const jsonLd = [
                     </thead>
                     <tbody>
                       {table.rows.map((row) => (
-                        <tr class="border-b border-hairline last:border-0">
+                        <tr class="border-b border-hairline transition-colors duration-200 last:border-0 hover:bg-inset">
                           {row.map((cell, cellIndex) => (
                             <td
                               class={
                                 cellIndex === 0
-                                  ? 'px-6 py-4 font-display text-base font-semibold tabular-nums text-ink'
+                                  ? 'px-6 py-4 font-display text-[1rem] font-semibold tabular-nums text-ink'
                                   : 'px-6 py-4 text-sm text-ink-2'
                               }
                             >
@@ -245,9 +280,12 @@ const jsonLd = [
   <!-- Enquiry + regulatory note -->
   <section data-contrast class="relative bg-base text-ink">
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-28">
-      <div class="grid gap-12 md:grid-cols-[1fr_auto] md:items-end">
+      <p class="readout text-xs text-ink-3" data-reveal>
+        {product.name} · Supplied on enquiry · AU / NZ
+      </p>
+      <div class="mt-8 grid gap-12 md:grid-cols-[1fr_auto] md:items-end">
         <div>
-          <h2 class="font-display text-3xl font-bold leading-tight md:text-5xl" data-reveal>
+          <h2 class="display-1" data-reveal>
             Enquire about {product.name}.
           </h2>
           <p class="mt-6 max-w-xl text-lg text-ink-2" data-reveal>
@@ -256,8 +294,9 @@ const jsonLd = [
             detail and availability.
           </p>
         </div>
-        <div data-reveal>
+        <div class="flex flex-wrap items-center gap-4" data-reveal>
           <a href="mailto:admin@integrant.com.au" class="cta-solid" data-magnetic>Request information</a>
+          <a href="/for-surgeons" class="cta-ghost">How surgeons work with us →</a>
         </div>
       </div>
 
@@ -280,14 +319,37 @@ const jsonLd = [
             {related.map((item) => (
               <a
                 href={`/products/${item.line}/${item.slug}`}
-                class="group border border-hairline bg-raised p-7 transition-colors duration-300 hover:border-hairline-strong hover:bg-base"
+                class="group flex flex-col border border-hairline bg-raised transition-colors duration-300 hover:border-hairline-strong hover:bg-base"
                 data-reveal
               >
-                <p class="readout text-xs text-ink-3">{item.category}</p>
-                <h3 class="mt-4 font-display text-2xl font-bold text-ink">{item.name}</h3>
-                <p class="readout mt-8 text-xs text-ink-3 transition-colors duration-300 group-hover:text-ink">
-                  View system →
-                </p>
+                {item.views && item.views.length > 0 ? (
+                  <span
+                    class="relative block h-40 border-b border-hairline"
+                    style="background: linear-gradient(155deg, #f2f2f2, #d4d4d4);"
+                    aria-hidden="true"
+                  >
+                    <img
+                      src={item.views[0].small ?? item.views[0].src}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      class="absolute inset-0 h-full w-full object-contain p-4"
+                    />
+                  </span>
+                ) : (
+                  <span class="flex h-40 items-center justify-center border-b border-hairline bg-inset" aria-hidden="true">
+                    <ProductPlate product={item} mode="thumb" class="h-32 w-32 border-0 bg-transparent" />
+                  </span>
+                )}
+                <span class="flex flex-1 flex-col justify-between p-7">
+                  <span>
+                    <span class="readout block text-xs text-ink-3">{item.category}</span>
+                    <span class="mt-4 block font-display text-2xl font-bold text-ink">{item.name}</span>
+                  </span>
+                  <span class="readout mt-8 block text-xs text-ink-3 transition-colors duration-300 group-hover:text-ink">
+                    View system →
+                  </span>
+                </span>
               </a>
             ))}
           </div>
@@ -295,4 +357,28 @@ const jsonLd = [
       </section>
     )
   }
+
+  <!-- The walk-through: prev / next along the catalogue index -->
+  <nav aria-label="Catalogue walk-through" class="relative bg-base text-ink">
+    <div class="mx-auto grid max-w-6xl grid-cols-2 border-t border-hairline">
+      <a
+        href={`/products/${prev.line}/${prev.slug}`}
+        class="group flex min-h-28 flex-col justify-center gap-2 border-r border-hairline py-8 pr-6 transition-colors duration-300 hover:bg-raised md:py-10"
+      >
+        <span class="readout text-xs text-ink-3">← {pad((position - 1 + PRODUCTS.length) % PRODUCTS.length)}</span>
+        <span class="font-display text-2xl font-bold text-ink-2 transition-colors duration-300 group-hover:text-ink md:text-3xl">
+          {prev.name}
+        </span>
+      </a>
+      <a
+        href={`/products/${next.line}/${next.slug}`}
+        class="group flex min-h-28 flex-col items-end justify-center gap-2 py-8 pl-6 text-right transition-colors duration-300 hover:bg-raised md:py-10"
+      >
+        <span class="readout text-xs text-ink-3">{pad((position + 1) % PRODUCTS.length)} →</span>
+        <span class="font-display text-2xl font-bold text-ink-2 transition-colors duration-300 group-hover:text-ink md:text-3xl">
+          {next.name}
+        </span>
+      </a>
+    </div>
+  </nav>
 </Base>

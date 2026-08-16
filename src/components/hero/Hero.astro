@@ -2,6 +2,7 @@
 // Full-viewport hero — white volumetric light in a black void.
 // Tiers: T3/T2 WebGL shader · T1 CSS/SVG rays · T0 static (reduced motion).
 import BrandMark from '../ui/BrandMark.astro';
+import HeroMetrics from './HeroMetrics.astro';
 ---
 
 <section
@@ -40,38 +41,33 @@ import BrandMark from '../ui/BrandMark.astro';
   ></canvas>
 
   <!-- Content -->
-  <div class="hero-content relative z-10 mx-auto max-w-4xl px-6 pb-28 pt-28 text-center">
+  <div class="hero-content relative z-10 mx-auto max-w-5xl px-6 pb-48 pt-28 text-center md:pb-40">
     {/* Mark alone — the wordmark already lives in the nav directly above;
         repeating it here read as a template lockup, not a brand moment */}
-    <BrandMark size={64} class="hero-logo boot-hide mx-auto mb-9 text-ink md:mb-10" label="Integrant" />
+    <BrandMark size={44} class="hero-logo boot-hide mx-auto mb-8 text-ink md:mb-9" label="Integrant" />
     <p class="hero-eyebrow boot-hide readout text-ink-3">
       Orthopaedic Med-Tech · Bio-Tech · AI
     </p>
-    <h1
-      class="hero-h1 boot-hide mt-6 font-display text-5xl font-bold leading-[1.02] tracking-tight text-ink md:text-6xl lg:text-7xl"
-    >
+    <h1 class="hero-h1 boot-hide display-hero mt-6 text-ink">
       Where biology becomes intelligence.
     </h1>
-    <p class="hero-sub boot-hide mx-auto mt-5 max-w-xl text-base text-ink-2 md:text-lg">
-      Implant systems, biologics and AI clinical software — one platform
-      engineering the future of orthopaedic care.
+    <p class="hero-sub boot-hide mx-auto mt-6 max-w-2xl text-lg text-ink-2 md:text-xl">
+      Implant systems, biologics and AI clinical software — one platform,
+      engineered in Sydney for Australian and New Zealand theatres.
     </p>
-    <div class="hero-cta-wrap boot-hide mt-9">
+    <div class="hero-cta-wrap boot-hide mt-9 flex flex-wrap items-center justify-center gap-4">
       <a href="#platform" class="cta-solid" data-magnetic>Explore the platform</a>
+      <a href="/contact" class="cta-ghost">Request a meeting</a>
     </div>
   </div>
 
   <!-- White bloom flood: the darkness→clarity hand-off, scrubbed on scroll -->
   <div class="hero-bloom" aria-hidden="true"></div>
 
-  <!-- Scroll cue -->
-  <div
-    class="hero-cue boot-hide absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-ink-3"
-    aria-hidden="true"
-  >
-    <span class="readout text-xs">Scroll</span>
-    <span class="cue-line block h-10 w-px bg-ink-3"></span>
-  </div>
+  <!-- The credibility register: verified metrics only, pinned to the hero's
+       bottom edge (outside .hero-content, so the pin's content exit doesn't
+       drag it — it gets its own faster exit in motion.ts) -->
+  <HeroMetrics class="absolute inset-x-0 bottom-0 z-10" />
 </section>
 
 <script>

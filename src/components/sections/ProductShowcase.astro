@@ -1,0 +1,158 @@
+---
+// Product showcase — the catalogue as an editorial feature stack, not a wall
+// of identical cards. Four asymmetric feature rows (alternating), then a
+// hairline index completing all twelve systems. Photography renders on the
+// specimen plate (light gradient — the cutouts are matte-black hardware);
+// systems without photography get the ProductPlate engineering drawing, a
+// defined premium state, never a gap. Copy is the TGA-curated tagline set
+// from src/data/products.ts — nothing new is claimed here.
+import NeuralField from '../ui/NeuralField.astro';
+import ProductPlate from '../ui/ProductPlate.astro';
+import { PRODUCTS, getProduct } from '../../data/products';
+
+const FEATURED_SLUGS = ['frameit', 'archit', 'graftit', 'screw-sets'];
+const featured = FEATURED_SLUGS.map((slug) => getProduct(slug)!).filter(Boolean);
+const rest = PRODUCTS.filter((p) => !FEATURED_SLUGS.includes(p.slug));
+
+// Continuous catalogue index 01–12, tied to the "12 systems" metric
+const indexOf = (slug: string) =>
+  String(PRODUCTS.findIndex((p) => p.slug === slug) + 1).padStart(2, '0');
+const TOTAL = String(PRODUCTS.length);
+
+const specLine = (p: (typeof PRODUCTS)[number]) =>
+  p.specs
+    .slice(0, 2)
+    .map((s) => s.value)
+    .join(' · ');
+---
+
+<section id="products" class="relative bg-raised text-ink">
+  <NeuralField variant="lattice" seed={53} />
+  <div class="mx-auto max-w-6xl px-6 py-20 md:py-36">
+    <p class="readout md:text-sm text-ink-2" data-reveal>03 — Product systems</p>
+    <h2 class="display-1 mt-6" data-reveal>Twelve systems, engineered as one.</h2>
+
+    <!-- The feature stack: asymmetric, alternating -->
+    <div class="mt-16 space-y-16 md:space-y-24">
+      {
+        featured.map((product, i) => (
+          <article
+            class={`group grid items-center gap-8 md:gap-14 ${
+              i % 2 === 0 ? 'md:grid-cols-[5fr_7fr]' : 'md:grid-cols-[7fr_5fr]'
+            }`}
+            data-reveal
+          >
+            <div class={i % 2 === 0 ? 'md:order-1' : 'md:order-2'}>
+              <p class="readout text-xs text-platinum">
+                {indexOf(product.slug)} / {TOTAL} — {product.category}
+              </p>
+              <h3 class="mt-4">
+                <a
+                  href={`/products/${product.line}/${product.slug}`}
+                  class="display-2 tap-target-sm text-ink transition-colors duration-300"
+                >
+                  {product.name}
+                </a>
+              </h3>
+              <p class="mt-4 max-w-md text-lg leading-relaxed text-ink-2">{product.tagline}</p>
+              <p class="readout mt-6 text-xs text-ink-3">{specLine(product)}</p>
+              <p class="mt-8">
+                <a
+                  href={`/products/${product.line}/${product.slug}`}
+                  class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 group-hover:text-ink"
+                >
+                  View system →
+                </a>
+              </p>
+            </div>
+
+            <div class={i % 2 === 0 ? 'md:order-2' : 'md:order-1'}>
+              {product.views?.length ? (
+                <figure class="showcase-plate relative overflow-hidden border border-hairline">
+                  <span class="corner corner-tl border-hairline-strong" aria-hidden="true" />
+                  <span class="corner corner-br border-hairline-strong" aria-hidden="true" />
+                  <div
+                    class="relative aspect-[4/3]"
+                    style="background: linear-gradient(155deg, #f2f2f2, #d4d4d4);"
+                  >
+                    <img
+                      src={product.views[0].small ?? product.views[0].src}
+                      alt={product.views[0].alt}
+                      class="showcase-img absolute inset-0 h-full w-full object-contain p-8"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    {product.views.length > 1 && (
+                      <img
+                        src={product.views[1].small ?? product.views[1].src}
+                        alt=""
+                        class="showcase-img-alt absolute inset-0 h-full w-full object-contain p-8 opacity-0"
+                        loading="lazy"
+                        decoding="async"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </div>
+                  <figcaption class="flex items-center justify-between border-t border-hairline px-5 py-3">
+                    <span class="readout text-xs text-ink-3">Specimen — first-party capture</span>
+                    <span class="readout text-xs text-ink-3">{product.name}</span>
+                  </figcaption>
+                </figure>
+              ) : (
+                <ProductPlate product={product} mode="card" />
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <!-- The index: the remaining systems, completing the twelve -->
+    <div class="mt-20 border-t border-hairline md:mt-28" data-reveal-group>
+      {
+        rest.map((product) => (
+          <a
+            href={`/products/${product.line}/${product.slug}`}
+            class="index-row group grid grid-cols-[3.5rem_1fr_auto] items-baseline gap-4 border-b border-hairline py-5 transition-colors duration-300 md:grid-cols-[4.5rem_1fr_1fr_auto]"
+            data-reveal-item
+          >
+            <span class="font-display text-lg font-bold tabular-nums text-platinum">
+              {indexOf(product.slug)}
+            </span>
+            <span class="font-display text-2xl font-semibold text-ink md:text-3xl">
+              {product.name}
+            </span>
+            <span class="readout hidden text-xs text-ink-3 md:block">{product.category}</span>
+            <span class="readout text-xs text-ink-3 transition-colors duration-300 group-hover:text-ink">
+              →
+            </span>
+          </a>
+        ))
+      }
+    </div>
+
+    <p class="mt-12" data-reveal>
+      <a href="/products" class="cta-ghost">All {TOTAL} systems →</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  @media (hover: hover) {
+    .showcase-img,
+    .showcase-img-alt {
+      transition: opacity 500ms var(--ease-precise), transform 700ms var(--ease-precise);
+    }
+    .group:hover .showcase-img {
+      transform: scale(1.03);
+    }
+    /* Second view crossfades in over the first where it exists — pure CSS */
+    .group:hover .showcase-img-alt {
+      opacity: 1;
+      transform: scale(1.03);
+    }
+    .index-row:hover {
+      background-color: var(--color-raised);
+    }
+  }
+</style>

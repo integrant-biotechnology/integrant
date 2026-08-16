@@ -8,29 +8,34 @@
  * Usage: node scripts/audit-contrast.mjs
  */
 
+// These literals MUST mirror src/styles/global.css exactly (the audit asserts
+// what actually ships, not a conservative stand-in — they drifted once).
 const THEMES = {
   dark: {
-    surfaces: { base: '#050505', raised: '#0a0a0a', inset: '#0f0f0f' },
+    surfaces: { base: '#050505', raised: '#0c0c0c', inset: '#131313' },
     inks: {
-      ink: 'rgba(245,245,245,1)',
-      'ink-2': 'rgba(255,255,255,0.62)',
-      'ink-3': 'rgba(255,255,255,0.48)',
+      ink: 'rgba(245,245,242,1)',
+      'ink-2': 'rgba(245,245,242,0.72)',
+      'ink-3': 'rgba(245,245,242,0.58)',
+      platinum: 'rgba(207,207,207,1)',
     },
   },
   light: {
     surfaces: { base: '#ffffff', raised: '#fafafa', inset: '#f2f2f2' },
     inks: {
       ink: 'rgba(10,10,10,1)',
-      'ink-2': 'rgba(10,10,10,0.68)',
-      'ink-3': 'rgba(10,10,10,0.58)',
+      'ink-2': 'rgba(10,10,10,0.74)',
+      'ink-3': 'rgba(10,10,10,0.64)',
+      platinum: 'rgba(90,90,90,1)',
     },
   },
   'contrast band': {
-    surfaces: { base: '#000000', raised: '#050505', inset: '#0d0d0d' },
+    surfaces: { base: '#000000', raised: '#070707', inset: '#0e0e0e' },
     inks: {
-      ink: 'rgba(245,245,245,1)',
-      'ink-2': 'rgba(255,255,255,0.62)',
-      'ink-3': 'rgba(255,255,255,0.48)',
+      ink: 'rgba(245,245,242,1)',
+      'ink-2': 'rgba(245,245,242,0.72)',
+      'ink-3': 'rgba(245,245,242,0.58)',
+      platinum: 'rgba(207,207,207,1)',
     },
   },
 };

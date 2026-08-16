@@ -18,11 +18,49 @@ import { INNOVATION_ITEMS } from '../data/innovation';
 const app = INNOVATION_ITEMS.find((i) => i.category === 'App')!;
 const rd = INNOVATION_ITEMS.find((i) => i.category === 'R&D')!;
 
+// The storyboard: four stages, function language only (no time-saved,
+// accuracy or error claims — substantiation + device-classification
+// exposure). Icons are hand-drawn stroke paths for svg[data-draw].
 const workflow = [
-  { label: 'CAPTURE', detail: 'Theatre audio' },
-  { label: 'STRUCTURE', detail: 'Sections & findings' },
-  { label: 'DRAFT', detail: 'The note, written' },
-  { label: 'SIGN', detail: 'The surgeon decides' },
+  {
+    index: '01',
+    label: 'Capture',
+    copy: 'Audio from the case is captured in theatre. Nothing else is recorded.',
+    io: 'In: theatre audio → Out: transcript',
+    icon: [
+      'M 20 8 H 32 V 28 C 32 34, 20 34, 20 28 Z',
+      'M 14 24 C 14 36, 38 36, 38 24',
+      'M 26 36 V 44', 'M 18 44 H 34',
+    ],
+  },
+  {
+    index: '02',
+    label: 'Structure',
+    copy: 'The transcript is organised into the sections an operation note requires — approach, findings, implants, closure.',
+    io: 'In: transcript → Out: structured sections',
+    icon: [
+      'M 10 8 V 44', 'M 10 8 H 16', 'M 10 44 H 16',
+      'M 42 8 V 44', 'M 42 8 H 36', 'M 42 44 H 36',
+      'M 20 16 H 32', 'M 20 26 H 32', 'M 20 36 H 32',
+    ],
+  },
+  {
+    index: '03',
+    label: 'Draft',
+    copy: 'A complete draft note, assembled from the case itself.',
+    io: 'In: sections → Out: draft note',
+    icon: [
+      'M 12 6 H 40 V 46 H 12 Z',
+      'M 18 14 H 34', 'M 18 21 H 34', 'M 18 28 H 34', 'M 18 35 H 28',
+    ],
+  },
+  {
+    index: '04',
+    label: 'Sign',
+    copy: 'Nothing is final until the surgeon signs. The app writes; the surgeon decides.',
+    io: 'In: draft → Out: signed note',
+    icon: ['M 8 34 C 14 24, 18 40, 24 30 C 30 20, 32 36, 38 28 C 41 24, 43 30, 46 27'],
+  },
 ];
 ---
 
@@ -36,6 +74,7 @@ const workflow = [
     kicker="AI clinical software · R&D"
     lede="The notebook that writes itself: clinical documentation drafted from the case, signed by the surgeon."
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Innovation' }]}
+    docRef="Doc 03 — Innovation"
     chips={app.chips}
     seed={223}
     variant="dense"
@@ -50,9 +89,7 @@ const workflow = [
     <NeuralField variant="dense" seed={227} />
     <div class="relative mx-auto max-w-6xl px-6 py-20 md:py-36">
       <p class="readout md:text-sm text-ink-2" data-reveal>01 — The notebook</p>
-      <h2 class="mt-6 max-w-2xl font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>
-        The note, drafted live.
-      </h2>
+      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>The note, drafted live.</h2>
 
       <div class="mt-14 flex justify-center" data-reveal aria-hidden="true">
         <div class="w-full max-w-xs md:max-w-md">
@@ -88,7 +125,7 @@ const workflow = [
     <div class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 md:py-32">
       <div>
         <p class="readout md:text-sm text-ink-2" data-reveal>02 — The app</p>
-        <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>{app.title}</h2>
+        <h2 class="display-1 mt-6" data-reveal>{app.title}</h2>
         <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{app.summary}</p>
         <div class="mt-10" data-reveal>
           {
@@ -122,32 +159,87 @@ const workflow = [
     </div>
   </section>
 
-  <!-- 03 · The workflow, drawn — theme-responsive -->
+  <!-- 03 · The workflow — a four-stage storyboard on a vertical spine.
+       Each stage: drawn icon · stage copy (function only) · supporting
+       instrument reusing the page's existing CSS animations. -->
   <section class="relative bg-base text-ink">
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="readout md:text-sm text-ink-2" data-reveal>03 — The workflow</p>
-      <h2 class="mt-6 max-w-2xl font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>
-        From audio to signed note.
-      </h2>
+      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>From audio to signed note.</h2>
 
-      <div class="mt-14" data-reveal>
-        <svg viewBox="0 0 900 60" class="w-full text-ink" fill="none" data-draw aria-hidden="true">
-          <path d="M 30 30 H 870" stroke="currentColor" stroke-width="1.5" class="text-ink-3"></path>
-          {[30, 310, 590, 870].map((x) => <circle cx={x} cy="30" r="5" fill="currentColor" />)}
-        </svg>
-        <div class="mt-6 grid grid-cols-2 gap-6 md:grid-cols-4">
-          {
-            workflow.map((step) => (
+      <ol class="mt-16 border-l border-hairline">
+        {
+          workflow.map((stage) => (
+            <li class="relative grid gap-8 pb-16 pl-8 last:pb-4 md:grid-cols-[minmax(0,1fr)_280px] md:gap-14 md:pl-14" data-reveal>
+              <span
+                class="absolute -left-[3px] top-2 block h-[5px] w-[5px] rounded-full bg-platinum"
+                aria-hidden="true"
+              />
               <div>
-                <p class="readout text-ink">{step.label}</p>
-                <p class="mt-2 text-sm text-ink-2">{step.detail}</p>
+                <div class="flex items-center gap-6">
+                  <svg
+                    viewBox="0 0 52 52"
+                    class="h-12 w-12 shrink-0 text-ink-2"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    data-draw
+                    aria-hidden="true"
+                  >
+                    {stage.icon.map((d) => (
+                      <path d={d} />
+                    ))}
+                  </svg>
+                  <p class="readout text-xs text-platinum md:text-sm">
+                    {stage.index} — {stage.label}
+                  </p>
+                </div>
+                <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2 md:text-xl">{stage.copy}</p>
+                <p class="readout mt-5 text-xs text-ink-3">{stage.io}</p>
               </div>
-            ))
-          }
-        </div>
-      </div>
 
-      <p class="readout mt-14 max-w-3xl text-xs leading-relaxed text-ink-3" data-reveal>
+              <div class="flex items-center md:justify-end" aria-hidden="true">
+                {stage.label === 'Capture' && (
+                  <span class="flex items-center gap-4 border border-hairline px-6 py-5">
+                    <span class="level">
+                      <i style="--i:0" />
+                      <i style="--i:1" />
+                      <i style="--i:2" />
+                      <i style="--i:3" />
+                    </span>
+                    <span class="readout text-xs text-ink-3">Listening</span>
+                  </span>
+                )}
+                {stage.label === 'Structure' && (
+                  <svg viewBox="0 0 220 120" class="w-56 text-ink-2" fill="none" stroke="currentColor" stroke-width="1.2" data-draw>
+                    <path d="M 8 8 V 112" class="text-ink-3" />
+                    <path d="M 20 16 H 120" /> <path d="M 20 30 H 200" class="text-ink-3" /> <path d="M 20 40 H 168" class="text-ink-3" />
+                    <path d="M 20 60 H 108" /> <path d="M 20 74 H 200" class="text-ink-3" /> <path d="M 20 84 H 148" class="text-ink-3" />
+                    <path d="M 20 104 H 96" />
+                  </svg>
+                )}
+                {stage.label === 'Draft' && (
+                  <div class="w-full max-w-[14rem]">
+                    <OpNote lines={[88, 70, 92, 56]} mobileRowCap={4} />
+                  </div>
+                )}
+                {stage.label === 'Sign' && (
+                  <span class="flex flex-col items-start gap-3 border border-hairline px-6 py-5">
+                    <svg viewBox="0 0 160 44" class="w-36 text-ink" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" data-draw>
+                      <path d="M 6 30 C 22 10, 34 40, 52 24 C 70 8, 76 36, 96 22 C 108 14, 118 30, 132 20 C 140 15, 146 24, 154 18" />
+                    </svg>
+                    <span class="readout text-xs text-ink-3">Signed — surgeon</span>
+                  </span>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      <p class="readout mt-12 max-w-3xl border-t border-hairline pt-8 text-xs leading-relaxed text-ink-3" data-reveal>
         EVERY DRAFT REMAINS A DRAFT UNTIL THE SURGEON SIGNS IT
       </p>
     </div>

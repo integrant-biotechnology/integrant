@@ -24,6 +24,12 @@ const map = buildDotMap();
     kicker="Sydney · Australia"
     lede="Product enquiries, distribution, clinical support — every message reaches the team that engineers the systems."
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Contact' }]}
+    docRef="Doc 07 — Contact"
+    meta={[
+      { label: 'Email', value: 'admin@integrant.com.au' },
+      { label: 'Address', value: 'Potts Point NSW 2011' },
+      { label: 'Position', value: '33.87°S · 151.22°E' },
+    ]}
     seed={131}
     variant="edge"
     backdrop="/photo/sydney-night.jpg"
@@ -35,9 +41,7 @@ const map = buildDotMap();
       <!-- The console -->
       <div>
         <p class="readout md:text-sm text-ink-2" data-reveal>01 — Transmission</p>
-        <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>
-          Write to the team.
-        </h2>
+        <h2 class="display-1 mt-6" data-reveal>Write to the team.</h2>
 
         <form
           id="enquiry"

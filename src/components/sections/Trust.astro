@@ -1,0 +1,115 @@
+---
+// The record — credibility as verified-gated slots, in a dark bookend before
+// the footer. Three registers: Regulatory (always populated — the anchor),
+// Research (structurally gated on publishedResearch), Partnerships (the four
+// partner models). A milestone rail renders below only as entries verify.
+// Every list is a filtered import: an unverified claim physically cannot
+// render here (TGA).
+import NeuralField from '../ui/NeuralField.astro';
+import { verifiedMetrics } from '../../data/site-metrics';
+import { publishedResearch } from '../../data/research';
+import { PARTNER_MODELS } from '../../data/pages/partners';
+import { verifiedMilestones } from '../../data/pages/about';
+
+const supply = verifiedMetrics.find((m) => m.id === 'supply');
+---
+
+<section data-contrast class="relative overflow-hidden bg-base text-ink">
+  <NeuralField variant="scaffold" seed={61} />
+  <div class="mx-auto max-w-6xl px-6 py-20 md:py-36">
+    <p class="readout md:text-sm text-ink-2" data-reveal>07 — The record</p>
+    <h2 class="display-1 mt-6" data-reveal>On the record.</h2>
+    <p class="mt-8 max-w-2xl text-lg leading-relaxed text-ink-2" data-reveal>
+      What Integrant publishes, it can substantiate. Registrations, research
+      and partnerships appear here as each clears verification.
+    </p>
+
+    <div class="mt-16 grid gap-px border border-hairline bg-hairline md:grid-cols-3" data-reveal-group>
+      <!-- Regulatory — the anchor, always populated -->
+      <div class="relative flex min-h-72 flex-col justify-between bg-raised p-8" data-reveal-item>
+        <div>
+          <p class="readout text-xs text-ink-3">Regulatory</p>
+          <p class="mt-6 font-display text-3xl font-bold text-platinum">ARTG listed</p>
+          <p class="mt-4 text-[1rem] leading-relaxed text-ink-2">
+            Implant systems supplied under Australian and New Zealand
+            therapeutic-goods regulation.
+          </p>
+        </div>
+        <p class="readout mt-8 text-xs text-ink-3">
+          {supply ? `${supply.value} — ${supply.label}` : 'AU·NZ — Regulated supply'}
+        </p>
+      </div>
+
+      <!-- Research — structurally gated -->
+      <div class="relative flex min-h-72 flex-col justify-between bg-raised p-8" data-reveal-item>
+        <div>
+          <p class="readout text-xs text-ink-3">Research</p>
+          {
+            publishedResearch.length > 0 ? (
+              <ul class="mt-6 space-y-4">
+                {publishedResearch.slice(0, 3).map((r) => (
+                  <li class="text-[1rem] leading-relaxed text-ink-2">
+                    <span class="readout text-xs text-platinum">{r.ref}</span> {r.title}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="mt-6 text-[1rem] leading-relaxed text-ink-2">
+                Investigator-led research programs are published on the ledger
+                as they complete compliance review.
+              </p>
+            )
+          }
+        </div>
+        <p class="mt-8">
+          <a
+            href="/research"
+            class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink"
+          >
+            The ledger →
+          </a>
+        </p>
+      </div>
+
+      <!-- Partnerships — the four models -->
+      <div class="relative flex min-h-72 flex-col justify-between bg-raised p-8" data-reveal-item>
+        <div>
+          <p class="readout text-xs text-ink-3">Partnerships</p>
+          <ul class="mt-6 space-y-3">
+            {
+              PARTNER_MODELS.map((m) => (
+                <li class="readout text-xs text-ink-2">{m.label}</li>
+              ))
+            }
+          </ul>
+        </div>
+        <p class="mt-8">
+          <a
+            href="/partners"
+            class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink"
+          >
+            Partner with Integrant →
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Milestones render only as each verifies; absent today by design -->
+    {
+      verifiedMilestones.length > 0 && (
+        <ol class="mt-12">
+          {verifiedMilestones.map((m) => (
+            <li class="grid grid-cols-[6rem_1fr] gap-6 border-t border-hairline py-8 last:border-b">
+              <span class="font-display text-3xl font-bold tabular-nums">{m.year}</span>
+              <p class="readout md:text-sm">{m.label}</p>
+            </li>
+          ))}
+        </ol>
+      )
+    }
+
+    <p class="readout mt-12 text-xs leading-relaxed text-ink-3" data-reveal>
+      Company milestones and registrations are published as each is verified.
+    </p>
+  </div>
+</section>

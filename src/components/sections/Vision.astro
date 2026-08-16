@@ -5,18 +5,17 @@ import NeuralField from '../ui/NeuralField.astro';
 ---
 
 <section id="about" class="relative bg-raised text-ink">
-  <NeuralField variant="organic" seed={11} />
+  <NeuralField variant="scaffold" seed={11} />
   <span class="corner corner-tl border-hairline-strong" aria-hidden="true"></span>
   <span class="corner corner-br border-hairline-strong" aria-hidden="true"></span>
 
   <div class="mx-auto max-w-6xl px-6 py-20 md:py-44">
     <p class="readout md:text-sm text-ink-2" data-reveal>01 — Vision</p>
-    <h2
-      class="sweep mt-6 max-w-4xl font-display text-4xl font-bold leading-[1.08] text-ink sm:text-5xl md:text-6xl lg:text-7xl"
-      data-sweep
-    >
-      Biological neurons taught us how to heal. Artificial neurons teach us
-      how to heal better.
+    {/* The one section allowed hero-scale type — the editorial statement.
+        "…what comes next" replaces a comparative-outcome phrasing (TGA). */}
+    <h2 class="sweep display-hero mt-6 max-w-5xl text-ink" data-sweep>
+      Biological neurons taught us how to heal. Artificial neurons are
+      teaching us what comes next.
     </h2>
     <p class="mt-10 max-w-2xl text-lg leading-relaxed text-ink-2" data-reveal>
       Integrant unites surgical-grade implants, regenerative biologics and AI

@@ -2,10 +2,25 @@
 import Base from '../../layouts/Base.astro';
 import { PRODUCTS, PRODUCT_LINES } from '../../data/products';
 import NeuralField from '../../components/ui/NeuralField.astro';
+import ProductPlate from '../../components/ui/ProductPlate.astro';
 
 const title = 'Product systems — Integrant';
 const description =
   'Integrant implant systems, instrumentation and graft materials — engineered for foot, ankle, hand and wrist.';
+
+// Continuous catalogue index 01–12 — the same number the homepage showcase
+// and the detail-page pager use, tied to the "12 systems" metric.
+const indexOf = (slug: string) =>
+  String(PRODUCTS.findIndex((p) => p.slug === slug) + 1).padStart(2, '0');
+
+// Each line leads with its flagship as a full-width feature row
+const LEAD: Record<string, string> = { 'med-tech': 'archit', 'bio-tech': 'frameit' };
+
+const specLine = (p: (typeof PRODUCTS)[number]) =>
+  p.specs
+    .slice(0, 2)
+    .map((s) => s.value)
+    .join(' · ');
 ---
 
 <Base title={title} description={description} ogImage="/og/products.png">
@@ -20,6 +35,7 @@ const description =
       fetchpriority="low"
       decoding="async"
       class="absolute inset-0 h-full w-full object-cover grayscale"
+      data-parallax="0.08"
     />
     <div
       class="absolute inset-0"
@@ -34,76 +50,187 @@ const description =
       aria-hidden="true"
     >
     </div>
-    <div class="relative mx-auto max-w-6xl px-6 pb-24 pt-40 md:pb-28 md:pt-48">
+    <div class="relative mx-auto max-w-6xl px-6 pb-20 pt-40 md:pb-24 md:pt-48">
       <p class="readout md:text-sm text-ink-2">Catalogue</p>
-      <h1 class="mt-6 max-w-3xl font-display text-4xl font-bold leading-[1.03] [text-wrap:balance] sm:text-5xl md:text-6xl xl:text-7xl">
-        Precision, instrument by instrument.
-      </h1>
-      <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2">
+      <h1 class="display-hero mt-6 max-w-4xl">Precision, instrument by instrument.</h1>
+      <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2 md:text-xl">
         Two divisions, one engineering standard — implant systems and
         instrumentation for the foot and ankle, and graft materials that work
         with the body’s own repair.
       </p>
+
+      <!-- Division index: jump links, counted from the catalogue itself -->
+      <div class="mt-12 grid gap-px border border-hairline bg-hairline sm:grid-cols-2">
+        {
+          PRODUCT_LINES.map((line, lineIndex) => (
+            <a
+              href={`#${line.id}`}
+              class="group flex items-baseline justify-between gap-6 bg-raised p-6 transition-colors duration-300 hover:bg-inset"
+            >
+              <span class="flex items-baseline gap-4">
+                <span class="font-display text-lg font-bold tabular-nums text-platinum">
+                  {String(lineIndex + 1).padStart(2, '0')}
+                </span>
+                <span class="readout text-xs text-ink md:text-sm">{line.label}</span>
+              </span>
+              <span class="readout text-xs text-ink-3 transition-colors duration-300 group-hover:text-ink">
+                <span data-count={PRODUCTS.filter((p) => p.line === line.id).length}>
+                  {PRODUCTS.filter((p) => p.line === line.id).length}
+                </span>{' '}
+                systems ↓
+              </span>
+            </a>
+          ))
+        }
+      </div>
     </div>
   </section>
 
   {
-    PRODUCT_LINES.map((line, lineIndex) => (
-      <section
-        id={line.id}
-        class={lineIndex % 2 === 0 ? 'relative bg-raised text-ink' : 'relative bg-base text-ink'}
-      >
-        <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-          <p class="readout md:text-sm text-ink-2" data-reveal>
-            {String(lineIndex + 1).padStart(2, '0')} — {line.label}
-          </p>
-          <h2 class="sweep mt-6 max-w-2xl font-display text-4xl font-bold leading-tight md:text-5xl lg:text-6xl" data-sweep>
-            {line.blurb}
-          </h2>
+    PRODUCT_LINES.map((line, lineIndex) => {
+      const lineProducts = PRODUCTS.filter((p) => p.line === line.id);
+      const lead = lineProducts.find((p) => p.slug === LEAD[line.id]) ?? lineProducts[0];
+      const rest = lineProducts.filter((p) => p !== lead);
+      return (
+        <section
+          id={line.id}
+          class={lineIndex % 2 === 0 ? 'relative bg-raised text-ink' : 'relative bg-base text-ink'}
+        >
+          <NeuralField variant={lineIndex % 2 === 0 ? 'lattice' : 'imaging'} seed={83 + lineIndex * 6} />
+          <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
+            <p class="readout md:text-sm text-ink-2" data-reveal>
+              {String(lineIndex + 1).padStart(2, '0')} — {line.label} ·{' '}
+              {lineProducts.length} systems
+            </p>
+            <h2 class="sweep display-1 mt-6 max-w-3xl" data-sweep>
+              {line.blurb}
+            </h2>
 
-          <!-- Individually bordered cards: an odd item count must never leave
-               empty cells showing the grid's hairline background -->
-          <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {PRODUCTS.filter((p) => p.line === line.id).map((product) => (
-              <a
-                href={`/products/${product.line}/${product.slug}`}
-                class="group relative flex min-h-64 flex-col justify-between border border-hairline bg-raised p-7 transition-colors duration-300 hover:border-hairline-strong hover:bg-base"
-                data-reveal
-              >
-                <div>
-                  <div class="flex items-start justify-between gap-4">
-                    <p class="readout text-xs text-ink-3">{product.category}</p>
-                    {/* real photography exists — small specimen thumbnail */}
-                    {product.views && product.views.length > 0 && (
+            <!-- The flagship: a full feature row -->
+            <article class="group mt-14 grid items-center gap-8 md:grid-cols-[5fr_7fr] md:gap-14" data-reveal>
+              <div>
+                <p class="readout text-xs text-platinum">
+                  {indexOf(lead.slug)} / {PRODUCTS.length} — {lead.category}
+                </p>
+                <h3 class="mt-4">
+                  <a href={`/products/${lead.line}/${lead.slug}`} class="display-2 tap-target-sm text-ink">
+                    {lead.name}
+                  </a>
+                </h3>
+                <p class="mt-4 max-w-md text-lg leading-relaxed text-ink-2">{lead.tagline}</p>
+                <p class="readout mt-6 text-xs text-ink-3">{specLine(lead)}</p>
+                <p class="mt-8">
+                  <a
+                    href={`/products/${lead.line}/${lead.slug}`}
+                    class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 group-hover:text-ink"
+                  >
+                    View system →
+                  </a>
+                </p>
+              </div>
+              <div>
+                {lead.views?.length ? (
+                  <figure class="relative overflow-hidden border border-hairline">
+                    <span class="corner corner-tl border-hairline-strong" aria-hidden="true" />
+                    <span class="corner corner-br border-hairline-strong" aria-hidden="true" />
+                    <div class="relative aspect-[4/3]" style="background: linear-gradient(155deg, #f2f2f2, #d4d4d4);">
+                      <img
+                        src={lead.views[0].small ?? lead.views[0].src}
+                        alt={lead.views[0].alt}
+                        class="absolute inset-0 h-full w-full object-contain p-8"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption class="flex items-center justify-between border-t border-hairline px-5 py-3">
+                      <span class="readout text-xs text-ink-3">Specimen — first-party capture</span>
+                      <span class="readout text-xs text-ink-3">{lead.name}</span>
+                    </figcaption>
+                  </figure>
+                ) : (
+                  <ProductPlate product={lead} mode="card" />
+                )}
+              </div>
+            </article>
+
+            <!-- The rest of the line: two-up premium cards -->
+            <div class="mt-14 grid gap-6 sm:grid-cols-2">
+              {rest.map((product) => (
+                <a
+                  href={`/products/${product.line}/${product.slug}`}
+                  class="catalogue-card group relative flex flex-col border border-hairline bg-raised transition-colors duration-300"
+                  data-reveal
+                >
+                  <span class="relative block overflow-hidden">
+                    {product.views && product.views.length > 0 ? (
                       <span
-                        class="block h-16 w-16 shrink-0 border border-hairline"
+                        class="relative block aspect-[4/3]"
                         style="background: linear-gradient(155deg, #f2f2f2, #d4d4d4);"
                         aria-hidden="true"
                       >
                         <img
                           src={product.views[0].small ?? product.views[0].src}
                           alt=""
-                          width="1400"
-                          height="1400"
                           loading="lazy"
-                          class="h-full w-full object-contain p-1.5"
+                          decoding="async"
+                          class="card-img absolute inset-0 h-full w-full object-contain p-8"
                         />
+                        {product.views.length > 1 && (
+                          <img
+                            src={product.views[1].small ?? product.views[1].src}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                            class="card-img-alt absolute inset-0 h-full w-full object-contain p-8 opacity-0"
+                          />
+                        )}
                       </span>
+                    ) : (
+                      <ProductPlate product={product} mode="card" class="border-0" />
                     )}
-                  </div>
-                  <h3 class="mt-4 font-display text-3xl font-bold text-ink">{product.name}</h3>
-                  <p class="mt-3 text-sm leading-relaxed text-ink-2">{product.tagline}</p>
-                </div>
-                <p class="readout mt-8 text-xs text-ink-3 transition-colors duration-300 group-hover:text-ink">
-                  View system →
-                </p>
-              </a>
-            ))}
+                  </span>
+                  <span class="flex flex-1 flex-col justify-between p-7">
+                    <span>
+                      <span class="readout block text-xs text-platinum">
+                        {indexOf(product.slug)} — {product.category}
+                      </span>
+                      <span class="mt-3 block font-display text-3xl font-bold text-ink md:text-4xl">
+                        {product.name}
+                      </span>
+                      <span class="mt-3 block text-[1rem] leading-relaxed text-ink-2">
+                        {product.tagline}
+                      </span>
+                    </span>
+                    <span class="readout mt-8 block text-xs text-ink-3 transition-colors duration-300 group-hover:text-ink">
+                      View system →
+                    </span>
+                  </span>
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-    ))
+        </section>
+      );
+    })
   }
+
+  <!-- The surgeon's route back in, now that For Surgeons has left the nav -->
+  <section data-contrast class="relative overflow-hidden bg-base text-ink">
+    <NeuralField variant="edge" seed={107} />
+    <div class="relative mx-auto max-w-6xl px-6 py-20 md:py-28">
+      <p class="readout md:text-sm text-ink-2" data-reveal>Operating with Integrant</p>
+      <h2 class="display-1 mt-6 max-w-3xl" data-reveal>
+        Consult, specify, theatre, document.
+      </h2>
+      <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>
+        The surgeon's journey in four steps — direct engineering access, an
+        anatomy-indexed catalogue, complete loan sets and AI-drafted notes.
+      </p>
+      <p class="mt-10" data-reveal>
+        <a href="/for-surgeons" class="cta-ghost">For surgeons →</a>
+      </p>
+    </div>
+  </section>
 
   <section class="relative bg-raised text-ink">
     <div class="mx-auto max-w-6xl border-t border-hairline px-6 py-16">
@@ -116,3 +243,23 @@ const description =
     </div>
   </section>
 </Base>
+
+<style>
+  @media (hover: hover) {
+    .catalogue-card:hover {
+      border-color: var(--color-hairline-strong);
+      background-color: var(--color-inset);
+    }
+    .card-img,
+    .card-img-alt {
+      transition: opacity 500ms var(--ease-precise), transform 700ms var(--ease-precise);
+    }
+    .catalogue-card:hover .card-img {
+      transform: scale(1.03);
+    }
+    .catalogue-card:hover .card-img-alt {
+      opacity: 1;
+      transform: scale(1.03);
+    }
+  }
+</style>

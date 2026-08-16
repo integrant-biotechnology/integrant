@@ -17,22 +17,23 @@ unlocks a section that is currently held back.
 | 7 | **App Store URL** for the Integrant app | Download CTA on /innovation | "In review — App Store" plate |
 | 8 | **Research activity list**: title, status, partners, DOI per item — each row needs your regulatory adviser's sign-off before it renders | Rows on /research | Page shows a designed "documented as programs are reviewed" state |
 | 9 | **Patient consent documents** for the 22 archived surgical photos (incl. the Modified Broström sequence) — or a consent process for new cases | Case imagery on /clinical-images | HCP-gated page with "archive in preparation" state |
+| 10 | **Credibility metrics, verified**: years of research/practice · procedure or case counts · any figures you want in the hero metrics strip. Each number needs (a) a source you can substantiate and (b) your regulatory adviser's TGA review — case counts were previously removed from legacy copy as a compliance risk, so nothing renders until both are recorded. Wire-in point: `src/data/site-metrics.ts` (flip `verified` only with sign-off noted in `source`) | Additional rows in the homepage hero metrics strip + Trust band | Strip shows the four cleared claims (12 systems · 5 regions · 2 divisions · AU·NZ) plus qualitative readouts |
 
 ## Needed before launch (DNS cutover)
 
 | # | Item | Why |
 |---|------|-----|
-| 10 | Clinical/regulatory sign-off on the 12 product pages (each carries recorded review notes) | Every product is currently marked review-pending by design |
-| 11 | Registrar/DNS access + an agreed cutover window | Pointing integrant.com.au at the new site |
-| 12 | Current DNS record inventory — **especially MX/SPF/DKIM** | Email for admin@ must survive the cutover untouched |
-| 13 | Confirmation the old WordPress site is exported/backed up | Before it is decommissioned |
+| 11 | Clinical/regulatory sign-off on the 12 product pages (each carries recorded review notes) | Every product is currently marked review-pending by design |
+| 12 | Registrar/DNS access + an agreed cutover window | Pointing integrant.com.au at the new site |
+| 13 | Current DNS record inventory — **especially MX/SPF/DKIM** | Email for admin@ must survive the cutover untouched |
+| 14 | Confirmation the old WordPress site is exported/backed up | Before it is decommissioned |
 
 ## Standing items (no urgency)
 
 | # | Item | Notes |
 |---|------|-------|
-| 14 | Vector logo source files | Site currently uses a high-fidelity trace of the brand PNG |
-| 15 | Nexa font license decision | Brand board lists Nexa (commercial); site uses licensed Rajdhani/Titillium until confirmed |
-| 16 | Product photography / CAD renders | ArchIT, FuseIT and the 2.5 mm screw have none; the site design covers this with technical line drawings |
+| 15 | Vector logo source files | Site currently uses a high-fidelity trace of the brand PNG |
+| 16 | Nexa font license decision | Brand board lists Nexa (commercial); site uses licensed Rajdhani/Titillium until confirmed |
+| 17 | Product photography / CAD renders | ArchIT, FuseIT and the 2.5 mm screw have none; the site design covers this with technical line drawings |
 | 18 | Commissioned site photography (optional) | The site currently uses licensed free-stock ambience (credits: src/data/photography.ts) — theatre, Sydney, materials. Any commissioned shot can replace an entry 1:1 via scripts/grade-photo.mjs |
-| 17 | Sanity CMS login | Content is code-managed and import-ready whenever the CMS is provisioned |
+| 19 | Sanity CMS login | Content is code-managed and import-ready whenever the CMS is provisioned |

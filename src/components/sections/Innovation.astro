@@ -13,10 +13,8 @@ const chips = ['Neural documentation', 'AI-assisted', 'iOS', 'PDF reports'];
 
   <div class="mx-auto grid max-w-6xl gap-16 px-6 py-20 md:grid-cols-[1fr_280px] md:py-36">
     <div>
-      <p class="readout md:text-sm text-ink-2" data-reveal>04 — Innovation &amp; AI</p>
-      <h2 class="mt-6 font-display text-4xl font-bold leading-tight sm:text-5xl md:text-6xl" data-reveal>
-        AI in the operating theatre.
-      </h2>
+      <p class="readout md:text-sm text-ink-2" data-reveal>06 — Innovation &amp; AI</p>
+      <h2 class="display-1 mt-6" data-reveal>AI in the operating theatre.</h2>
       <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>
         The Integrant app listens to the case and writes the clinical
         documentation — structured, complete, ready to sign.
@@ -55,7 +53,12 @@ const chips = ['Neural documentation', 'AI-assisted', 'iOS', 'PDF reports'];
 
     <!-- The app, writing. Lines fill in sequence, the caret follows, then the
          draft clears and the next case begins. -->
-    <div class="relative mx-auto mt-12 w-full max-w-[17rem] md:mt-0 md:w-64" data-reveal aria-hidden="true">
+    <div
+      class="relative mx-auto mt-12 w-full max-w-[17rem] md:mt-0 md:w-64"
+      data-reveal
+      data-parallax="0.12"
+      aria-hidden="true"
+    >
       <OpNote />
     </div>
   </div>

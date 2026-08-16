@@ -8,7 +8,8 @@
 import Base from '../layouts/Base.astro';
 import SubpageHero from '../components/SubpageHero.astro';
 import NeuralField from '../components/ui/NeuralField.astro';
-import { ABOUT, verifiedMilestones } from '../data/pages/about';
+import TrustBand from '../components/ui/TrustBand.astro';
+import { ABOUT } from '../data/pages/about';
 import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
 ---
 
@@ -22,6 +23,13 @@ import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
     kicker="Orthopaedic Med-Tech · Bio-Tech · AI"
     lede="A Sydney company building the instruments, biologics and software of orthopaedic care — as one system, not three products."
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'About' }]}
+    docRef="Doc 04 — About"
+    meta={[
+      { label: 'Founded', value: 'Sydney, Australia' },
+      { label: 'Divisions', value: 'Med-Tech · Bio-Tech' },
+      { label: 'Systems', value: '12' },
+      { label: 'Supply', value: 'AU · NZ' },
+    ]}
     seed={149}
     variant="organic"
     backdrop="/photo/sydney-day.jpg"
@@ -33,44 +41,27 @@ import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
     <span class="corner corner-br border-hairline-strong" aria-hidden="true"></span>
     <div class="mx-auto max-w-6xl px-6 py-20 md:py-40">
       <p class="readout md:text-sm text-ink-2" data-reveal>01 — Thesis</p>
-      <h2
-        class="sweep mt-6 max-w-4xl font-display text-4xl font-bold leading-[1.08] text-ink sm:text-5xl md:text-6xl lg:text-7xl"
-        data-sweep
-      >
+      <h2 class="sweep display-hero mt-6 max-w-5xl text-ink" data-sweep>
         {ABOUT.thesis}
       </h2>
     </div>
   </section>
 
-  <!-- The record rail — renders only client-verified milestones -->
-  {
-    verifiedMilestones.length > 0 && (
-      <section class="relative bg-base text-ink">
-        <div class="mx-auto max-w-6xl px-6 py-20 md:py-32">
-          <p class="readout md:text-sm text-ink-2" data-reveal>
-            The record
-          </p>
-          <ol class="mt-12 space-y-0">
-            {verifiedMilestones.map((m) => (
-              <li class="grid grid-cols-[6rem_1fr] gap-6 border-t border-hairline py-8 last:border-b" data-reveal>
-                <span class="font-display text-3xl font-bold tabular-nums text-ink">{m.year}</span>
-                <div>
-                  <p class="readout text-ink-2">{m.label}</p>
-                  {m.detail && <p class="mt-3 max-w-xl text-ink-2">{m.detail}</p>}
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-    )
-  }
+  <!-- 02 · On the record — cleared claims + verified-gated slots -->
+  <section class="relative bg-base text-ink">
+    <NeuralField variant="imaging" seed={153} />
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="readout md:text-sm text-ink-2" data-reveal>02 — On the record</p>
+      <h2 class="display-1 mt-6" data-reveal>What we publish, we can substantiate.</h2>
+      <TrustBand class="mt-14" />
+    </div>
+  </section>
 
-  <!-- 02 · Founder -->
+  <!-- 03 · Founder -->
   <section class="relative bg-base text-ink">
     <NeuralField variant="edge" seed={157} />
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="readout md:text-sm text-ink-2" data-reveal>02 — Founder</p>
+      <p class="readout md:text-sm text-ink-2" data-reveal>03 — Founder</p>
 
       <div class="mt-10 grid gap-10 md:grid-cols-[340px_1fr] md:items-center" data-reveal>
         <!-- Portrait plate — 3:4, engraved-plate treatment. Falls back to the
@@ -97,7 +88,7 @@ import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
         </div>
 
         <div class="flex flex-col justify-center">
-          <h3 class="font-display text-4xl font-bold text-ink md:text-5xl">{ABOUT.founder.name}</h3>
+          <h3 class="font-display text-5xl font-bold text-ink md:text-6xl">{ABOUT.founder.name}</h3>
           <p class="readout mt-4 text-ink-3">{ABOUT.founder.role} · Surgeon-led design</p>
           <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2">
             {
@@ -114,8 +105,8 @@ import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
   <section data-contrast class="relative overflow-hidden bg-base text-ink">
     <NeuralField variant="lattice" seed={163} />
     <div class="mx-auto max-w-6xl px-6 py-20 md:py-32">
-      <p class="readout md:text-sm text-ink-2" data-reveal>03 — The formula</p>
-      <h2 class="mt-6 max-w-3xl font-display text-4xl font-bold leading-tight sm:text-5xl md:text-6xl" data-reveal>
+      <p class="readout md:text-sm text-ink-2" data-reveal>04 — The formula</p>
+      <h2 class="display-1 mt-6 max-w-3xl" data-reveal>
         Biology, engineered. Intelligence, applied.
       </h2>
 
@@ -156,8 +147,8 @@ import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
     <NeuralField variant="edge" seed={167} />
     <div class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 md:py-32">
       <div>
-        <p class="readout md:text-sm text-ink-2" data-reveal>04 — Careers</p>
-        <h2 class="mt-6 font-display text-4xl font-bold leading-tight md:text-5xl" data-reveal>
+        <p class="readout md:text-sm text-ink-2" data-reveal>05 — Careers</p>
+        <h2 class="display-1 mt-6" data-reveal>
           {ABOUT.careers.heading}
         </h2>
       </div>
@@ -173,25 +164,6 @@ import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
     </div>
   </section>
 
-  <!-- Verifiable facts strip -->
-  <section class="relative bg-raised text-ink">
-    <div class="mx-auto max-w-6xl border-t border-hairline px-6 py-20 md:py-24">
-      <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-4" data-reveal>
-        {
-          ABOUT.facts.map((fact) => (
-            <div>
-              <p class="font-display text-5xl font-bold tabular-nums text-ink md:text-6xl">
-                <span data-count={fact.value}>{fact.value}</span>
-              </p>
-              <p class="readout mt-3 text-ink-3">{fact.label}</p>
-            </div>
-          ))
-        }
-        <div>
-          <p class="font-display text-5xl font-bold text-ink md:text-6xl">AU·NZ</p>
-          <p class="readout mt-3 text-ink-3">Regulated supply</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  {/* The old facts strip moved up into 02 — On the record (TrustBand), which
+      derives the same figures from src/data/site-metrics.ts. */}
 </Base>

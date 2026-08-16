@@ -1,9 +1,13 @@
 ---
-// Shared subpage hero — the dark identity strip every interior page opens
-// with, extracted from the product-detail pattern: contrast band, neural
-// field, breadcrumb readout, corner bracket, radial highlight. Pages differ
-// only in seed/variant (so neighbouring pages never share a constellation)
-// and in what they put in the optional aside slot.
+// Shared subpage hero v2 — every interior page opens like the title block of
+// an engineering document: a ruled breadcrumb bar with a folio readout, an
+// asymmetric title grid (editorial display left, labelled spec stack right),
+// and a closing rule with the scroll cue. Contrast band + neural field +
+// optional graded photo backdrop carry over from v1; pages differ in
+// seed/variant so neighbours never share a constellation.
+//
+// Back-compatible: `chips` still renders (as value-only rows in the spec
+// stack); the `aside` slot still claims the right column when present.
 import NeuralField from './ui/NeuralField.astro';
 import type { FieldVariant } from '../lib/neural-field';
 
@@ -12,14 +16,24 @@ interface Crumb {
   href?: string; // omit on the current page (last crumb)
 }
 
+interface MetaRow {
+  label: string;
+  value: string;
+}
+
 interface Props {
   title: string;
-  /** Short line under the title — a category or classification, not a slogan. */
+  /** Classification line — rendered as the eyebrow above the title. */
   kicker?: string;
   /** Lede paragraph. */
   lede?: string;
   crumbs?: Crumb[];
+  /** Labelled spec rows for the right-hand stack. */
+  meta?: MetaRow[];
+  /** Legacy prop — renders as value-only rows in the spec stack. */
   chips?: string[];
+  /** Folio readout, right end of the breadcrumb bar (e.g. "DOC 04 — ABOUT"). */
+  docRef?: string;
   seed?: number;
   variant?: FieldVariant;
   pulse?: boolean;
@@ -34,7 +48,9 @@ const {
   kicker,
   lede,
   crumbs = [],
+  meta = [],
   chips = [],
+  docRef,
   seed = 7,
   variant = 'dense',
   pulse = false,
@@ -42,6 +58,8 @@ const {
 } = Astro.props;
 
 const hasAside = Astro.slots.has('aside');
+const stack: MetaRow[] = [...meta, ...chips.map((chip) => ({ label: '', value: chip }))];
+const hasRail = hasAside || stack.length > 0;
 ---
 
 <section data-contrast class="relative overflow-hidden bg-base text-ink">
@@ -56,6 +74,7 @@ const hasAside = Astro.slots.has('aside');
           fetchpriority="low"
           decoding="async"
           class="absolute inset-0 h-full w-full object-cover grayscale"
+          data-parallax="0.08"
         />
         {/* Scrim: keeps every headline on near-black regardless of the
             photograph; deepens toward the text column */}
@@ -76,55 +95,89 @@ const hasAside = Astro.slots.has('aside');
   </div>
   <span class="corner corner-tl border-hairline-strong" aria-hidden="true"></span>
 
-  <div
-    class:list={[
-      'relative mx-auto grid max-w-6xl gap-12 px-6 pb-20 pt-36 md:pb-24 md:pt-44',
-      hasAside && 'md:grid-cols-[1fr_320px]',
-    ]}
-  >
-    <div>
+  <div class="relative mx-auto max-w-6xl px-6 pb-16 pt-32 md:pb-20 md:pt-44">
+    <!-- The ruled bar: breadcrumbs left, folio right -->
+    {
+      (crumbs.length > 0 || docRef) && (
+        <div class="flex items-baseline justify-between gap-6 border-b border-hairline pb-5">
+          {crumbs.length > 0 ? (
+            <nav aria-label="Breadcrumb">
+              <ol class="readout flex flex-wrap items-center gap-2 text-xs text-ink-3">
+                {crumbs.map((crumb, i) => (
+                  <>
+                    {i > 0 && <li aria-hidden="true">/</li>}
+                    <li>
+                      {crumb.href ? (
+                        <a href={crumb.href} class="tap-target-sm inline-block transition-colors hover:text-ink">
+                          {crumb.label}
+                        </a>
+                      ) : (
+                        <span class="text-ink-2" aria-current="page">
+                          {crumb.label}
+                        </span>
+                      )}
+                    </li>
+                  </>
+                ))}
+              </ol>
+            </nav>
+          ) : (
+            <span />
+          )}
+          {docRef && <p class="readout shrink-0 text-xs text-platinum md:text-sm">{docRef}</p>}
+        </div>
+      )
+    }
+
+    <!-- The title grid: editorial display left, spec stack right -->
+    <div
+      class:list={[
+        'mt-10 grid gap-12 md:mt-14',
+        hasRail && 'md:grid-cols-[minmax(0,7fr)_minmax(280px,3fr)] md:gap-16',
+      ]}
+    >
+      <div>
+        {kicker && <p class="readout text-xs text-ink-2 md:text-sm">{kicker}</p>}
+        {/* The H1 is the LCP element on every interior page — never animate it */}
+        <h1 class:list={['display-hero max-w-[16ch]', kicker && 'mt-5']}>{title}</h1>
+        {lede && (
+          <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2 md:text-xl" data-reveal>
+            {lede}
+          </p>
+        )}
+      </div>
+
       {
-        crumbs.length > 0 && (
-          <nav aria-label="Breadcrumb">
-            <ol class="readout flex flex-wrap items-center gap-2 text-xs text-ink-3">
-              {crumbs.map((crumb, i) => (
-                <>
-                  {i > 0 && <li aria-hidden="true">/</li>}
-                  <li>
-                    {crumb.href ? (
-                      <a href={crumb.href} class="tap-target-sm inline-block transition-colors hover:text-ink">
-                        {crumb.label}
-                      </a>
-                    ) : (
-                      <span class="text-ink-2" aria-current="page">
-                        {crumb.label}
-                      </span>
-                    )}
-                  </li>
-                </>
+        hasAside ? (
+          <slot name="aside" />
+        ) : (
+          stack.length > 0 && (
+            <dl class="self-end divide-y divide-[var(--color-hairline)] border-y border-hairline" data-reveal>
+              {stack.map((row) => (
+                <div class="flex items-baseline justify-between gap-6 py-3.5">
+                  {row.label ? (
+                    <>
+                      <dt class="readout text-xs text-ink-3">{row.label}</dt>
+                      <dd class="font-display text-[1rem] font-semibold text-ink">{row.value}</dd>
+                    </>
+                  ) : (
+                    <dd class="readout text-xs text-ink-2">{row.value}</dd>
+                  )}
+                </div>
               ))}
-            </ol>
-          </nav>
-        )
-      }
-
-      <h1
-        class="mt-8 max-w-[16ch] font-display text-5xl font-bold leading-[0.98] [text-wrap:balance] sm:text-6xl md:text-7xl"
-      >{title}</h1>
-      {kicker && <p class="mt-5 text-xl text-ink-2 md:text-2xl">{kicker}</p>}
-      {lede && <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2">{lede}</p>}
-
-      {
-        chips.length > 0 && (
-          <div class="mt-10 flex flex-wrap gap-3">
-            {chips.map((chip) => (
-              <span class="readout border border-hairline-strong px-4 py-2.5 text-xs text-ink-2">{chip}</span>
-            ))}
-          </div>
+            </dl>
+          )
         )
       }
     </div>
 
-    {hasAside && <slot name="aside" />}
+    <!-- The closing rule: scroll cue left, folio echo right -->
+    <div class="mt-14 flex items-center justify-between gap-6 border-t border-hairline pt-5 md:mt-20">
+      <span class="flex items-center gap-3 text-ink-3" aria-hidden="true">
+        <span class="readout text-xs">Scroll</span>
+        <span class="block h-px w-10 bg-ink-3"></span>
+      </span>
+      {docRef && <p class="readout text-xs text-ink-3" aria-hidden="true">{docRef}</p>}
+    </div>
   </div>
 </section>

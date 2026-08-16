@@ -1,0 +1,74 @@
+---
+// Trust band — the credibility register as verified-gated slots.
+// Counters come from verifiedMetrics (structural TGA gate); the milestone
+// rail renders only verifiedMilestones. When the gated lists are empty the
+// band still reads complete: two labelled plates state the publication
+// standard instead of promising content. Nothing here can ever render an
+// unverified number — every list is a filtered import.
+import { verifiedMetrics } from '../../data/site-metrics';
+import { verifiedMilestones } from '../../data/pages/about';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const counters = verifiedMetrics.filter((m) => ['systems', 'regions', 'divisions', 'supply'].includes(m.id));
+---
+
+<div class={className}>
+  <!-- The cleared claims — same derived figures everywhere on the site -->
+  <dl class="grid gap-x-6 gap-y-10 border-y border-hairline py-10 sm:grid-cols-2 md:grid-cols-4" data-reveal-group>
+    {
+      counters.map((m) => (
+        <div data-reveal-item>
+          <dd class="font-display text-5xl font-bold tabular-nums text-platinum md:text-6xl">
+            {m.kind === 'count' ? <span data-count={m.value}>{m.value}</span> : m.value}
+          </dd>
+          <dt class="readout mt-3 text-xs text-ink-3">{m.label}</dt>
+        </div>
+      ))
+    }
+  </dl>
+
+  <!-- The verified-gated rail: milestones render as each clears review -->
+  {
+    verifiedMilestones.length > 0 && (
+      <ol class="mt-12">
+        {verifiedMilestones.map((m) => (
+          <li class="grid grid-cols-[6rem_1fr] gap-6 border-t border-hairline py-8 last:border-b">
+            <span class="font-display text-3xl font-bold tabular-nums">{m.year}</span>
+            <div>
+              <p class="readout md:text-sm">{m.label}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    )
+  }
+
+  <!-- The standard, stated — complete today, slots for what verifies later -->
+  <div class="mt-12 grid gap-px border border-hairline bg-hairline sm:grid-cols-2" data-reveal>
+    <div class="relative min-h-36 bg-raised p-7">
+      <span class="corner corner-tr border-hairline-strong" aria-hidden="true"></span>
+      <p class="readout text-xs text-ink-3">Registrations</p>
+      <p class="mt-4 text-[1rem] leading-relaxed text-ink-2">
+        ARTG references and regulatory milestones are published here as each is
+        verified.
+      </p>
+    </div>
+    <div class="relative min-h-36 bg-raised p-7">
+      <span class="corner corner-tr border-hairline-strong" aria-hidden="true"></span>
+      <p class="readout text-xs text-ink-3">Publications</p>
+      <p class="mt-4 text-[1rem] leading-relaxed text-ink-2">
+        Research activity is recorded on the ledger once compliance review
+        completes.
+        <a href="/research" class="readout tap-target-sm ml-1 text-xs text-ink transition-colors duration-300 hover:text-platinum">Research →</a>
+      </p>
+    </div>
+  </div>
+
+  <p class="readout mt-8 text-xs leading-relaxed text-ink-3" data-reveal>
+    Company milestones and registrations are published as each is verified.
+  </p>
+</div>
