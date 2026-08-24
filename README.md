@@ -28,11 +28,11 @@ QA params: `?motion=off` · `?tier=1\|2\|3` · `?morph=1` · `?forcevisible`
 
 ## Repository layout
 
-- `src/` — the site (see `CLAUDE.md` for the full architecture map)
+- `src/` — the site: layouts, components (hero shader, sections, UI), motion system, data modules, styles
 - `content-archive/` — complete capture of the legacy WordPress site: markdown + structured JSON (real product spec tables), full-res assets, screenshots, migration inventory. **Source material only — never imported by the site.**
 - `cms/schemas/` — Sanity schema stubs for the future Studio
 - `brand/` — source brand assets (brand board, logo originals)
 
 ## Conventions
 
-Deploys promote via Git pushes once the repo is connected to the Vercel project (or `vercel deploy --prod` from local). `noindex` stays until DNS cutover. All copy passes brand-voice rewrite + TGA compliance review before publishing — see `CLAUDE.md`.
+Deploys promote via Git pushes once the repo is connected to the Vercel project (or `vercel deploy --prod` from local). `noindex` stays until DNS cutover. All copy passes brand-voice rewrite + TGA compliance review before publishing.
