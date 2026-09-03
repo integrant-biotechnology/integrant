@@ -88,7 +88,7 @@ const workflow = [
   <section class="relative overflow-hidden bg-base text-ink">
     <NeuralField variant="dense" seed={227} />
     <div class="relative mx-auto max-w-6xl px-6 py-20 md:py-36">
-      <p class="readout md:text-sm text-ink-2" data-reveal>01 — The notebook</p>
+      <p class="eyebrow" data-reveal>01 — The notebook</p>
       <h2 class="display-1 mt-6 max-w-2xl" data-reveal>The note, drafted live.</h2>
 
       <div class="mt-14 flex justify-center" data-reveal aria-hidden="true">
@@ -124,7 +124,7 @@ const workflow = [
     <NeuralField variant="lattice" seed={229} />
     <div class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 md:py-32">
       <div>
-        <p class="readout md:text-sm text-ink-2" data-reveal>02 — The app</p>
+        <p class="eyebrow" data-reveal>02 — The app</p>
         <h2 class="display-1 mt-6" data-reveal>{app.title}</h2>
         <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{app.summary}</p>
         <div class="mt-10" data-reveal>
@@ -146,7 +146,7 @@ const workflow = [
           {
             (app.body ?? []).map((paragraph, i) => (
               <li class="flex gap-5 border-b border-hairline pb-6" data-reveal>
-                <span class="readout mt-1 text-xs text-ink-3">{String(i + 1).padStart(2, '0')}</span>
+                <span class="readout mt-1 text-xs text-ink-2">{String(i + 1).padStart(2, '0')}</span>
                 <p class="leading-relaxed text-ink-2">{paragraph}</p>
               </li>
             ))
@@ -164,7 +164,7 @@ const workflow = [
        instrument reusing the page's existing CSS animations. -->
   <section class="relative bg-base text-ink">
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="readout md:text-sm text-ink-2" data-reveal>03 — The workflow</p>
+      <p class="eyebrow" data-reveal>03 — The workflow</p>
       <h2 class="display-1 mt-6 max-w-2xl" data-reveal>From audio to signed note.</h2>
 
       <ol class="mt-16 border-l border-hairline">
@@ -197,7 +197,7 @@ const workflow = [
                   </p>
                 </div>
                 <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2 md:text-xl">{stage.copy}</p>
-                <p class="readout mt-5 text-xs text-ink-3">{stage.io}</p>
+                <p class="readout mt-5 text-xs text-ink-2">{stage.io}</p>
               </div>
 
               <div class="flex items-center md:justify-end" aria-hidden="true">
@@ -209,7 +209,7 @@ const workflow = [
                       <i style="--i:2" />
                       <i style="--i:3" />
                     </span>
-                    <span class="readout text-xs text-ink-3">Listening</span>
+                    <span class="readout text-xs text-ink-2">Listening</span>
                   </span>
                 )}
                 {stage.label === 'Structure' && (
@@ -230,7 +230,7 @@ const workflow = [
                     <svg viewBox="0 0 160 44" class="w-36 text-ink" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" data-draw>
                       <path d="M 6 30 C 22 10, 34 40, 52 24 C 70 8, 76 36, 96 22 C 108 14, 118 30, 132 20 C 140 15, 146 24, 154 18" />
                     </svg>
-                    <span class="readout text-xs text-ink-3">Signed — surgeon</span>
+                    <span class="readout text-xs text-ink-2">Signed — surgeon</span>
                   </span>
                 )}
               </div>
@@ -239,7 +239,7 @@ const workflow = [
         }
       </ol>
 
-      <p class="readout mt-12 max-w-3xl border-t border-hairline pt-8 text-xs leading-relaxed text-ink-3" data-reveal>
+      <p class="readout mt-12 max-w-3xl border-t border-hairline pt-8 text-xs leading-relaxed text-ink-2" data-reveal>
         EVERY DRAFT REMAINS A DRAFT UNTIL THE SURGEON SIGNS IT
       </p>
     </div>
@@ -249,7 +249,7 @@ const workflow = [
   <section data-contrast class="relative bg-base text-ink">
     <NeuralField variant="dense" seed={233} />
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="readout md:text-sm text-ink-2" data-reveal>04 — In development</p>
+      <p class="eyebrow" data-reveal>04 — In development</p>
       <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{rd.summary}</p>
 
       <div class="mt-12 grid gap-px border border-hairline bg-hairline sm:grid-cols-3">
@@ -257,7 +257,7 @@ const workflow = [
           ['IMPLANT SYSTEMS', 'CLINICAL SOFTWARE', 'BIOLOGICS'].map((area) => (
             <div class="relative flex min-h-48 flex-col justify-between bg-base p-7" data-reveal>
               <p class="font-display text-xl font-semibold text-ink-2">{area}</p>
-              <p class="readout text-xs text-ink-3">GATED · DISCLOSED ON RELEASE</p>
+              <p class="readout text-xs text-ink-2">GATED · DISCLOSED ON RELEASE</p>
               <span class="corner corner-tr border-hairline-strong" aria-hidden="true" />
             </div>
           ))

@@ -33,7 +33,7 @@ const pillars = [
 <section id="platform" class="relative bg-base text-ink">
   <NeuralField variant="lattice" seed={23} />
   <div class="mx-auto max-w-6xl px-6 py-20 md:py-36">
-    <p class="readout md:text-sm text-ink-2" data-reveal>02 — The platform</p>
+    <p class="eyebrow" data-reveal>02 — The platform</p>
     <h2 class="display-1 mt-6" data-reveal>Four disciplines. One system.</h2>
 
     {/* Editorial index rows, not identical boxes: each discipline reads as a
@@ -48,8 +48,8 @@ const pillars = [
             <p class="font-display text-2xl font-bold tabular-nums text-platinum">{p.index}</p>
             <h3 class="display-2 text-ink">{p.title}</h3>
             <div class="flex flex-col justify-between gap-6">
-              <p class="text-[1rem] leading-relaxed text-ink-2 md:text-lg">{p.body}</p>
-              <p class="readout text-xs text-ink-3">{p.tag}</p>
+              <p class="text-body leading-relaxed text-ink-2 md:text-lg">{p.body}</p>
+              <p class="readout text-xs text-ink-2">{p.tag}</p>
             </div>
           </article>
         ))

@@ -102,7 +102,7 @@ const hasRail = hasAside || stack.length > 0;
         <div class="flex items-baseline justify-between gap-6 border-b border-hairline pb-5">
           {crumbs.length > 0 ? (
             <nav aria-label="Breadcrumb">
-              <ol class="readout flex flex-wrap items-center gap-2 text-xs text-ink-3">
+              <ol class="readout flex flex-wrap items-center gap-2 text-xs text-ink-2">
                 {crumbs.map((crumb, i) => (
                   <>
                     {i > 0 && <li aria-hidden="true">/</li>}
@@ -137,7 +137,7 @@ const hasRail = hasAside || stack.length > 0;
       ]}
     >
       <div>
-        {kicker && <p class="readout text-xs text-ink-2 md:text-sm">{kicker}</p>}
+        {kicker && <p class="eyebrow">{kicker}</p>}
         {/* The H1 is the LCP element on every interior page — never animate it */}
         <h1 class:list={['display-hero max-w-[16ch]', kicker && 'mt-5']}>{title}</h1>
         {lede && (
@@ -157,8 +157,8 @@ const hasRail = hasAside || stack.length > 0;
                 <div class="flex items-baseline justify-between gap-6 py-3.5">
                   {row.label ? (
                     <>
-                      <dt class="readout text-xs text-ink-3">{row.label}</dt>
-                      <dd class="font-display text-[1rem] font-semibold text-ink">{row.value}</dd>
+                      <dt class="readout text-xs text-ink-2">{row.label}</dt>
+                      <dd class="font-display text-body font-semibold text-ink">{row.value}</dd>
                     </>
                   ) : (
                     <dd class="readout text-xs text-ink-2">{row.value}</dd>
@@ -177,7 +177,7 @@ const hasRail = hasAside || stack.length > 0;
         <span class="readout text-xs">Scroll</span>
         <span class="block h-px w-10 bg-ink-3"></span>
       </span>
-      {docRef && <p class="readout text-xs text-ink-3" aria-hidden="true">{docRef}</p>}
+      {docRef && <p class="readout text-xs text-ink-2" aria-hidden="true">{docRef}</p>}
     </div>
   </div>
 </section>

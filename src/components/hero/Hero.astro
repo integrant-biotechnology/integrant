@@ -41,23 +41,25 @@ import HeroMetrics from './HeroMetrics.astro';
   ></canvas>
 
   <!-- Content -->
-  <div class="hero-content relative z-10 mx-auto max-w-5xl px-6 pb-48 pt-28 text-center md:pb-40">
+  <!-- Bottom padding reserves the metrics strip (absolute, below): on phones the
+       strip is a 2×2 grid with wrapping 17px labels, ~17rem tall; one row from md. -->
+  <div class="hero-content relative z-10 mx-auto max-w-5xl px-6 pb-[15.5rem] pt-20 text-center md:pb-40 md:pt-28">
     {/* Mark alone — the wordmark already lives in the nav directly above;
         repeating it here read as a template lockup, not a brand moment */}
-    <BrandMark size={44} class="hero-logo boot-hide mx-auto mb-8 text-ink md:mb-9" label="Integrant" />
-    <p class="hero-eyebrow boot-hide readout text-ink-3">
-      Orthopaedic Med-Tech · Bio-Tech · AI
+    <BrandMark size={44} class="hero-logo boot-hide mx-auto mb-6 text-ink md:mb-9" label="Integrant" />
+    <p class="hero-eyebrow boot-hide eyebrow text-ink-2">
+      Orthopaedic <span class="whitespace-nowrap">Med-Tech</span> · <span class="whitespace-nowrap">Bio-Tech</span> · AI
     </p>
-    <h1 class="hero-h1 boot-hide display-hero mt-6 text-ink">
+    <h1 class="hero-h1 boot-hide display-hero mt-5 text-ink md:mt-6">
       Where biology becomes intelligence.
     </h1>
-    <p class="hero-sub boot-hide mx-auto mt-6 max-w-2xl text-lg text-ink-2 md:text-xl">
+    <p class="hero-sub boot-hide mx-auto mt-5 max-w-2xl text-lg text-ink-2 md:mt-6 md:text-xl">
       Implant systems, biologics and AI clinical software — one platform,
       engineered in Sydney for Australian and New Zealand theatres.
     </p>
-    <div class="hero-cta-wrap boot-hide mt-9 flex flex-wrap items-center justify-center gap-4">
+    <div class="hero-cta-wrap boot-hide mt-8 flex flex-wrap items-center justify-center gap-4 md:mt-9">
       <a href="#platform" class="cta-solid" data-magnetic>Explore the platform</a>
-      <a href="/contact" class="cta-ghost">Request a meeting</a>
+      <a href="/contact" class="cta-ghost" data-event="Request Meeting" data-event-location="hero">Request a meeting</a>
     </div>
   </div>
 

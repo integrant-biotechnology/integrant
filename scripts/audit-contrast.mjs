@@ -15,8 +15,8 @@ const THEMES = {
     surfaces: { base: '#050505', raised: '#0c0c0c', inset: '#131313' },
     inks: {
       ink: 'rgba(245,245,242,1)',
-      'ink-2': 'rgba(245,245,242,0.72)',
-      'ink-3': 'rgba(245,245,242,0.58)',
+      'ink-2': 'rgba(245,245,242,0.78)',
+      'ink-3': 'rgba(245,245,242,0.66)',
       platinum: 'rgba(207,207,207,1)',
     },
   },
@@ -24,8 +24,8 @@ const THEMES = {
     surfaces: { base: '#ffffff', raised: '#fafafa', inset: '#f2f2f2' },
     inks: {
       ink: 'rgba(10,10,10,1)',
-      'ink-2': 'rgba(10,10,10,0.74)',
-      'ink-3': 'rgba(10,10,10,0.64)',
+      'ink-2': 'rgba(10,10,10,0.78)',
+      'ink-3': 'rgba(10,10,10,0.7)',
       platinum: 'rgba(90,90,90,1)',
     },
   },
@@ -33,14 +33,14 @@ const THEMES = {
     surfaces: { base: '#000000', raised: '#070707', inset: '#0e0e0e' },
     inks: {
       ink: 'rgba(245,245,242,1)',
-      'ink-2': 'rgba(245,245,242,0.72)',
-      'ink-3': 'rgba(245,245,242,0.58)',
+      'ink-2': 'rgba(245,245,242,0.78)',
+      'ink-3': 'rgba(245,245,242,0.66)',
       platinum: 'rgba(207,207,207,1)',
     },
   },
 };
 
-// ink-3 carries readouts/labels, which are uppercase Rajdhani at ~11px —
+// ink-3 carries the few remaining meta readouts (legal row, coordinates) —
 // small text, so it is held to the 4.5:1 bar, not the 3:1 large-text bar.
 const MIN = 4.5;
 

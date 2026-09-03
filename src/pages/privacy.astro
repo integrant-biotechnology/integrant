@@ -1,0 +1,83 @@
+---
+// /privacy — a factual statement of what the site collects, written to be
+// true of the build as shipped: cookieless analytics (Plausible, first-party
+// served), no advertising or profiling, contact-form data delivered by
+// email to the Integrant desk. DRAFT — for client legal review before DNS
+// cutover (docs/client-inputs.md #20). Keep every sentence verifiable
+// against the code; do not add policy the site does not implement.
+import Base from '../layouts/Base.astro';
+import SubpageHero from '../components/SubpageHero.astro';
+
+const SECTIONS = [
+  {
+    index: '01',
+    title: 'What we collect',
+    body: [
+      'Integrant does not use advertising trackers, social plug-ins or cross-site profiling of any kind.',
+      'Site analytics are provided by Plausible, a privacy-first service hosted in the European Union. It records aggregate page views, referrers, country, device type and the actions people take on this site — such as opening the contact page. It does not use cookies, does not store personal information, and does not identify individual visitors.',
+      'The site keeps two small settings in your browser only: your chosen light or dark theme, and — on the clinical images page — a per-session confirmation that you are a healthcare professional. Neither leaves your device.',
+    ],
+  },
+  {
+    index: '02',
+    title: 'When you contact us',
+    body: [
+      'If you write to us through the contact form or by email, the details you provide — your name, email address and message — are delivered to the Integrant team and used only to respond to your enquiry.',
+      'We do not sell, rent or share those details with third parties, and we keep them only for as long as needed to handle your enquiry and any follow-up you request.',
+    ],
+  },
+  {
+    index: '03',
+    title: 'Clinical material',
+    body: [
+      'Any clinical imagery published on this site is shown only with documented patient consent and is intended for healthcare professionals. Nothing on this site is a substitute for professional medical advice.',
+    ],
+  },
+  {
+    index: '04',
+    title: 'Your rights and our details',
+    body: [
+      'Integrant Pty Ltd, 5 Ward Avenue, Potts Point NSW 2011, Australia, is the entity responsible for this site under the Australian Privacy Act 1988.',
+      'To ask what we hold about you, to have it corrected or deleted, or to raise any privacy concern, email admin@integrant.com.au. We will respond within a reasonable time.',
+    ],
+  },
+] as const;
+---
+
+<Base
+  title="Privacy — Integrant"
+  description="How the Integrant website handles analytics and contact enquiries: cookieless, privacy-first, no advertising trackers."
+>
+  <SubpageHero
+    title="Privacy."
+    kicker="Site privacy statement"
+    lede="Cookieless analytics, no advertising trackers, and enquiries handled by people."
+    crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Privacy' }]}
+    docRef="Doc 09 — Privacy"
+    seed={211}
+    variant="lattice"
+  />
+
+  <section class="relative bg-base text-ink">
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-28">
+      <div class="divide-y divide-hairline border-y border-hairline">
+        {
+          SECTIONS.map((s) => (
+            <article class="grid gap-6 py-12 md:grid-cols-[8rem_1fr] md:gap-12 md:py-16" data-reveal>
+              <p class="readout text-ink-2">{s.index}</p>
+              <div>
+                <h2 class="font-display text-3xl font-bold text-ink md:text-4xl">{s.title}</h2>
+                <div class="mt-6 max-w-3xl space-y-5">
+                  {s.body.map((p) => (
+                    <p class="text-lg leading-relaxed text-ink-2">{p}</p>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+      <p class="readout mt-10 text-ink-2" data-reveal>Last reviewed — September 2026 · Statement under review by Integrant’s advisers</p>
+    </div>
+  </section>
+</Base>

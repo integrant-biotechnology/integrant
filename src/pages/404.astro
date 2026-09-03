@@ -8,7 +8,7 @@ const suggestions = PRODUCTS.slice(0, 3);
 ---
 
 <Base title="Page not found — Integrant" description="The page you requested could not be found." omitCanonical>
-  <section data-contrast class="relative flex min-h-screen items-center overflow-hidden bg-base text-ink">
+  <section data-contrast data-route="404" class="relative flex min-h-screen items-center overflow-hidden bg-base text-ink">
   <NeuralField variant="dense" seed={71} />
     <div
       class="pointer-events-none absolute inset-0"
@@ -20,7 +20,7 @@ const suggestions = PRODUCTS.slice(0, 3);
     <span class="corner corner-br border-hairline-strong" aria-hidden="true"></span>
 
     <div class="relative mx-auto w-full max-w-6xl px-6 py-32">
-      <p class="readout text-ink-3">Error 404</p>
+      <p class="readout text-ink-2">Error 404</p>
       <h1 class="mt-8 font-display text-6xl font-bold leading-[0.95] md:text-8xl">
         This page has<br />no signal.
       </h1>
@@ -35,7 +35,7 @@ const suggestions = PRODUCTS.slice(0, 3);
       </div>
 
       <div class="mt-20 border-t border-hairline pt-10">
-        <p class="readout text-ink-3">Popular systems</p>
+        <p class="readout text-ink-2">Popular systems</p>
         <ul class="mt-6 flex flex-wrap gap-x-10 gap-y-4">
           {
             suggestions.map((product) => (

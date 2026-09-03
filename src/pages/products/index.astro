@@ -51,7 +51,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
     >
     </div>
     <div class="relative mx-auto max-w-6xl px-6 pb-20 pt-40 md:pb-24 md:pt-48">
-      <p class="readout md:text-sm text-ink-2">Catalogue</p>
+      <p class="eyebrow">Catalogue</p>
       <h1 class="display-hero mt-6 max-w-4xl">Precision, instrument by instrument.</h1>
       <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2 md:text-xl">
         Two divisions, one engineering standard — implant systems and
@@ -73,7 +73,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                 </span>
                 <span class="readout text-xs text-ink md:text-sm">{line.label}</span>
               </span>
-              <span class="readout text-xs text-ink-3 transition-colors duration-300 group-hover:text-ink">
+              <span class="readout text-xs text-ink-2 transition-colors duration-300 group-hover:text-ink">
                 <span data-count={PRODUCTS.filter((p) => p.line === line.id).length}>
                   {PRODUCTS.filter((p) => p.line === line.id).length}
                 </span>{' '}
@@ -98,7 +98,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
         >
           <NeuralField variant={lineIndex % 2 === 0 ? 'lattice' : 'imaging'} seed={83 + lineIndex * 6} />
           <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-            <p class="readout md:text-sm text-ink-2" data-reveal>
+            <p class="eyebrow" data-reveal>
               {String(lineIndex + 1).padStart(2, '0')} — {line.label} ·{' '}
               {lineProducts.length} systems
             </p>
@@ -118,11 +118,14 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                   </a>
                 </h3>
                 <p class="mt-4 max-w-md text-lg leading-relaxed text-ink-2">{lead.tagline}</p>
-                <p class="readout mt-6 text-xs text-ink-3">{specLine(lead)}</p>
+                <p class="readout mt-6 text-xs text-ink-2">{specLine(lead)}</p>
                 <p class="mt-8">
                   <a
                     href={`/products/${lead.line}/${lead.slug}`}
                     class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 group-hover:text-ink"
+                    data-event="View System"
+                    data-event-product={lead.slug}
+                    data-event-location="catalogue"
                   >
                     View system →
                   </a>
@@ -143,8 +146,8 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                       />
                     </div>
                     <figcaption class="flex items-center justify-between border-t border-hairline px-5 py-3">
-                      <span class="readout text-xs text-ink-3">Specimen — first-party capture</span>
-                      <span class="readout text-xs text-ink-3">{lead.name}</span>
+                      <span class="readout text-xs text-ink-2">Specimen — first-party capture</span>
+                      <span class="readout text-xs text-ink-2">{lead.name}</span>
                     </figcaption>
                   </figure>
                 ) : (
@@ -197,11 +200,11 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                       <span class="mt-3 block font-display text-3xl font-bold text-ink md:text-4xl">
                         {product.name}
                       </span>
-                      <span class="mt-3 block text-[1rem] leading-relaxed text-ink-2">
+                      <span class="mt-3 block text-body leading-relaxed text-ink-2">
                         {product.tagline}
                       </span>
                     </span>
-                    <span class="readout mt-8 block text-xs text-ink-3 transition-colors duration-300 group-hover:text-ink">
+                    <span class="readout mt-8 block text-xs text-ink-2 transition-colors duration-300 group-hover:text-ink">
                       View system →
                     </span>
                   </span>
@@ -218,7 +221,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
   <section data-contrast class="relative overflow-hidden bg-base text-ink">
     <NeuralField variant="edge" seed={107} />
     <div class="relative mx-auto max-w-6xl px-6 py-20 md:py-28">
-      <p class="readout md:text-sm text-ink-2" data-reveal>Operating with Integrant</p>
+      <p class="eyebrow" data-reveal>Operating with Integrant</p>
       <h2 class="display-1 mt-6 max-w-3xl" data-reveal>
         Consult, specify, theatre, document.
       </h2>

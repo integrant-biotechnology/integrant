@@ -28,6 +28,12 @@ const {
   omitCanonical = false,
 } = Astro.props;
 
+// Analytics (Plausible) renders only when the build carries the site domain —
+// production on Vercel. Local and QA builds ship no tag at all. The script is
+// served first-party via the /stats/* rewrites in vercel.json, and the
+// `plausible` queue stub lets goal events fire before the script has loaded.
+const plausibleDomain = (import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN ?? '').trim();
+
 const ogImage = new URL(ogImagePath, Astro.site ?? Astro.url);
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
 
@@ -78,6 +84,14 @@ const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="generator" content={Astro.generator} />
     <script type="application/ld+json" set:html={jsonLdPayload} />
+    {
+      plausibleDomain && (
+        <>
+          <script is:inline defer data-domain={plausibleDomain} data-api="/stats/api/event" src="/stats/js/script.js" />
+          <script is:inline set:html={`window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)}`} />
+        </>
+      )
+    }
     <script is:inline>
       // Theme resolution runs FIRST and synchronously — this is the only
       // thing standing between the visitor and a flash of the wrong theme.
@@ -153,7 +167,7 @@ const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph
             conversation.
           </p>
           <div class="mt-10" data-reveal>
-            <a href="/contact" class="cta-solid" data-magnetic>Get in touch</a>
+            <a href="/contact" class="cta-solid" data-magnetic data-event="Request Meeting" data-event-location="footer">Get in touch</a>
           </div>
         </div>
 
@@ -163,22 +177,24 @@ const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph
           <div>
             <a href="/" class="tap-target inline-flex items-center gap-3" aria-label="Integrant — home">
               <BrandMark size={30} class="text-ink" />
-              <span class="font-display text-[15px] font-semibold uppercase text-ink" style="letter-spacing: var(--tracking-nav);">
+              <span class="font-display text-[18px] font-semibold uppercase text-ink" style="letter-spacing: var(--tracking-nav);">
                 Integrant
               </span>
             </a>
-            <p class="mt-6 max-w-[26ch] text-[15px] leading-relaxed text-ink-2">
+            <p class="mt-6 max-w-[26ch] text-[18px] leading-relaxed text-ink-2">
               Orthopaedic med-tech, bio-tech and AI — one platform, engineered
               in Sydney.
             </p>
             <address class="mt-8 space-y-2 not-italic">
-              <p class="readout text-xs leading-relaxed text-ink-3">
+              <p class="readout text-xs leading-relaxed text-ink-2">
                 5 Ward Avenue<br />Potts Point NSW 2011
               </p>
               <p class="readout text-xs text-ink-3">33.87°S · 151.22°E</p>
               <a
                 href="mailto:admin@integrant.com.au"
                 class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink"
+                data-event="Email Click"
+                data-event-location="footer"
               >
                 admin@integrant.com.au
               </a>
@@ -215,11 +231,11 @@ const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph
                 },
               ].map((column) => (
                 <div>
-                  <p class="readout text-ink-3">{column.heading}</p>
+                  <p class="readout text-ink-2">{column.heading}</p>
                   <ul class="mt-5 space-y-1.5">
                     {column.links.map((link) => (
                       <li>
-                        <a href={link.href} class="tap-target-sm text-[15px] text-ink-2 transition-colors duration-300 hover:text-ink">
+                        <a href={link.href} class="tap-target-sm text-[18px] text-ink-2 transition-colors duration-300 hover:text-ink">
                           {link.label}
                         </a>
                       </li>
@@ -234,8 +250,11 @@ const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph
         <!-- Legal row -->
         <div class="mt-16 flex flex-col items-start justify-between gap-6 border-t border-hairline pb-6 pt-8 md:flex-row md:items-center">
           <p class="readout text-xs text-ink-3">© 2026 Integrant Pty Ltd · Sydney, Australia</p>
-          <div class="flex items-center gap-8">
+          <div class="flex flex-wrap items-center gap-8">
             <p class="readout hidden text-xs text-ink-3 sm:block">Precision in every dimension</p>
+            <a href="/privacy" class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink">
+              Privacy
+            </a>
             <a href="#main" class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink">
               Top ↑
             </a>
@@ -258,6 +277,8 @@ const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph
 
     <script>
       import { initMotion } from '../scripts/motion';
+      import { initAnalytics } from '../scripts/analytics';
+      initAnalytics();
       initMotion();
     </script>
   </body>
