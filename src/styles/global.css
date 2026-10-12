@@ -572,13 +572,17 @@
     letter-spacing: -0.005em;
   }
 
-  /* Light-sweep headline: a band of light crossing dark text (background-clip) */
+  /* Light-sweep headline: a band of light crossing dark text (background-clip).
+     Uses --color-ink, not currentColor: the rule below sets this element's
+     own `color` to transparent for the clip trick, and currentColor always
+     resolves against that same (now-transparent) value — it can't reach
+     back to what the color would otherwise have been. */
   .sweep {
     background-image: linear-gradient(
       100deg,
-      currentColor 42%,
+      var(--color-ink) 42%,
       var(--color-platinum) 50%,
-      currentColor 58%
+      var(--color-ink) 58%
     );
     background-size: 260% 100%;
     background-position: 115% 0;

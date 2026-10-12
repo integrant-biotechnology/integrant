@@ -260,6 +260,10 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
     .catalogue-card:hover .card-img {
       transform: scale(1.03);
     }
+    /* Only fade the base image out when a hover replacement actually exists */
+    .catalogue-card:hover .card-img:has(+ .card-img-alt) {
+      opacity: 0;
+    }
     .catalogue-card:hover .card-img-alt {
       opacity: 1;
       transform: scale(1.03);

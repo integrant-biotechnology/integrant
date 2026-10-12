@@ -149,6 +149,10 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
     .group:hover .showcase-img {
       transform: scale(1.03);
     }
+    /* Only fade the base image out when a hover replacement actually exists */
+    .group:hover .showcase-img:has(+ .showcase-img-alt) {
+      opacity: 0;
+    }
     /* Second view crossfades in over the first where it exists — pure CSS */
     .group:hover .showcase-img-alt {
       opacity: 1;
