@@ -1,38 +1,78 @@
-# Integrant — Website Rebuild
+# Integrant
 
-Investor-grade rebuild of [integrant.com.au](https://integrant.com.au) — orthopaedic med-tech, bio-tech and AI clinical software, unified as one platform story: **“Where biology becomes intelligence.”**
+Website for Integrant Biotechnology — orthopaedic med-tech, bio-tech and AI clinical software, presented as one platform.
 
-**Live staging:** https://integrant.vercel.app · **Design concept (Figma):** [Neural Genesis](https://www.figma.com/design/OxDexcGVcMOJSoTtSArabs)
+**Live site:** [integrant.com.au](https://integrant.com.au)
 
-## The experience
+## Overview
 
-- **Cinematic hero** — a WebGL theatre-lamp power-on reveals a living biological neural field (OGL, three GPU passes, fully procedural vertex animation)
-- **The morph** — on scroll, biological neurons reorganize into an artificial neural-network lattice, then bloom to white as the page hands off from darkness to a bright, airy content world
-- **Strict monochrome brand system** — #000/#FFF only, Rajdhani + Titillium Web, hairlines, film grain
-- **Engineered to degrade** — capability tiers T0–T3 (static → CSS rays → WebGL), FPS auto-downgrade, context-loss recovery, one global reduced-motion gate; ~74KB gz total JS
+- **Cinematic hero** — a WebGL scene in which a biological neural field reorganises into an artificial neural-network lattice as the visitor scrolls. It is fully procedural: three GPU passes with all animation computed in vertex shaders.
+- **Strict monochrome brand system** — black, white and a grayscale ramp only, set in Rajdhani and Titillium Web, with dark and light themes.
+- **Product catalogue** — twelve product detail pages generated from typed data modules, alongside pages for surgeons, partners, research and innovation.
+- **Engineered to degrade** — capability tiers from a static image through CSS to full WebGL, automatic frame-rate downgrade, context-loss recovery and a single reduced-motion gate.
 
 ## Stack
 
-Astro 5 (static) · Tailwind CSS v4 · OGL · GSAP + ScrollTrigger + SplitText · Lenis · Vercel
+| | |
+|---|---|
+| Framework | [Astro 7](https://astro.build) — static output |
+| Styling | Tailwind CSS 4 — semantic tokens in `src/styles/global.css` |
+| Graphics and motion | OGL, GSAP (ScrollTrigger, SplitText), Lenis |
+| Analytics | Plausible, proxied first-party |
+| Hosting | Vercel |
 
-## Commands
+## Getting started
+
+Use the Node.js version pinned in `.nvmrc`.
+
+```bash
+npm install
+npm run dev
+```
+
+The site runs at `http://localhost:4321`.
 
 | Command | Purpose |
 |---|---|
-| `npm run dev` | dev server on `:4321` |
-| `npm run build` | static production build to `dist/` |
-| `npm run scrape` | full legacy-site capture into `content-archive/` |
-| `npm run scrape:diff` | detect legacy content drift vs the archive |
+| `npm run dev` | Start the development server |
+| `npm run build` | Static production build to `dist/` |
+| `npm run preview` | Preview the production build |
+| `npm run qa` | Build, then run the contrast, redirect and type-scale audits |
+| `npm run qa:sweep` | Layout, touch-target and theme checks across routes and viewport widths |
+| `npm run qa:analytics` | Verify that each analytics event fires once with the expected properties |
+| `npm run validate:redirects` | Check every redirect destination against the build output |
 
-QA params: `?motion=off` · `?tier=1\|2\|3` · `?morph=1` · `?forcevisible`
+Debug parameters for local QA: `?motion=off` forces the reduced-motion experience, `?tier=1|2|3` forces a graphics capability tier, `?morph=1` starts the hero in its final state.
 
-## Repository layout
+## Project structure
 
-- `src/` — the site: layouts, components (hero shader, sections, UI), motion system, data modules, styles
-- `content-archive/` — complete capture of the legacy WordPress site: markdown + structured JSON (real product spec tables), full-res assets, screenshots, migration inventory. **Source material only — never imported by the site.**
-- `cms/schemas/` — Sanity schema stubs for the future Studio
-- `brand/` — source brand assets (brand board, logo originals)
+```text
+src/
+  layouts/      Base layout: metadata, fonts, theme resolution
+  components/   Navigation, hero (shader and bridge), page sections, UI primitives
+  pages/        Routes, including the product catalogue and detail pages
+  data/         Typed content modules that drive the pages
+  scripts/      Motion system and analytics
+  styles/       Design tokens for both themes
+api/            Serverless function behind the contact form
+cms/schemas/    Content schemas for a future CMS
+scripts/        Build, audit and QA tooling
+public/         Static assets: brand marks, share images, product photography
+brand/          Source brand assets
+content-archive/ Capture of the previous site, kept as reference; never imported by the site
+```
 
 ## Conventions
 
-Deploys promote via Git pushes once the repo is connected to the Vercel project (or `vercel deploy --prod` from local). `noindex` stays until DNS cutover. All copy passes brand-voice rewrite + TGA compliance review before publishing.
+- **Theming** — components use semantic colour tokens only; raw colour utilities are not used, so every surface responds to both themes.
+- **Accessibility** — every ink and surface pairing is audited to WCAG AA, interactive elements have a 44px minimum hit area, and all motion sits behind a reduced-motion gate.
+- **Type scale** — no visible text is set below 16px on desktop or 15px on phones; the audit in `npm run qa` enforces this.
+- **Deployment** — pushes to `main` deploy to production.
+
+## Compliance
+
+Integrant's products are medical devices, so all published copy is written to the TGA Therapeutic Goods Advertising Code: no therapeutic claims, no outcome promises and no comparative language. Research and clinical-image sections render only entries that have been marked as compliance-reviewed and consent-confirmed.
+
+## Licence
+
+No open-source licence is granted. All rights are reserved by the respective owners.
