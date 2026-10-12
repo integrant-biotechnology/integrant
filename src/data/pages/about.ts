@@ -30,7 +30,8 @@ export const ABOUT = {
   },
   milestones: [
     // Nothing renders while verified === false. The verified rows are taken
-    // from the company's own published announcements (see src/data/news.ts);
+    // from the Australian Business Register (ABN active from 1 Apr 2015) and
+    // the company's own published announcements (see src/data/news.ts);
     // the rest wait on the client questionnaire (docs/client-inputs.md).
     { year: '2015', label: 'Integrant founded in Sydney', verified: true },
     { year: '', label: 'First implant system', verified: false },

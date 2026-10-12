@@ -34,7 +34,7 @@ export const SITE_METRICS: SiteMetric[] = [
     value: '2015',
     label: 'Founded',
     verified: true,
-    source: 'Company press release, Business Wire, 16 Apr 2026 ("founded in 2015")',
+    source: 'ABR: ABN 73 605 083 485 active from 1 Apr 2015; company press release, 16 Apr 2026',
   },
   {
     id: 'systems',

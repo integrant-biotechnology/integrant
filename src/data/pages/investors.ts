@@ -4,7 +4,8 @@
 // carries the date and URL of the public announcement it comes from, and the
 // page prints that date beside it. Nothing here is a forecast, a valuation
 // or an invitation to invest — add a row only when there is a published
-// source for it, and never a listing date, raise amount or price.
+// source for it, and never a raise amount, valuation or price. The planned
+// listing month is the one the company announced and has since confirmed.
 import { NEWS } from '../news';
 
 export interface SourcedFact {
@@ -31,6 +32,7 @@ export const INVESTORS = {
   },
   company: [
     { label: 'Entity', value: 'Integrant Pty Ltd' },
+    { label: 'ABN', value: '73 605 083 485' },
     { label: 'Founded', value: '2015' },
     { label: 'Headquarters', value: 'Sydney, Australia' },
     { label: 'Status', value: 'Privately held' },
@@ -40,6 +42,7 @@ export const INVESTORS = {
     { label: 'Series A', value: 'Closed', ...seriesA },
     { label: 'Proposed exchange', value: 'Nasdaq', ...ticker },
     { label: 'Reserved ticker symbol', value: 'INGT', ...ticker },
+    { label: 'Planned listing', value: 'November 2026', ...seriesA },
     { label: 'Pre-IPO placement', value: 'Being explored', ...seriesA },
   ] satisfies readonly SourcedFact[],
   pillars: [

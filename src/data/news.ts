@@ -27,13 +27,13 @@ export interface NewsItem {
 export const NEWS: NewsItem[] = [
   {
     slug: 'series-a-capital-raise-closed',
-    date: '2026-04-22',
+    date: '2026-04-24',
     title: 'Series A capital raise closed',
     summary:
       'Integrant has closed its Series A capital raise and is exploring a pre-IPO placement ahead of a planned Nasdaq listing.',
     body: [
       'Integrant has closed its Series A capital raise, which opened in April 2025. Financial terms were not disclosed.',
-      'Since the round opened, the company has reported progress in the development of its AI platform. In light of that progress, Integrant is exploring a pre-IPO placement ahead of a planned listing on the Nasdaq Stock Market under the proposed ticker symbol INGT.',
+      'Since the round opened, the company has reported progress in the development of its AI platform. In light of that progress, Integrant is exploring a pre-IPO placement ahead of a listing on the Nasdaq Stock Market planned for November 2026, under the proposed ticker symbol INGT.',
       'The company has said the proceeds of any placement would support final-stage development, operational scaling and market readiness.',
     ],
     category: 'Press release',
@@ -44,7 +44,7 @@ export const NEWS: NewsItem[] = [
   },
   {
     slug: 'nasdaq-ticker-symbol-ingt-reserved',
-    date: '2026-04-14',
+    date: '2026-04-16',
     title: 'Nasdaq ticker symbol INGT reserved',
     summary:
       'The Nasdaq Stock Market has granted Integrant the ticker symbol INGT, a step toward a planned initial public offering.',
@@ -69,6 +69,14 @@ export const getNews = (slug: string) => publishedNews.find((n) => n.slug === sl
 /** Company boilerplate — the "About Integrant" paragraph for media use. */
 export const BOILERPLATE =
   'Integrant is a Sydney-based orthopaedic company founded in 2015. It designs and supplies implant systems and instrumentation, graft materials and external fixation, and is developing AI clinical documentation software for the operating theatre. Integrant Pty Ltd supplies healthcare professionals across Australia and New Zealand.';
+
+/** Public company identifiers — ABN from the Australian Business Register. */
+export const COMPANY = {
+  legalName: 'Integrant Pty Ltd',
+  abn: '73 605 083 485',
+  abnRecord: 'https://abr.business.gov.au/ABN/View/73605083485',
+  linkedin: 'https://www.linkedin.com/company/integrantau/',
+} as const;
 
 export const MEDIA_CONTACT = {
   email: 'media@integrant.com.au',
