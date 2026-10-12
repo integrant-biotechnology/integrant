@@ -24,7 +24,7 @@ const isCurrent = (link: (typeof links)[number]) =>
       <a href="/" class="nav-link tap-target flex items-center gap-3" aria-label="Integrant — home">
         <BrandMark size={28} class="nav-mark" />
         <span
-          class="nav-wordmark font-display text-sm font-semibold uppercase"
+          class="nav-wordmark font-display text-[17px] font-semibold uppercase"
           style="letter-spacing: var(--tracking-nav);"
         >
           Integrant
@@ -50,7 +50,7 @@ const isCurrent = (link: (typeof links)[number]) =>
 
       <div class="flex items-center gap-2 sm:gap-4">
         <ThemeToggle />
-        <a href="/contact" class="nav-cta hidden sm:inline-flex">Request Meeting</a>
+        <a href="/contact" class="nav-cta hidden sm:inline-flex" data-event="Request Meeting" data-event-location="nav">Request Meeting</a>
 
         <!-- Mobile menu trigger -->
         <button
@@ -99,13 +99,15 @@ const isCurrent = (link: (typeof links)[number]) =>
         <a
           href="/contact"
           class="block border-b border-hairline py-5 font-display text-4xl font-bold text-ink"
+          data-event="Request Meeting"
+          data-event-location="mobile-menu"
         >
           Request Meeting
         </a>
       </li>
     </ul>
 
-    <p class="readout mobile-menu-item text-ink-3" style={`--i: ${links.length + 2}`}>
+    <p class="readout mobile-menu-item text-ink-2" style={`--i: ${links.length + 2}`}>
       Orthopaedic Med-Tech · Bio-Tech · AI
     </p>
   </nav>

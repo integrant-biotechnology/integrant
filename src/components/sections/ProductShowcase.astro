@@ -29,7 +29,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
 <section id="products" class="relative bg-raised text-ink">
   <NeuralField variant="lattice" seed={53} />
   <div class="mx-auto max-w-6xl px-6 py-20 md:py-36">
-    <p class="readout md:text-sm text-ink-2" data-reveal>03 — Product systems</p>
+    <p class="eyebrow" data-reveal>03 — Product systems</p>
     <h2 class="display-1 mt-6" data-reveal>Twelve systems, engineered as one.</h2>
 
     <!-- The feature stack: asymmetric, alternating -->
@@ -55,11 +55,14 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                 </a>
               </h3>
               <p class="mt-4 max-w-md text-lg leading-relaxed text-ink-2">{product.tagline}</p>
-              <p class="readout mt-6 text-xs text-ink-3">{specLine(product)}</p>
+              <p class="readout mt-6 text-xs text-ink-2">{specLine(product)}</p>
               <p class="mt-8">
                 <a
                   href={`/products/${product.line}/${product.slug}`}
                   class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 group-hover:text-ink"
+                  data-event="View System"
+                  data-event-product={product.slug}
+                  data-event-location="home-showcase"
                 >
                   View system →
                 </a>
@@ -94,8 +97,8 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                     )}
                   </div>
                   <figcaption class="flex items-center justify-between border-t border-hairline px-5 py-3">
-                    <span class="readout text-xs text-ink-3">Specimen — first-party capture</span>
-                    <span class="readout text-xs text-ink-3">{product.name}</span>
+                    <span class="readout text-xs text-ink-2">Specimen — first-party capture</span>
+                    <span class="readout text-xs text-ink-2">{product.name}</span>
                   </figcaption>
                 </figure>
               ) : (
@@ -122,8 +125,8 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
             <span class="font-display text-2xl font-semibold text-ink md:text-3xl">
               {product.name}
             </span>
-            <span class="readout hidden text-xs text-ink-3 md:block">{product.category}</span>
-            <span class="readout text-xs text-ink-3 transition-colors duration-300 group-hover:text-ink">
+            <span class="readout hidden text-xs text-ink-2 md:block">{product.category}</span>
+            <span class="readout text-xs text-ink-2 transition-colors duration-300 group-hover:text-ink">
               →
             </span>
           </a>

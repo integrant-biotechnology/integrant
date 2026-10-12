@@ -17,7 +17,7 @@ const supply = verifiedMetrics.find((m) => m.id === 'supply');
 <section data-contrast class="relative overflow-hidden bg-base text-ink">
   <NeuralField variant="scaffold" seed={61} />
   <div class="mx-auto max-w-6xl px-6 py-20 md:py-36">
-    <p class="readout md:text-sm text-ink-2" data-reveal>07 — The record</p>
+    <p class="eyebrow" data-reveal>07 — The record</p>
     <h2 class="display-1 mt-6" data-reveal>On the record.</h2>
     <p class="mt-8 max-w-2xl text-lg leading-relaxed text-ink-2" data-reveal>
       What Integrant publishes, it can substantiate. Registrations, research
@@ -28,14 +28,14 @@ const supply = verifiedMetrics.find((m) => m.id === 'supply');
       <!-- Regulatory — the anchor, always populated -->
       <div class="relative flex min-h-72 flex-col justify-between bg-raised p-8" data-reveal-item>
         <div>
-          <p class="readout text-xs text-ink-3">Regulatory</p>
+          <p class="readout text-xs text-ink-2">Regulatory</p>
           <p class="mt-6 font-display text-3xl font-bold text-platinum">ARTG listed</p>
-          <p class="mt-4 text-[1rem] leading-relaxed text-ink-2">
+          <p class="mt-4 text-body leading-relaxed text-ink-2">
             Implant systems supplied under Australian and New Zealand
             therapeutic-goods regulation.
           </p>
         </div>
-        <p class="readout mt-8 text-xs text-ink-3">
+        <p class="readout mt-8 text-xs text-ink-2">
           {supply ? `${supply.value} — ${supply.label}` : 'AU·NZ — Regulated supply'}
         </p>
       </div>
@@ -43,18 +43,18 @@ const supply = verifiedMetrics.find((m) => m.id === 'supply');
       <!-- Research — structurally gated -->
       <div class="relative flex min-h-72 flex-col justify-between bg-raised p-8" data-reveal-item>
         <div>
-          <p class="readout text-xs text-ink-3">Research</p>
+          <p class="readout text-xs text-ink-2">Research</p>
           {
             publishedResearch.length > 0 ? (
               <ul class="mt-6 space-y-4">
                 {publishedResearch.slice(0, 3).map((r) => (
-                  <li class="text-[1rem] leading-relaxed text-ink-2">
+                  <li class="text-body leading-relaxed text-ink-2">
                     <span class="readout text-xs text-platinum">{r.ref}</span> {r.title}
                   </li>
                 ))}
               </ul>
             ) : (
-              <p class="mt-6 text-[1rem] leading-relaxed text-ink-2">
+              <p class="mt-6 text-body leading-relaxed text-ink-2">
                 Investigator-led research programs are published on the ledger
                 as they complete compliance review.
               </p>
@@ -74,7 +74,7 @@ const supply = verifiedMetrics.find((m) => m.id === 'supply');
       <!-- Partnerships — the four models -->
       <div class="relative flex min-h-72 flex-col justify-between bg-raised p-8" data-reveal-item>
         <div>
-          <p class="readout text-xs text-ink-3">Partnerships</p>
+          <p class="readout text-xs text-ink-2">Partnerships</p>
           <ul class="mt-6 space-y-3">
             {
               PARTNER_MODELS.map((m) => (
@@ -108,7 +108,7 @@ const supply = verifiedMetrics.find((m) => m.id === 'supply');
       )
     }
 
-    <p class="readout mt-12 text-xs leading-relaxed text-ink-3" data-reveal>
+    <p class="readout mt-12 text-xs leading-relaxed text-ink-2" data-reveal>
       Company milestones and registrations are published as each is verified.
     </p>
   </div>

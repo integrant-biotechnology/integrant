@@ -12,9 +12,11 @@
     "audit:rendered": "node scripts/audit-rendered-contrast.mjs",
     "qa:sweep": "node scripts/qa-sweep.mjs",
     "validate:redirects": "node scripts/validate-redirects.mjs",
-    "qa": "npm run build && npm run audit:contrast && npm run validate:redirects && npm run audit:rendered",
+    "qa": "npm run build && npm run audit:contrast && npm run validate:redirects && npm run audit:rendered && npm run audit:type",
     "scrape": "node scripts/scrape-legacy.mjs",
-    "scrape:diff": "node scripts/scrape-legacy.mjs --diff"
+    "scrape:diff": "node scripts/scrape-legacy.mjs --diff",
+    "audit:type": "node scripts/audit-type-floor.mjs",
+    "qa:analytics": "node scripts/audit-analytics.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

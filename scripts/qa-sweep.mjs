@@ -11,7 +11,7 @@ import { chromium } from 'playwright';
 const BASE = process.argv[2] ?? 'http://localhost:4322';
 const ROUTES = [
   '/', '/about', '/contact', '/partners', '/for-surgeons', '/innovation',
-  '/research', '/clinical-images', '/products', '/404',
+  '/research', '/clinical-images', '/products', '/privacy', '/404',
   '/products/med-tech/archit', '/products/med-tech/anchorit', '/products/med-tech/screwit',
   '/products/med-tech/fuseit', '/products/med-tech/loopit', '/products/med-tech/nailit',
   '/products/med-tech/screw-sets', '/products/med-tech/screw-removal-set',
@@ -47,6 +47,16 @@ for (const theme of ['dark', 'light']) {
       await page.waitForTimeout(150);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       if (overflow > 0) problems.push(`OVERFLOW ${overflow}px ${theme}/${width} ${route}`);
+      // Hero stacking: the CTA row must clear the absolutely-positioned metrics
+      // strip at every width (bigger labels once pushed the strip into the buttons).
+      if (route === '/') {
+        const clash = await page.evaluate(() => {
+          const a = document.querySelector('.hero-cta-wrap')?.getBoundingClientRect();
+          const b = document.querySelector('.hero-metrics')?.getBoundingClientRect();
+          return a && b && a.bottom > b.top ? Math.round(a.bottom - b.top) : 0;
+        });
+        if (clash > 0) problems.push(`HERO CLASH ${clash}px (CTAs overlap metrics strip) ${theme}/${width}`);
+      }
       pageIssues.forEach((i) => problems.push(`${i} @ ${theme}/${width} ${route}`));
     }
     await ctx.close();
@@ -194,4 +204,4 @@ if (problems.length) {
   problems.forEach((p) => console.log(' -', p));
   process.exit(1);
 }
-console.log('QA GATE GREEN: 22 routes x 4 widths x 2 themes clean; touch contract holds; toggle, tier, motion, flows all pass.');
+console.log('QA GATE GREEN: 23 routes x 4 widths x 2 themes clean; touch contract holds; toggle, tier, motion, flows all pass.');

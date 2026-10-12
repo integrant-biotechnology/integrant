@@ -26,8 +26,8 @@
   --color-void: #000000;
 
   --color-ink: #f5f5f2;
-  --color-ink-2: rgb(245 245 242 / 0.72);
-  --color-ink-3: rgb(245 245 242 / 0.58);
+  --color-ink-2: rgb(245 245 242 / 0.78);
+  --color-ink-3: rgb(245 245 242 / 0.66);
   --color-hairline: rgb(245 245 242 / 0.1);
   --color-hairline-strong: rgb(245 245 242 / 0.24);
   /* Interactive-control boundaries (inputs, ghost buttons): >=3:1 against
@@ -38,15 +38,43 @@
   --color-platinum: #cfcfcf;
   /* TRAP: because --color-base exists, the class `text-base` compiles as
      COLOR: var(--color-base) (near-invisible text), not font-size 1rem.
-     Never write `text-base` in this codebase — use text-[1rem]. The
+     Never write `text-base` in this codebase — use `text-body`. The
      rendered-contrast audit catches regressions. */
+
+  /* Type scale — "no small wording" contract (client-driven, Sept 2026).
+     The stock Tailwind steps are re-pinned so the whole labelling layer
+     (≈170 call sites of text-xs / text-sm) lifts at once. Floor: no visible
+     text below 16px on desktop or 15px on mobile — asserted by
+     scripts/audit-type-floor.mjs on every route. Names are kept for churn
+     reasons; the values are the contract:
+       xs   17px  technical readouts, captions, labels, table headers
+       sm   18px  small body — table cells, chips, footnotes
+       body 19px  running body copy
+       lg   21px  section paragraphs
+       xl   24px  ledes
+       2xl  28px  card / plate headings, product overview copy */
+  --text-xs: 1.0625rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 1.125rem;
+  --text-sm--line-height: 1.5;
+  --text-body: 1.1875rem;
+  --text-body--line-height: 1.6;
+  --text-lg: 1.3125rem;
+  --text-lg--line-height: 1.6;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 1.5;
+  --text-2xl: 1.75rem;
+  --text-2xl--line-height: 1.25;
 
   --font-display: 'Rajdhani', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Titillium Web', ui-sans-serif, system-ui, sans-serif;
 
   --ease-precise: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --tracking-eyebrow: 0.22em;
+  /* Tracking is tuned for the 16–20px caps above: wider than this reads as
+     spaced-out letters rather than a set label. motion.ts boot tween
+     targets the same value. */
+  --tracking-eyebrow: 0.16em;
   --tracking-nav: 0.16em;
 }
 
@@ -62,8 +90,8 @@
   --color-raised: #0c0c0c;
   --color-inset: #131313;
   --color-ink: #f5f5f2;
-  --color-ink-2: rgb(245 245 242 / 0.72);
-  --color-ink-3: rgb(245 245 242 / 0.58);
+  --color-ink-2: rgb(245 245 242 / 0.78);
+  --color-ink-3: rgb(245 245 242 / 0.66);
   --color-hairline: rgb(245 245 242 / 0.1);
   --color-hairline-strong: rgb(245 245 242 / 0.24);
   --color-hairline-control: rgb(245 245 242 / 0.42);
@@ -80,8 +108,8 @@
   --color-raised: #fafafa;
   --color-inset: #f2f2f2;
   --color-ink: #0a0a0a;
-  --color-ink-2: rgb(10 10 10 / 0.74);
-  --color-ink-3: rgb(10 10 10 / 0.64);
+  --color-ink-2: rgb(10 10 10 / 0.78);
+  --color-ink-3: rgb(10 10 10 / 0.7);
   --color-hairline: rgb(10 10 10 / 0.12);
   --color-hairline-strong: rgb(10 10 10 / 0.24);
   --color-hairline-control: rgb(10 10 10 / 0.45);
@@ -106,8 +134,8 @@
   --color-raised: #070707;
   --color-inset: #0e0e0e;
   --color-ink: #f5f5f2;
-  --color-ink-2: rgb(245 245 242 / 0.72);
-  --color-ink-3: rgb(245 245 242 / 0.58);
+  --color-ink-2: rgb(245 245 242 / 0.78);
+  --color-ink-3: rgb(245 245 242 / 0.66);
   --color-hairline: rgb(245 245 242 / 0.1);
   --color-hairline-strong: rgb(245 245 242 / 0.24);
   --color-hairline-control: rgb(245 245 242 / 0.42);
@@ -206,16 +234,35 @@
 
 @layer components {
   /* Technical readout — the HUD/engineering voice from the brand board.
-     Bumped a step on small screens: 11px of wide-tracked uppercase is hard
-     to read at arm's length on a phone. */
-  /* One size at every breakpoint: 12px is the floor a global audience
-     reads tracked caps at comfortably (client-verified, repeatedly). */
+     17px at every breakpoint — one size for the whole label layer (nav,
+     CTAs and readouts all sit at 17px; the floor is 16). A readout
+     is never decoration — it carries specs, captions and labels, so it
+     sits at ink-2 unless it is genuinely legal/meta text. */
   .readout {
     font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.75rem;
+    font-weight: 600;
+    font-size: 1.0625rem;
+    line-height: 1.5;
     text-transform: uppercase;
     letter-spacing: var(--tracking-eyebrow);
+  }
+
+  /* Section eyebrow — the index line above every display heading
+     ("02 — The platform"). A tier of its own: full ink, 18px on phones,
+     20px from md. Never a section's only heading — always paired with a display h2. */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--color-ink);
+  }
+  @media (min-width: 48rem) {
+    .eyebrow {
+      font-size: 1.25rem;
+    }
   }
 
   /* A ≥44px hit area (Apple HIG / WCAG 2.5.8) without changing visual size:
@@ -263,7 +310,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    font-size: 0.75rem;
+    font-size: 1rem;
   }
   .skip-link:focus-visible {
     top: 1.5rem;
@@ -273,7 +320,8 @@
      button on dark and a black button on light, and inverts again inside
      contrast bands, all from the same two tokens. */
   .cta-solid {
-    @apply inline-flex items-center gap-3 px-8 py-4 font-display text-sm font-bold uppercase;
+    @apply inline-flex items-center gap-3 px-8 py-4 font-display font-bold uppercase;
+    font-size: 1.0625rem; /* 17px — pinned, not tied to the text-sm token */
     background-color: var(--color-ink);
     color: var(--color-base);
     letter-spacing: 0.12em;
@@ -309,7 +357,7 @@
   }
 
   .cta-ghost {
-    @apply inline-flex items-center px-5 py-2.5 font-display text-[13px] font-semibold uppercase;
+    @apply inline-flex items-center px-6 py-2.5 font-display text-[16px] font-semibold uppercase;
     min-height: 44px;
     border: 1px solid var(--color-hairline-control);
     color: var(--color-ink);
@@ -555,7 +603,7 @@
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
     --nav-fg: #ffffff;
-    --nav-fg-dim: rgb(255 255 255 / 0.78);
+    --nav-fg-dim: rgb(255 255 255 / 0.86);
     --nav-bg: transparent;
     --nav-border: transparent;
     --nav-rule: rgb(255 255 255 / 0.25);
@@ -569,7 +617,7 @@
   }
   .site-nav[data-theme='light'] {
     --nav-fg: #0a0a0a;
-    --nav-fg-dim: rgb(10 10 10 / 0.72);
+    --nav-fg-dim: rgb(10 10 10 / 0.8);
     --nav-rule: rgb(10 10 10 / 0.22);
     --nav-thumb-contrast: #ffffff;
   }
@@ -629,7 +677,7 @@
     color: var(--nav-thumb-contrast);
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 13px;
+    font-size: 16px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     border-radius: 8px;
@@ -652,15 +700,15 @@
 
   .site-nav .nav-wordmark {
     color: var(--nav-fg);
-    font-size: 1rem; /* 16px — the lockup leads the bar */
+    /* size comes from the element's utility (17px) — a utility outranks
+       this layer, so a font-size here would be dead code */
   }
-  /* Primary links run larger and brighter than the readout base — tracked
-     caps read a size smaller than they measure, so the glance-test floor
-     for an international audience is 14px at 78% ink. */
+  /* Primary links: 17px at 86% ink — tracked caps read a size smaller than
+     they measure, and the client reads anything fainter as unprofessional. */
   .site-nav nav a {
     color: var(--nav-fg-dim);
-    font-size: 0.875rem;
-    letter-spacing: 0.22em;
+    font-size: 1.0625rem;
+    letter-spacing: 0.16em;
   }
   @media (hover: hover) {
     .site-nav nav a:hover {
@@ -1025,7 +1073,7 @@
     border-bottom: 1px solid var(--color-hairline-control);
     border-radius: 0;
     color: var(--color-ink);
-    font-size: 1rem;
+    font-size: 1.125rem; /* ≥16px keeps iOS from zooming on focus */
     outline: none;
     transition: border-color 300ms var(--ease-precise);
   }
@@ -1083,14 +1131,14 @@
   .formula-label {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 26px;
-    letter-spacing: 0.22em;
+    font-size: 28px;
+    letter-spacing: 0.16em;
   }
   .formula-sublabel {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 15px;
-    letter-spacing: 0.22em;
+    font-size: 19px;
+    letter-spacing: 0.16em;
   }
   /* A light impulse travelling the merged line — starts after the draw,
      repeats slowly. Zeroed by the motion kill switches. */

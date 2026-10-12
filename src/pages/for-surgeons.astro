@@ -53,13 +53,13 @@ const instruments = [
       <p class="font-display text-8xl font-bold text-ink-3" aria-hidden="true">{consult.index}</p>
       <div class="mt-4 grid gap-10 md:grid-cols-2">
         <div>
-          <p class="readout md:text-sm text-ink-2" data-reveal>{consult.index} — {consult.label}</p>
+          <p class="eyebrow" data-reveal>{consult.index} — {consult.label}</p>
           <h2 class="display-1 mt-6" data-reveal>{consult.heading}</h2>
         </div>
         <div class="md:pt-14">
           <p class="max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{consult.body}</p>
           <div class="mt-8" data-reveal>
-            <a href="/contact?channel=surgeons" class="cta-ghost">Arrange a consult</a>
+            <a href="/contact?channel=surgeons" class="cta-ghost" data-event="Request Meeting" data-event-location="for-surgeons">Arrange a consult</a>
           </div>
           <div class="mt-12" data-reveal>
             <PhotoPlate
@@ -80,7 +80,7 @@ const instruments = [
     <NeuralField variant="organic" seed={197} />
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="font-display text-8xl font-bold text-ink-3" aria-hidden="true">{specify.index}</p>
-      <p class="mt-4 readout md:text-sm text-ink-2" data-reveal>{specify.index} — {specify.label}</p>
+      <p class="mt-4 eyebrow" data-reveal>{specify.index} — {specify.label}</p>
       <h2 class="display-1 mt-6 max-w-2xl" data-reveal>{specify.heading}</h2>
       <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{specify.body}</p>
 
@@ -110,10 +110,10 @@ const instruments = [
                 </div>
                 <div class="mt-8">
                   {/* The systems themselves, not a bare count */}
-                  <p class="readout text-xs leading-relaxed text-ink-3">
+                  <p class="readout text-xs leading-relaxed text-ink-2">
                     {products.map((p) => p!.name).join(' · ')}
                   </p>
-                  <p class="readout mt-3 text-xs leading-relaxed text-ink-3 transition-colors duration-300 group-hover:text-ink">
+                  <p class="readout mt-3 text-xs leading-relaxed text-ink-2 transition-colors duration-300 group-hover:text-ink">
                     View catalogue →
                   </p>
                 </div>
@@ -138,7 +138,7 @@ const instruments = [
                   )}
                   <h3 class="font-display text-2xl font-semibold text-ink-3">{area.name}</h3>
                 </div>
-                <p class="readout mt-8 text-xs text-ink-3">Portfolio in development</p>
+                <p class="readout mt-8 text-xs text-ink-2">Portfolio in development</p>
               </div>
             );
           })
@@ -154,7 +154,7 @@ const instruments = [
       <p class="font-display text-8xl font-bold text-ink-3" aria-hidden="true">{theatre.index}</p>
       <div class="mt-4 grid gap-10 md:grid-cols-2">
         <div>
-          <p class="readout md:text-sm text-ink-2" data-reveal>{theatre.index} — {theatre.label}</p>
+          <p class="eyebrow" data-reveal>{theatre.index} — {theatre.label}</p>
           <h2 class="display-1 mt-6" data-reveal>{theatre.heading}</h2>
         </div>
         <p class="max-w-xl text-lg leading-relaxed text-ink-2 md:pt-14" data-reveal>{theatre.body}</p>
@@ -177,7 +177,7 @@ const instruments = [
               </svg>
               <figcaption class="mt-6 border-t border-hairline pt-4">
                 <p class="font-display text-lg font-semibold text-ink">{inst.label}</p>
-                <p class="readout mt-2 text-xs text-ink-3">{inst.caption}</p>
+                <p class="readout mt-2 text-xs text-ink-2">{inst.caption}</p>
               </figcaption>
             </figure>
           ))
@@ -185,7 +185,7 @@ const instruments = [
       </div>
 
       <div class="mt-10 flex flex-wrap items-center justify-between gap-6" data-reveal>
-        <p class="readout text-xs text-ink-3">{FOR_SURGEONS.ifuNote} · SPECIFICATIONS IN THE CATALOGUE</p>
+        <p class="readout text-xs text-ink-2">{FOR_SURGEONS.ifuNote} · SPECIFICATIONS IN THE CATALOGUE</p>
         <a href="/products" class="cta-ghost">Full catalogue</a>
       </div>
     </div>
@@ -197,7 +197,7 @@ const instruments = [
     <div class="mx-auto grid max-w-6xl gap-16 px-6 py-20 md:grid-cols-[1fr_280px] md:py-32">
       <div>
         <p class="font-display text-8xl font-bold text-ink-3" aria-hidden="true">{doc.index}</p>
-        <p class="mt-4 readout md:text-sm text-ink-2" data-reveal>{doc.index} — {doc.label}</p>
+        <p class="mt-4 eyebrow" data-reveal>{doc.index} — {doc.label}</p>
         <h2 class="display-1 mt-6" data-reveal>{doc.heading}</h2>
         <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{doc.body}</p>
         <div class="mt-10" data-reveal>
@@ -214,7 +214,7 @@ const instruments = [
     FOR_SURGEONS.showPricing && FOR_SURGEONS.pricing.rows.length > 0 && (
       <section class="relative bg-raised text-ink">
         <div class="mx-auto max-w-6xl px-6 py-16 md:py-28">
-          <p class="readout md:text-sm text-ink-2" data-reveal>
+          <p class="eyebrow" data-reveal>
             {FOR_SURGEONS.pricing.heading}
           </p>
           <div class="mt-8 border border-hairline bg-base">

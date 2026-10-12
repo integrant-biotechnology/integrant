@@ -123,7 +123,7 @@ export async function initMotion(): Promise<void> {
     });
     boot
       .to(logo, { autoAlpha: 1, y: 0, scale: 1, duration: 1.1 }, 0.55)
-      .to(eyebrow, { autoAlpha: 1, letterSpacing: '0.22em', duration: 1.0 }, 0.75)
+      .to(eyebrow, { autoAlpha: 1, letterSpacing: '0.16em', duration: 1.0 }, 0.75)
       .to(split ? split.lines : h1, { yPercent: 0, autoAlpha: 1, duration: 1.15, stagger: 0.12, ease: 'power4.out' }, 0.9)
       .to(sub, { autoAlpha: 1, y: 0, duration: 0.9 }, 1.35)
       .to(ctaWrap, { autoAlpha: 1, y: 0, duration: 0.9 }, 1.5)

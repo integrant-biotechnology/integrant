@@ -40,7 +40,7 @@ const map = buildDotMap();
     <div class="relative mx-auto grid max-w-6xl gap-16 px-6 py-16 md:grid-cols-[1fr_minmax(320px,420px)] md:py-28">
       <!-- The console -->
       <div>
-        <p class="readout md:text-sm text-ink-2" data-reveal>01 — Transmission</p>
+        <p class="eyebrow" data-reveal>01 — Transmission</p>
         <h2 class="display-1 mt-6" data-reveal>Write to the team.</h2>
 
         <form
@@ -52,19 +52,19 @@ const map = buildDotMap();
           data-reveal
         >
           <label class="console-field">
-            <span class="readout block text-xs text-ink-3">Name</span>
+            <span class="readout block text-xs text-ink-2">Name</span>
             <input type="text" name="name" autocomplete="name" required disabled={!formEnabled} />
           </label>
           <label class="console-field">
-            <span class="readout block text-xs text-ink-3">Email</span>
+            <span class="readout block text-xs text-ink-2">Email</span>
             <input type="email" name="email" autocomplete="email" required disabled={!formEnabled} />
           </label>
           <label class="console-field">
-            <span class="readout block text-xs text-ink-3">Subject</span>
+            <span class="readout block text-xs text-ink-2">Subject</span>
             <input type="text" name="subject" required disabled={!formEnabled} />
           </label>
           <label class="console-field">
-            <span class="readout block text-xs text-ink-3">Message</span>
+            <span class="readout block text-xs text-ink-2">Message</span>
             <textarea name="message" rows="5" required disabled={!formEnabled}></textarea>
           </label>
 
@@ -81,15 +81,15 @@ const map = buildDotMap();
                 <button type="submit" class="cta-solid" data-magnetic>
                   Transmit
                 </button>
-                <p class="readout text-xs text-ink-3">Response within 2 business days</p>
+                <p class="readout text-xs text-ink-2">Response within 2 business days</p>
               </div>
             ) : (
               <div class="border border-hairline bg-base p-6">
-                <p class="readout text-xs text-ink-3">CONSOLE PROVISIONING</p>
+                <p class="readout text-xs text-ink-2">CONSOLE PROVISIONING</p>
                 <p class="mt-3 text-ink-2">
                   Direct transmission is being connected. Until then, email reaches the same desk:
                 </p>
-                <a href={`mailto:${CONTACT.email}`} class="cta-solid mt-6 inline-flex">
+                <a href={`mailto:${CONTACT.email}`} class="cta-solid mt-6 inline-flex" data-event="Email Click" data-event-location="contact-console">
                   {CONTACT.email}
                 </a>
               </div>
@@ -103,7 +103,7 @@ const map = buildDotMap();
       <!-- The location plate -->
       <aside class="md:pt-14">
         <div class="border border-hairline bg-base p-8" data-reveal>
-          <p class="readout text-xs text-ink-3">02 — Location</p>
+          <p class="readout text-xs text-ink-2">02 — Location</p>
 
           <svg
             viewBox={`0 0 ${map.width} ${map.height}`}
@@ -118,7 +118,7 @@ const map = buildDotMap();
               y={map.sydney.y + 4}
               text-anchor="end"
               fill="currentColor"
-              style="font-family: var(--font-display); font-size: 15px; letter-spacing: 0.3em;"
+              style="font-family: var(--font-display); font-size: 17px; letter-spacing: 0.2em;"
             >SYDNEY</text>
           </svg>
 
@@ -134,8 +134,13 @@ const map = buildDotMap();
           {
             CONTACT.channels.map((channel) => (
               <li>
-                <a href={channel.href} class="group flex items-center justify-between gap-4 p-5 transition-colors duration-300">
-                  <span class="readout text-xs text-ink-3 transition-colors duration-300 group-hover:text-ink">
+                <a
+                  href={channel.href}
+                  class="group flex items-center justify-between gap-4 p-5 transition-colors duration-300"
+                  data-event={channel.href.startsWith('mailto:') ? 'Email Click' : undefined}
+                  data-event-location={channel.href.startsWith('mailto:') ? 'contact-channels' : undefined}
+                >
+                  <span class="readout text-xs text-ink-2 transition-colors duration-300 group-hover:text-ink">
                     {channel.label}
                   </span>
                   <span class="font-display text-sm font-semibold text-ink-2 transition-colors duration-300 group-hover:text-ink">
@@ -147,7 +152,7 @@ const map = buildDotMap();
           }
         </ul>
 
-        <p class="readout mt-6 text-xs leading-relaxed text-ink-3" data-reveal>
+        <p class="readout mt-6 text-xs leading-relaxed text-ink-2" data-reveal>
           NO SWITCHBOARD · WRITTEN CHANNELS ONLY — EVERY ENQUIRY IS READ BY THE TEAM
         </p>
       </aside>
@@ -156,10 +161,16 @@ const map = buildDotMap();
 </Base>
 
 <script>
+  import { track } from '../scripts/analytics';
+
   // Progressive enhancement only: stamp the fill-time field, prefill the
   // subject from ?channel=, intercept submit for an inline success readout.
   // With JS disabled the form still posts and the function 303s back here.
   const form = document.getElementById('enquiry') as HTMLFormElement | null;
+  // Allowlisted channel — the only query value that ever reaches analytics.
+  const CHANNELS = ['partners', 'surgeons', 'research', 'clinical'];
+  const rawChannel = new URLSearchParams(location.search).get('channel') ?? '';
+  const safeChannel = CHANNELS.includes(rawChannel) ? rawChannel : 'direct';
   if (form && form.dataset.enabled === 'true') {
     const ts = form.querySelector<HTMLInputElement>('input[name="ts"]');
     if (ts) ts.value = String(Date.now());
@@ -193,6 +204,8 @@ const map = buildDotMap();
         if (!res.ok) throw new Error(String(res.status));
         form.querySelectorAll('input, textarea, button').forEach((el) => ((el as HTMLInputElement).disabled = true));
         status.textContent = 'RECEIVED — RESPONSE WITHIN 2 BUSINESS DAYS';
+        // After the UI has settled: a tracking failure can never touch the form.
+        track('Contact Submit', { channel: safeChannel });
       } catch {
         status.textContent = 'TRANSMISSION FAILED — EMAIL admin@integrant.com.au DIRECTLY';
       }
@@ -206,5 +219,6 @@ const map = buildDotMap();
       status.classList.remove('hidden');
       status.textContent = 'RECEIVED — RESPONSE WITHIN 2 BUSINESS DAYS';
     }
+    track('Contact Submit', { channel: safeChannel });
   }
 </script>

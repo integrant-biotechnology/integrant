@@ -45,7 +45,7 @@ import { publishedResearch } from '../data/research';
   <section class="relative bg-base text-ink">
     <NeuralField variant="edge" seed={238} />
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-28">
-      <p class="readout md:text-sm text-ink-2" data-reveal>01 — The standard</p>
+      <p class="eyebrow" data-reveal>01 — The standard</p>
       <h2 class="display-1 mt-6 max-w-3xl" data-reveal>Published the hard way.</h2>
 
       <div class="mt-14 grid gap-px border border-hairline bg-hairline md:grid-cols-3" data-reveal-group>
@@ -71,7 +71,7 @@ import { publishedResearch } from '../data/research';
               <span class="corner corner-tr border-hairline-strong" aria-hidden="true" />
               <p class="font-display text-lg font-bold tabular-nums text-platinum">{plate.n}</p>
               <h3 class="mt-5 font-display text-2xl font-semibold text-ink">{plate.title}</h3>
-              <p class="mt-4 text-[1rem] leading-relaxed text-ink-2">{plate.body}</p>
+              <p class="mt-4 text-body leading-relaxed text-ink-2">{plate.body}</p>
             </div>
           ))
         }
@@ -81,26 +81,26 @@ import { publishedResearch } from '../data/research';
 
   <section class="relative bg-raised text-ink">
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="readout md:text-sm text-ink-2" data-reveal>02 — The ledger</p>
+      <p class="eyebrow" data-reveal>02 — The ledger</p>
       <h2 class="display-1 mt-6 max-w-2xl" data-reveal>Activity, on the record.</h2>
 
       {
         publishedResearch.length > 0 ? (
           <div class="mt-10 border-t border-hairline-strong">
             <div class="hidden grid-cols-[6rem_1fr_10rem_14rem] gap-6 border-b border-hairline py-4 md:grid" aria-hidden="true">
-              <span class="readout text-xs text-ink-3">REF</span>
-              <span class="readout text-xs text-ink-3">TITLE</span>
-              <span class="readout text-xs text-ink-3">STATUS</span>
-              <span class="readout text-xs text-ink-3">PARTNERS</span>
+              <span class="readout text-xs text-ink-2">REF</span>
+              <span class="readout text-xs text-ink-2">TITLE</span>
+              <span class="readout text-xs text-ink-2">STATUS</span>
+              <span class="readout text-xs text-ink-2">PARTNERS</span>
             </div>
             {publishedResearch.map((item) => (
               <details class="plate border-b border-hairline">
                 <summary class="tap-target grid gap-3 py-6 md:grid-cols-[6rem_1fr_10rem_14rem] md:items-baseline md:gap-6">
-                  <span class="readout text-xs text-ink-3">{item.ref}</span>
+                  <span class="readout text-xs text-ink-2">{item.ref}</span>
                   <span class="font-display text-xl font-semibold text-ink">{item.title}</span>
                   <span class="readout text-xs text-ink-2">[ {item.status.toUpperCase()} ]</span>
                   <span class="flex items-center justify-between gap-4">
-                    <span class="readout text-xs text-ink-3">{item.partners.join(' · ') || '—'}</span>
+                    <span class="readout text-xs text-ink-2">{item.partners.join(' · ') || '—'}</span>
                     <span class="plate-toggle font-display text-xl font-semibold text-ink-2" aria-hidden="true">+</span>
                   </span>
                 </summary>
@@ -123,20 +123,20 @@ import { publishedResearch } from '../data/research';
             {/* The ruled ledger renders even at zero rows — the register
                 exists; its first entries are simply still in review. */}
             <div class="hidden grid-cols-[6rem_1fr_10rem_14rem] gap-6 border-b border-hairline py-4 md:grid" aria-hidden="true">
-              <span class="readout text-xs text-ink-3">REF</span>
-              <span class="readout text-xs text-ink-3">TITLE</span>
-              <span class="readout text-xs text-ink-3">STATUS</span>
-              <span class="readout text-xs text-ink-3">PARTNERS</span>
+              <span class="readout text-xs text-ink-2">REF</span>
+              <span class="readout text-xs text-ink-2">TITLE</span>
+              <span class="readout text-xs text-ink-2">STATUS</span>
+              <span class="readout text-xs text-ink-2">PARTNERS</span>
             </div>
             <div class="grid gap-3 border-b border-hairline py-6 md:grid-cols-[6rem_1fr_10rem_14rem] md:items-baseline md:gap-6">
-              <span class="readout text-xs text-ink-3">—</span>
+              <span class="readout text-xs text-ink-2">—</span>
               <span class="font-display text-xl font-semibold text-ink-2">
                 First entries in compliance review
               </span>
               <span class="readout text-xs text-ink-2">[ PENDING ]</span>
-              <span class="readout text-xs text-ink-3">—</span>
+              <span class="readout text-xs text-ink-2">—</span>
             </div>
-            <p class="mt-8 max-w-2xl text-[1rem] leading-relaxed text-ink-2">
+            <p class="mt-8 max-w-2xl text-body leading-relaxed text-ink-2">
               Research activity is documented here as each program completes
               review for publication. Entries list what is being studied, the
               methodology and the partners involved.
@@ -162,7 +162,7 @@ import { publishedResearch } from '../data/research';
           </p>
         </div>
         <div data-reveal>
-          <a href="/contact?channel=research" class="cta-solid" data-magnetic>Research enquiry</a>
+          <a href="/contact?channel=research" class="cta-solid" data-magnetic data-event="Request Meeting" data-event-location="research">Research enquiry</a>
         </div>
       </div>
     </div>

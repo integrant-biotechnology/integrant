@@ -12,7 +12,7 @@ import { chromium } from 'playwright';
 const BASE = process.argv[2] ?? 'http://localhost:4322';
 const ROUTES = [
   '/', '/about', '/contact', '/partners', '/for-surgeons', '/innovation',
-  '/research', '/clinical-images', '/products', '/404',
+  '/research', '/clinical-images', '/products', '/privacy', '/404',
   '/products/med-tech/archit', '/products/med-tech/anchorit', '/products/med-tech/screwit',
   '/products/med-tech/fuseit', '/products/med-tech/loopit', '/products/med-tech/nailit',
   '/products/med-tech/screw-sets', '/products/med-tech/screw-removal-set',
