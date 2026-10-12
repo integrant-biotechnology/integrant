@@ -8,17 +8,9 @@
 // Usage: node scripts/audit-rendered-contrast.mjs [baseUrl]
 //   (default http://localhost:4322 — `npx astro preview --port 4322`)
 import { chromium } from 'playwright';
+import { ROUTES } from './routes.mjs';
 
 const BASE = process.argv[2] ?? 'http://localhost:4322';
-const ROUTES = [
-  '/', '/about', '/contact', '/partners', '/for-surgeons', '/innovation',
-  '/research', '/clinical-images', '/products', '/privacy', '/404',
-  '/products/med-tech/archit', '/products/med-tech/anchorit', '/products/med-tech/screwit',
-  '/products/med-tech/fuseit', '/products/med-tech/loopit', '/products/med-tech/nailit',
-  '/products/med-tech/screw-sets', '/products/med-tech/screw-removal-set',
-  '/products/med-tech/ankle-fusion-set', '/products/med-tech/2-5mm-screw',
-  '/products/bio-tech/frameit', '/products/bio-tech/graftit',
-];
 
 const AUDIT = () => {
   const parse = (c) => {
