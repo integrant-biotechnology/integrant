@@ -13,8 +13,7 @@
  * client verification and TGA compliance review — see docs/client-inputs.md.
  * Never flip a flag without recorded sign-off.
  */
-import { PRODUCTS, PRODUCT_LINES } from './products';
-import { ANATOMY_AREAS } from './anatomy-areas';
+import { PRODUCTS } from './products';
 
 export interface SiteMetric {
   id: string;
@@ -30,28 +29,20 @@ export interface SiteMetric {
 
 export const SITE_METRICS: SiteMetric[] = [
   {
+    id: 'founded',
+    kind: 'readout',
+    value: '2015',
+    label: 'Founded · Sydney',
+    verified: true,
+    source: 'Company press release, Business Wire, 16 Apr 2026 ("founded in 2015")',
+  },
+  {
     id: 'systems',
     kind: 'count',
     value: PRODUCTS.length,
     label: 'Product systems',
     verified: true,
     source: 'Derived: src/data/products.ts',
-  },
-  {
-    id: 'regions',
-    kind: 'count',
-    value: ANATOMY_AREAS.filter((a) => a.productSlugs.length > 0).length,
-    label: 'Anatomical regions',
-    verified: true,
-    source: 'Derived: src/data/anatomy-areas.ts (regions with mapped systems)',
-  },
-  {
-    id: 'divisions',
-    kind: 'count',
-    value: PRODUCT_LINES.length,
-    label: 'Divisions — Med · Bio',
-    verified: true,
-    source: 'Derived: src/data/products.ts PRODUCT_LINES',
   },
   {
     id: 'supply',
@@ -64,16 +55,16 @@ export const SITE_METRICS: SiteMetric[] = [
   {
     id: 'artg',
     kind: 'readout',
-    value: 'ARTG listed',
-    label: 'Med-tech implant systems',
+    value: 'ARTG',
+    label: 'Listed implant systems',
     verified: true,
-    source: 'Carried over from the reviewed Platform section chip (TI-6AL-4V · ARTG LISTED)',
+    source: 'Reviewed Platform chip (TI-6AL-4V · ARTG LISTED); public TGA sponsor record for Integrant Pty Ltd',
   },
   {
     id: 'ai',
     kind: 'readout',
     value: 'AI-assisted',
-    label: 'Documentation — in development',
+    label: 'Clinical documentation',
     verified: true,
     source: 'Activity descriptor only; mirrors the reviewed Innovation copy',
   },

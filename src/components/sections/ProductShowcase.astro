@@ -1,7 +1,7 @@
 ---
 // Product showcase — the catalogue as an editorial feature stack, not a wall
 // of identical cards. Four asymmetric feature rows (alternating), then a
-// hairline index completing all twelve systems. Photography renders on the
+// hairline index completing the full catalogue. Photography renders on the
 // specimen plate (light gradient — the cutouts are matte-black hardware);
 // systems without photography get the ProductPlate engineering drawing, a
 // defined premium state, never a gap. Copy is the TGA-curated tagline set
@@ -14,10 +14,12 @@ const FEATURED_SLUGS = ['frameit', 'archit', 'graftit', 'screw-sets'];
 const featured = FEATURED_SLUGS.map((slug) => getProduct(slug)!).filter(Boolean);
 const rest = PRODUCTS.filter((p) => !FEATURED_SLUGS.includes(p.slug));
 
-// Continuous catalogue index 01–12, tied to the "12 systems" metric
+// Continuous catalogue index, tied to the product-systems metric
 const indexOf = (slug: string) =>
   String(PRODUCTS.findIndex((p) => p.slug === slug) + 1).padStart(2, '0');
 const TOTAL = String(PRODUCTS.length);
+const NUMBER_WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen'];
+const TOTAL_WORD = NUMBER_WORDS[PRODUCTS.length] ?? TOTAL;
 
 const specLine = (p: (typeof PRODUCTS)[number]) =>
   p.specs
@@ -30,7 +32,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
   <NeuralField variant="lattice" seed={53} />
   <div class="mx-auto max-w-6xl px-6 py-20 md:py-36">
     <p class="eyebrow" data-reveal>03 — Product systems</p>
-    <h2 class="display-1 mt-6" data-reveal>Twelve systems, engineered as one.</h2>
+    <h2 class="display-1 mt-6" data-reveal>{TOTAL_WORD} systems, engineered as one.</h2>
 
     <!-- The feature stack: asymmetric, alternating -->
     <div class="mt-16 space-y-16 md:space-y-24">
@@ -110,7 +112,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
       }
     </div>
 
-    <!-- The index: the remaining systems, completing the twelve -->
+    <!-- The index: the remaining systems, completing the catalogue -->
     <div class="mt-20 border-t border-hairline md:mt-28" data-reveal-group>
       {
         rest.map((product) => (

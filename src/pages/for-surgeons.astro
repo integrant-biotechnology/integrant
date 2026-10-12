@@ -84,13 +84,16 @@ const instruments = [
       <h2 class="display-1 mt-6 max-w-2xl" data-reveal>{specify.heading}</h2>
       <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{specify.body}</p>
 
-      <div class="mt-14 grid gap-px border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-4">
+      {/* Only regions with a system in the catalogue are listed: the two
+          broadest lead the row, the rest sit beneath. */}
+      <div class="mt-14 grid gap-px border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-6">
         {
-          ANATOMY_AREAS.map((area) => {
+          ANATOMY_AREAS.map((area, i, all) => {
+            const spanLast = i === all.length - 1 && all.length % 2 === 1;
             const products = area.productSlugs.map((slug) => getProduct(slug)).filter(Boolean);
             const active = products.length > 0;
             return active ? (
-              <a href="/products" class="group relative flex min-h-64 flex-col justify-between bg-raised p-7 transition-colors duration-300 hover:bg-base" data-reveal>
+              <a href="/products" class:list={['group relative flex min-h-64 flex-col justify-between bg-raised p-7 transition-colors duration-300 hover:bg-base', spanLast && 'sm:col-span-2', i < 2 ? 'lg:col-span-3' : 'lg:col-span-2']} data-reveal>
                 <div>
                   {/* first-party anatomy plate art (legacy capture, regraded) —
                       image and text never overlap (rendered-contrast contract) */}
@@ -118,29 +121,7 @@ const instruments = [
                   </p>
                 </div>
               </a>
-            ) : (
-              <div
-                class="relative flex min-h-64 flex-col justify-between bg-raised p-7"
-                style="background-image: repeating-linear-gradient(45deg, var(--color-hairline) 0 1px, transparent 1px 12px);"
-                data-reveal
-              >
-                <div>
-                  {area.illustration && (
-                    <img
-                      src={area.illustration}
-                      alt=""
-                      width="900"
-                      height="900"
-                      loading="lazy"
-                      class="mb-6 h-36 w-full object-contain opacity-55"
-                      aria-hidden="true"
-                    />
-                  )}
-                  <h3 class="font-display text-2xl font-semibold text-ink-3">{area.name}</h3>
-                </div>
-                <p class="readout mt-8 text-xs text-ink-2">Portfolio in development</p>
-              </div>
-            );
+            ) : null;
           })
         }
       </div>

@@ -123,19 +123,12 @@ for (const c of publishableCases) {
           </div>
         ) : (
           <div class="mt-16 border-t border-hairline-strong" data-reveal>
-            {/* The register exists; its first case is simply still in
-                consent verification — same treatment as the research ledger */}
-            <div class="grid gap-3 border-b border-hairline py-6 md:grid-cols-[6rem_1fr_12rem] md:items-baseline md:gap-6">
-              <span class="readout text-xs text-ink-2">—</span>
-              <span class="font-display text-xl font-semibold text-ink-2">
-                First cases in consent verification
-              </span>
-              <span class="readout text-xs text-ink-2">[ PENDING ]</span>
-            </div>
-            <p class="mt-8 max-w-2xl text-body leading-relaxed text-ink-2">
-              Every case publishes only with documented patient consent on
-              file. Each will carry its operative sequence, the systems used
-              and an anatomy index.
+            {/* No consented case on file: say how material is shared
+                instead of showing an empty register. */}
+            <p class="max-w-2xl pt-8 text-lg leading-relaxed text-ink-2">
+              Case imagery is published here only with documented patient
+              consent on file. Healthcare professionals can request operative
+              sequences and case material for a specific system directly.
             </p>
             <p class="readout mt-8 text-xs text-ink-2">
               HCPs CAN REQUEST CASE MATERIAL DIRECTLY —

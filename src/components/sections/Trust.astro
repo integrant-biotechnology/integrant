@@ -9,7 +9,7 @@ import NeuralField from '../ui/NeuralField.astro';
 import { verifiedMetrics } from '../../data/site-metrics';
 import { publishedResearch } from '../../data/research';
 import { PARTNER_MODELS } from '../../data/pages/partners';
-import { verifiedMilestones } from '../../data/pages/about';
+import { ABOUT, verifiedMilestones } from '../../data/pages/about';
 
 const supply = verifiedMetrics.find((m) => m.id === 'supply');
 ---
@@ -20,8 +20,8 @@ const supply = verifiedMetrics.find((m) => m.id === 'supply');
     <p class="eyebrow" data-reveal>07 — The record</p>
     <h2 class="display-1 mt-6" data-reveal>On the record.</h2>
     <p class="mt-8 max-w-2xl text-lg leading-relaxed text-ink-2" data-reveal>
-      What Integrant publishes, it can substantiate. Registrations, research
-      and partnerships appear here as each clears verification.
+      What Integrant publishes, it can substantiate — against the regulator’s
+      register, the research ledger and its own announcements.
     </p>
 
     <div class="mt-16 grid gap-px border border-hairline bg-hairline md:grid-cols-3" data-reveal-group>
@@ -35,9 +35,14 @@ const supply = verifiedMetrics.find((m) => m.id === 'supply');
             therapeutic-goods regulation.
           </p>
         </div>
-        <p class="readout mt-8 text-xs text-ink-2">
-          {supply ? `${supply.value} — ${supply.label}` : 'AU·NZ — Regulated supply'}
-        </p>
+        <div class="mt-8">
+          <p class="readout text-xs text-ink-2">
+            {supply ? `${supply.value} — ${supply.label}` : 'AU·NZ — Regulated supply'}
+          </p>
+          <p class="mt-3">
+            <a href={ABOUT.tgaSponsorRecord} target="_blank" rel="noopener noreferrer" class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink">TGA sponsor record ↗</a>
+          </p>
+        </div>
       </div>
 
       <!-- Research — structurally gated -->
@@ -55,8 +60,8 @@ const supply = verifiedMetrics.find((m) => m.id === 'supply');
               </ul>
             ) : (
               <p class="mt-6 text-body leading-relaxed text-ink-2">
-                Investigator-led research programs are published on the ledger
-                as they complete compliance review.
+                Research activity is kept on a public ledger: what is being
+                studied, how, and with whom — never results.
               </p>
             )
           }
@@ -94,7 +99,7 @@ const supply = verifiedMetrics.find((m) => m.id === 'supply');
       </div>
     </div>
 
-    <!-- Milestones render only as each verifies; absent today by design -->
+    <!-- Milestones: verified rows only -->
     {
       verifiedMilestones.length > 0 && (
         <ol class="mt-12">
@@ -108,8 +113,5 @@ const supply = verifiedMetrics.find((m) => m.id === 'supply');
       )
     }
 
-    <p class="readout mt-12 text-xs leading-relaxed text-ink-2" data-reveal>
-      Company milestones and registrations are published as each is verified.
-    </p>
   </div>
 </section>

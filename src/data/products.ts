@@ -221,11 +221,11 @@ export const PRODUCTS: Product[] = [
     category: 'Double loop lift implant',
     tagline: 'Double-loop fixation for syndesmotic repair.',
     summary:
-      'A double loop lift implant developed for ankle syndesmosis repair. Product documentation is being consolidated with the clinical team.',
+      'A double loop lift implant developed for ankle syndesmosis repair, supplied to healthcare professionals on enquiry with its instrumentation.',
     features: ['Double-loop construct'],
     specs: [
       { label: 'Type', value: 'Double loop lift implant' },
-      { label: 'Documentation', value: 'In preparation' },
+      { label: 'Construct', value: 'Double loop' },
     ],
     applications: ['Ankle syndesmosis repair'],
     legacyPath: '/loopit/',
@@ -388,24 +388,6 @@ export const PRODUCTS: Product[] = [
     reviewStatus: 'pending',
     reviewNotes:
       'Legacy page published pre/post-operative patient radiographs (sample cases) — excluded pending documented patient consent and HCP gating. "Able to withstand delayed fusion" claim removed.',
-  },
-  {
-    slug: '2-5mm-screw',
-    name: '2.5 mm Screw',
-    line: 'med-tech',
-    category: 'Cannulated screw',
-    tagline: 'Documentation in preparation.',
-    summary:
-      'The 2.5 mm screw is supplied within the ScrewIT cannulated system. A dedicated specification sheet is being prepared with the clinical team.',
-    features: [],
-    specs: [
-      { label: 'Diameter', value: '2.5 mm' },
-      { label: 'System', value: 'ScrewIT' },
-      { label: 'Documentation', value: 'In preparation' },
-    ],
-    legacyPath: '/integrant-2-5mm-screw/',
-    reviewStatus: 'pending',
-    reviewNotes: 'Legacy page had no content. Consider consolidating into the ScrewIT page.',
   },
   {
     slug: 'frameit',

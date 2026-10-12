@@ -54,7 +54,9 @@ const routeOf = (file) => {
 const failures = [];
 for (const file of HTML_FILES) {
   const route = routeOf(file);
-  const $ = cheerio.load(readFileSync(file, 'utf8'));
+  // textContent glues adjacent elements together ("BIOLOGICSGATED"), which
+  // defeats word-boundary matching — pad every tag so words stay separate.
+  const $ = cheerio.load(readFileSync(file, 'utf8').replace(/</g, ' <'));
   $('script, style, noscript, template').remove();
   // Meta copy is published copy too (search results, link previews).
   const meta = $('meta[name="description"], meta[property="og:description"], meta[property="og:title"]')
