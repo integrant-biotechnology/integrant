@@ -141,12 +141,21 @@ console.log('toggle done:', problems.length, 'problems total');
   const anims = await page.evaluate(() => document.getAnimations().filter((a) => a.playState === 'running').length);
   if (anims > 0) problems.push(`MOTION-OFF still ${anims} running animations on /`);
 
-  // contact: channel allowlist (prefill only exists once the form is enabled)
+  // contact: with the form connected the channel prefills the subject from
+  // an allowlist; without it the page must lead with the direct email lines
+  // and render no form at all.
   await page.goto(BASE + '/contact?channel=surgeons', { waitUntil: 'load' });
   await page.waitForTimeout(400);
-  const subj1 = await page.evaluate(() => document.querySelector('input[name="subject"]')?.value);
-  const formDisabled = await page.evaluate(() => document.querySelector('input[name="name"]')?.disabled);
-  if (!formDisabled && subj1 !== 'Surgeon enquiry') problems.push(`CHANNEL surgeons -> "${subj1}"`);
+  const hasForm = await page.evaluate(() => Boolean(document.querySelector('form#enquiry')));
+  if (hasForm) {
+    const subj1 = await page.evaluate(() => document.querySelector('input[name="subject"]')?.value);
+    if (subj1 !== 'Surgeon enquiry') problems.push(`CHANNEL surgeons -> "${subj1}"`);
+  } else {
+    const lines = await page.evaluate(() => document.querySelectorAll('main a[href^="mailto:"][data-event="Email Click"]').length);
+    if (lines < 2) problems.push(`CONTACT direct lines missing (found ${lines})`);
+    const deadFields = await page.evaluate(() => document.querySelectorAll('main input:disabled, main textarea:disabled').length);
+    if (deadFields) problems.push(`CONTACT renders ${deadFields} disabled field(s)`);
+  }
   await page.goto(BASE + '/contact?channel=<script>x</script>', { waitUntil: 'load' });
   const subj2 = await page.evaluate(() => document.querySelector('input[name="subject"]')?.value);
   if (subj2) problems.push(`CHANNEL junk reflected: "${subj2}"`);

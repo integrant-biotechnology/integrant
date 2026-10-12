@@ -3,13 +3,14 @@ import ThemeToggle from './ui/ThemeToggle.astro';
 import BrandMark from './ui/BrandMark.astro';
 
 // Absolute paths so the nav works from every route, not just the homepage.
-// Four links + the CTA is the ceiling before the bar crowds at 1280.
-// For Surgeons, Partners and Clinical Images live in the footer nav; Contact
-// is carried by the Request Meeting CTA itself (premium-redesign IA, Aug 2026).
+// Five links + the CTA is the ceiling before the bar crowds at 1280.
+// For Surgeons, Research and Partners live in the footer nav; Contact is
+// carried by the Request Meeting CTA itself.
 const links = [
   { href: '/products', label: 'Products', match: '/products' },
-  { href: '/research', label: 'Research', match: '/research' },
   { href: '/innovation', label: 'Innovation', match: '/innovation' },
+  { href: '/investors', label: 'Investors', match: '/investors' },
+  { href: '/news', label: 'News', match: '/news' },
   { href: '/about', label: 'About', match: '/about' },
 ];
 
@@ -72,14 +73,14 @@ const isCurrent = (link: (typeof links)[number]) =>
 
 <!-- Mobile menu: full-viewport panel, hidden from AT until opened -->
 <div id="mobile-menu" data-contrast class="mobile-menu" data-open="false" hidden>
-  <nav aria-label="Mobile" class="mx-auto flex h-full max-w-7xl flex-col justify-between px-6 pb-12 pt-28">
+  <nav aria-label="Mobile" class="mx-auto flex h-full max-w-7xl flex-col justify-between gap-8 overflow-y-auto px-6 pb-10 pt-24">
     <ul class="space-y-2">
       {
         links.map((link, i) => (
           <li class="mobile-menu-item overflow-hidden" style={`--i: ${i}`}>
             <a
               href={link.href}
-              class="block border-b border-hairline py-5 font-display text-4xl font-bold text-ink"
+              class="block border-b border-hairline py-4 font-display text-3xl font-bold text-ink sm:py-5 sm:text-4xl"
               aria-current={isCurrent(link) ? 'page' : undefined}
             >
               {link.label}
@@ -90,7 +91,7 @@ const isCurrent = (link: (typeof links)[number]) =>
       <li class="mobile-menu-item overflow-hidden" style={`--i: ${links.length}`}>
         <a
           href="/for-surgeons"
-          class="block border-b border-hairline py-5 font-display text-4xl font-bold text-ink"
+          class="block border-b border-hairline py-4 font-display text-3xl font-bold text-ink sm:py-5 sm:text-4xl"
         >
           For Surgeons
         </a>
@@ -98,7 +99,7 @@ const isCurrent = (link: (typeof links)[number]) =>
       <li class="mobile-menu-item overflow-hidden" style={`--i: ${links.length + 1}`}>
         <a
           href="/contact"
-          class="block border-b border-hairline py-5 font-display text-4xl font-bold text-ink"
+          class="block border-b border-hairline py-4 font-display text-3xl font-bold text-ink sm:py-5 sm:text-4xl"
           data-event="Request Meeting"
           data-event-location="mobile-menu"
         >

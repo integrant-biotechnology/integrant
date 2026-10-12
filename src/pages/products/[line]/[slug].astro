@@ -55,11 +55,22 @@ const jsonLd = [
     category: product.category,
   },
 ];
+// Meta description: whole sentences up to ~155 characters, never cut mid-word.
+const sentences = product.summary.match(/[^.!?]+[.!?]+/g) ?? [product.summary];
+let metaDescription = '';
+for (const sentence of sentences) {
+  if (metaDescription && (metaDescription + sentence).length > 158) break;
+  metaDescription += sentence;
+}
+metaDescription = metaDescription.trim();
+if (metaDescription.length > 158) {
+  metaDescription = metaDescription.slice(0, 155).replace(/\s+\S*$/, '') + '…';
+}
 ---
 
 <Base
-  title={`${product.name} — ${product.category} | Integrant`}
-  description={product.summary.slice(0, 155)}
+  title={`${product.name} — ${product.category} — Integrant`}
+  description={metaDescription}
   ogImage={`/og/product-${product.slug}.png`}
   jsonLd={jsonLd}
 >
@@ -322,7 +333,7 @@ const jsonLd = [
   {
     related.length > 0 && (
       <section class="relative bg-raised text-ink">
-        <div class="mx-auto max-w-6xl px-6 py-24">
+        <div class="mx-auto max-w-6xl px-6 py-16 md:py-28">
           <p class="eyebrow" data-reveal>Related systems</p>
           <div class="mt-10 grid gap-6 sm:grid-cols-3">
             {related.map((item) => (
@@ -333,8 +344,7 @@ const jsonLd = [
               >
                 {item.views && item.views.length > 0 ? (
                   <span
-                    class="relative block h-40 border-b border-hairline"
-                    style="background: linear-gradient(155deg, #f2f2f2, #d4d4d4);"
+                    class="relative block h-40 border-b border-hairline specimen"
                     aria-hidden="true"
                   >
                     <img

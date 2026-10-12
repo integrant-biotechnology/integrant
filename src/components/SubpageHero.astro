@@ -41,6 +41,9 @@ interface Props {
    *  black scrim; the neural field and radial gradient render on top so
    *  the motif owns every hero. Ambience only — see src/data/photography.ts. */
   backdrop?: string;
+  /** 'compact' sets the H1 one step down for long, sentence-length titles
+   *  (news articles); 'hero' is the single-word page title. */
+  titleSize?: 'hero' | 'compact';
 }
 
 const {
@@ -55,6 +58,7 @@ const {
   variant = 'dense',
   pulse = false,
   backdrop,
+  titleSize = 'hero',
 } = Astro.props;
 
 const hasAside = Astro.slots.has('aside');
@@ -139,7 +143,7 @@ const hasRail = hasAside || stack.length > 0;
       <div>
         {kicker && <p class="eyebrow">{kicker}</p>}
         {/* The H1 is the LCP element on every interior page — never animate it */}
-        <h1 class:list={['display-hero max-w-[16ch]', kicker && 'mt-5']}>{title}</h1>
+        <h1 class:list={[titleSize === 'compact' ? 'display-1 max-w-[20ch]' : 'display-hero max-w-[16ch]', kicker && 'mt-5']}>{title}</h1>
         {lede && (
           <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2 md:text-xl" data-reveal>
             {lede}

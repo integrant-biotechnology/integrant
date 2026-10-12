@@ -1,0 +1,218 @@
+---
+// /investors — the company for an investor reading it cold: what Integrant
+// is, where it stands, and who to speak to. Every statement about the
+// capital position is a SourcedFact (data/pages/investors.ts) printed with
+// the date of the public announcement it comes from. No forecasts, no
+// valuation, no listing date, and an explicit not-an-offer notice.
+import Base from '../layouts/Base.astro';
+import SubpageHero from '../components/SubpageHero.astro';
+import NeuralField from '../components/ui/NeuralField.astro';
+import { INVESTORS } from '../data/pages/investors';
+import { publishedNews, MEDIA_CONTACT } from '../data/news';
+import { ABOUT } from '../data/pages/about';
+import { PRODUCTS } from '../data/products';
+import { formatDate, formatDateShort } from '../lib/format-date';
+
+const announcements = publishedNews.slice(0, 4);
+---
+
+<Base
+  title="Investors — Integrant"
+  ogImage="/og/investors.png"
+  description="Integrant for investors: the company, its orthopaedic platform, its announced capital position and investor contact."
+  footerCta={false}
+>
+  <SubpageHero
+    title="Investors."
+    kicker="Company · Platform · Announcements"
+    lede="An orthopaedic platform company from Sydney — implant systems, biologics and AI clinical software, built as one."
+    crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Investors' }]}
+    docRef="Doc 11 — Investors"
+    meta={[
+      { label: 'Founded', value: '2015' },
+      { label: 'Status', value: 'Privately held' },
+      { label: 'Reserved ticker', value: 'Nasdaq: INGT' },
+    ]}
+    seed={347}
+    variant="scaffold"
+  />
+
+  <!-- 01 · Thesis -->
+  <section class="relative bg-raised text-ink">
+    <NeuralField variant="organic" seed={349} />
+    <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="eyebrow" data-reveal>01 — The thesis</p>
+      <h2 class="display-1 mt-6 max-w-3xl" data-reveal>{INVESTORS.thesis.headline}</h2>
+      <p class="mt-8 max-w-2xl text-xl leading-relaxed text-ink-2" data-reveal>{INVESTORS.thesis.body}</p>
+    </div>
+  </section>
+
+  <!-- 02 · The platform -->
+  <section class="relative bg-base text-ink">
+    <NeuralField variant="lattice" seed={353} />
+    <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="eyebrow" data-reveal>02 — The platform</p>
+      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>Three businesses, one system.</h2>
+
+      <div class="mt-12 grid gap-px border border-hairline bg-hairline md:grid-cols-3" data-reveal-group>
+        {
+          INVESTORS.pillars.map((pillar) => (
+            <div class="relative flex min-h-72 flex-col justify-between bg-raised p-8" data-reveal-item>
+              <span class="corner corner-tr border-hairline-strong" aria-hidden="true" />
+              <div>
+                <p class="font-display text-lg font-bold tabular-nums text-platinum">{pillar.index}</p>
+                <h3 class="mt-5 font-display text-2xl font-semibold text-ink">{pillar.title}</h3>
+                <p class="mt-4 text-body leading-relaxed text-ink-2">{pillar.body}</p>
+              </div>
+              <p class="mt-8">
+                <a href={pillar.href} class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink">
+                  {pillar.link} →
+                </a>
+              </p>
+            </div>
+          ))
+        }
+      </div>
+
+      <dl class="mt-12 grid gap-x-6 gap-y-10 border-y border-hairline py-10 sm:grid-cols-3" data-reveal>
+        <div>
+          <dd class="font-display text-5xl font-bold tabular-nums text-platinum md:text-6xl">{PRODUCTS.length}</dd>
+          <dt class="readout mt-3 text-xs text-ink-2">Product systems in the catalogue</dt>
+        </div>
+        <div>
+          <dd class="font-display text-5xl font-bold text-platinum md:text-6xl">ARTG</dd>
+          <dt class="readout mt-3 text-xs text-ink-2">
+            Listed implant systems ·
+            <a href={ABOUT.tgaSponsorRecord} target="_blank" rel="noopener noreferrer" class="tap-target-sm text-ink-2 underline underline-offset-4 transition-colors duration-300 hover:text-ink">TGA record ↗</a>
+          </dt>
+        </div>
+        <div>
+          <dd class="font-display text-5xl font-bold text-platinum md:text-6xl">AU·NZ</dd>
+          <dt class="readout mt-3 text-xs text-ink-2">Regulated supply</dt>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 03 · Company and capital position -->
+  <section data-contrast class="relative bg-base text-ink">
+    <NeuralField variant="dense" seed={359} />
+    <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="eyebrow" data-reveal>03 — Where the company stands</p>
+      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>As announced.</h2>
+      <p class="mt-8 max-w-2xl text-lg leading-relaxed text-ink-2" data-reveal>
+        Each line below is taken from a public company announcement and is
+        dated to it. Follow the date to read the source.
+      </p>
+
+      <div class="mt-12 grid gap-12 md:grid-cols-2 md:gap-16">
+        <div data-reveal>
+          <h3 class="readout text-xs text-ink-2">Company</h3>
+          <dl class="mt-5 border-t border-hairline">
+            {INVESTORS.company.map((row) => (
+              <div class="flex items-baseline justify-between gap-6 border-b border-hairline py-4">
+                <dt class="readout text-xs text-ink-2">{row.label}</dt>
+                <dd class="text-right font-display text-body font-semibold text-ink">{row.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div data-reveal>
+          <h3 class="readout text-xs text-ink-2">Capital position</h3>
+          <dl class="mt-5 border-t border-hairline">
+            {INVESTORS.capital.map((fact) => (
+              <div class="border-b border-hairline py-4">
+                <div class="flex items-baseline justify-between gap-6">
+                  <dt class="readout text-xs text-ink-2">{fact.label}</dt>
+                  <dd class="text-right font-display text-body font-semibold text-ink">{fact.value}</dd>
+                </div>
+                <p class="mt-1 text-right">
+                  <a
+                    href={fact.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink"
+                  >
+                    {/* one inline box: the link is a flex container, which would drop the spaces between loose children */}
+                    <span>Announced <time datetime={fact.asOf}>{formatDate(fact.asOf)}</time> ↗</span>
+                  </a>
+                </p>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · Announcements -->
+  {
+    announcements.length > 0 && (
+      <section class="relative bg-raised text-ink">
+        <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
+          <div class="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p class="eyebrow" data-reveal>04 — Announcements</p>
+              <h2 class="display-1 mt-6" data-reveal>Latest news.</h2>
+            </div>
+            <a href="/news" class="cta-ghost" data-reveal>All news →</a>
+          </div>
+
+          <ol class="mt-12 border-t border-hairline-strong" data-reveal>
+            {announcements.map((item) => (
+              <li class="border-b border-hairline">
+                <a href={`/news/${item.slug}`} class="group grid gap-3 py-7 md:grid-cols-[10rem_1fr_auto] md:items-baseline md:gap-8">
+                  <time datetime={item.date} class="readout text-xs text-ink-2">{formatDateShort(item.date)}</time>
+                  <span class="font-display text-2xl font-semibold text-ink">{item.title}</span>
+                  <span class="readout text-xs text-ink-2 transition-colors duration-300 group-hover:text-ink">Read →</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Investor contact close + notice -->
+  <section class="relative bg-base text-ink">
+    <NeuralField variant="edge" seed={367} />
+    <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-28">
+      <div class="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+        <div>
+          <p class="eyebrow" data-reveal>05 — Investor contact</p>
+          <h2 class="display-1 mt-6" data-reveal>Speak with the company.</h2>
+          <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>
+            Investor and analyst enquiries are answered directly by the
+            company. Write to{' '}
+            <a
+              href={`mailto:${MEDIA_CONTACT.email}`}
+              class="tap-target-sm text-ink underline underline-offset-4"
+              data-event="Email Click"
+              data-event-location="investors"
+            >{MEDIA_CONTACT.email}</a>{' '}
+            or request a meeting.
+          </p>
+        </div>
+        <a
+          href="/contact?channel=investors"
+          class="cta-solid"
+          data-magnetic
+          data-event="Request Meeting"
+          data-event-location="investors"
+          data-reveal
+        >
+          Request a meeting
+        </a>
+      </div>
+
+      <div class="mt-16 border-t border-hairline pt-8" data-reveal>
+        <p class="readout text-xs text-ink-2">Important notice</p>
+        <div class="mt-4 max-w-3xl space-y-4">
+          {INVESTORS.notice.map((paragraph) => <p class="text-sm leading-relaxed text-ink-2">{paragraph}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

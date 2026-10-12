@@ -10,6 +10,8 @@ import path from 'node:path';
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const { PRODUCTS } = await import(path.join(root, 'src/data/products.ts'));
+const { publishedNews } = await import(path.join(root, 'src/data/news.ts'));
+const { formatDateShort } = await import(path.join(root, 'src/lib/format-date.ts'));
 
 const font = (file) =>
   readFileSync(path.join(root, 'node_modules/@fontsource/rajdhani/files', file)).toString('base64');
@@ -29,6 +31,13 @@ const PAGES = [
   { file: 'innovation.png', eyebrow: 'AI CLINICAL SOFTWARE · R&D', title: 'The notebook that writes itself.' },
   { file: 'research.png', eyebrow: 'ACTIVITY · METHODOLOGY · PARTNERSHIPS', title: 'Clinical research.' },
   { file: 'clinical-images.png', eyebrow: 'HEALTHCARE PROFESSIONALS ONLY', title: 'The case file.' },
+  { file: 'news.png', eyebrow: 'ANNOUNCEMENTS · PRESS · MEDIA', title: 'News.' },
+  { file: 'investors.png', eyebrow: 'COMPANY · PLATFORM · ANNOUNCEMENTS', title: 'Investors.' },
+  ...publishedNews.map((n) => ({
+    file: `news-${n.slug}.png`,
+    eyebrow: `${n.category.toUpperCase()} · ${formatDateShort(n.date)}`,
+    title: `${n.title}.`,
+  })),
   ...PRODUCTS.map((p) => ({
     file: `product-${p.slug}.png`,
     eyebrow: p.category.toUpperCase(),
@@ -48,7 +57,7 @@ body { width: 1200px; height: 630px; background: #000; color: #fff; font-family:
 .lockup { display: flex; align-items: center; gap: 20px; }
 .word { font-weight: 700; font-size: 30px; letter-spacing: 0.42em; }
 .eyebrow { font-weight: 500; font-size: 21px; letter-spacing: 0.34em; color: rgba(255,255,255,0.62); margin-bottom: 22px; }
-h1 { font-weight: 700; font-size: ${title.length > 22 ? 84 : 104}px; line-height: 0.98; letter-spacing: -0.01em; max-width: 980px; }
+h1 { font-weight: 700; font-size: ${title.length > 30 ? 72 : title.length > 22 ? 84 : 104}px; line-height: 0.98; letter-spacing: -0.01em; max-width: 980px; }
 .foot { display: flex; justify-content: space-between; align-items: baseline; }
 .url { font-weight: 500; font-size: 20px; letter-spacing: 0.3em; color: rgba(255,255,255,0.55); }
 </style></head><body>
@@ -58,7 +67,7 @@ h1 { font-weight: 700; font-size: ${title.length > 22 ? 84 : 104}px; line-height
   <span class="word">INTEGRANT</span>
 </div>
 <div><p class="eyebrow">${eyebrow}</p><h1>${title}</h1></div>
-<div class="foot"><span class="url">INTEGRANT.COM.AU</span><span class="url">PRECISION IN EVERY DIMENSION</span></div>
+<div class="foot"><span class="url">INTEGRANT.COM.AU</span><span class="url">SYDNEY · AUSTRALIA</span></div>
 </body></html>`;
 
 mkdirSync(path.join(root, 'public/og'), { recursive: true });

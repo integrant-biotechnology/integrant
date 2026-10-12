@@ -32,7 +32,7 @@ export const SITE_METRICS: SiteMetric[] = [
     id: 'founded',
     kind: 'readout',
     value: '2015',
-    label: 'Founded · Sydney',
+    label: 'Founded',
     verified: true,
     source: 'Company press release, Business Wire, 16 Apr 2026 ("founded in 2015")',
   },
