@@ -40,7 +40,7 @@ export const NEWS: NewsItem[] = [
     sourceName: 'Business Wire',
     sourceUrl:
       'https://www.businesswire.com/news/home/20260422882502/en/Integrant-announces-closure-of-Series-A-capital-raise.-Now-exploring-pre-IPO-raise-ahead-of-November-listing',
-    published: true,
+    published: false,
   },
   {
     slug: 'nasdaq-ticker-symbol-ingt-reserved',
@@ -57,7 +57,7 @@ export const NEWS: NewsItem[] = [
     sourceName: 'Business Wire',
     sourceUrl:
       'https://www.businesswire.com/news/home/20260414004727/en/Integrant-Awarded-Nasdaq-Ticker-INGT-Ahead-of-Highly-Anticipated-IPO',
-    published: true,
+    published: false,
   },
 ];
 
