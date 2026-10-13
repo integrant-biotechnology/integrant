@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import { PRODUCTS, PRODUCT_LINES } from '../../data/products';
 import NeuralField from '../../components/ui/NeuralField.astro';
 import ProductPlate from '../../components/ui/ProductPlate.astro';
+import { ANATOMY_AREAS } from '../../data/anatomy-areas';
 
 const title = 'Product systems — Integrant';
 const description =
@@ -12,6 +13,16 @@ const description =
 // and the detail-page pager use, tied to the product-systems metric.
 const indexOf = (slug: string) =>
   String(PRODUCTS.findIndex((p) => p.slug === slug) + 1).padStart(2, '0');
+
+// Anatomy filter (?region=<slug>, linked from the For surgeons index): each
+// card carries the regions its system is mapped to in anatomy-areas.ts.
+const regionsOf = (slug: string) =>
+  ANATOMY_AREAS.filter((a) => a.productSlugs.includes(slug))
+    .map((a) => a.slug)
+    .join(' ');
+const REGION_NAMES = Object.fromEntries(
+  ANATOMY_AREAS.filter((a) => a.productSlugs.length > 0).map((a) => [a.slug, a.name]),
+);
 
 // Each line leads with its flagship as a full-width feature row
 const LEAD: Record<string, string> = { 'med-tech': 'archit', 'bio-tech': 'frameit' };
@@ -86,6 +97,15 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
     </div>
   </section>
 
+  <!-- Region filter status: revealed by the script below only when the URL
+       carries a known ?region= value -->
+  <div id="region-filter" class="relative bg-raised text-ink" data-regions-map={JSON.stringify(REGION_NAMES)} hidden>
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 border-b border-hairline px-6 py-6">
+      <p class="readout text-xs text-ink" role="status" data-region-label></p>
+      <a href="/products" class="cta-ghost">Show all systems →</a>
+    </div>
+  </div>
+
   {
     PRODUCT_LINES.map((line, lineIndex) => {
       const lineProducts = PRODUCTS.filter((p) => p.line === line.id);
@@ -94,6 +114,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
       return (
         <section
           id={line.id}
+          data-line-section
           class={lineIndex % 2 === 0 ? 'relative bg-raised text-ink' : 'relative bg-base text-ink'}
         >
           <NeuralField variant={lineIndex % 2 === 0 ? 'lattice' : 'imaging'} seed={83 + lineIndex * 6} />
@@ -107,7 +128,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
             </h2>
 
             <!-- The flagship: a full feature row -->
-            <article class="group mt-14 grid items-center gap-8 md:grid-cols-[5fr_7fr] md:gap-14" data-reveal>
+            <article class="group mt-14 grid items-center gap-8 md:grid-cols-[5fr_7fr] md:gap-14" data-catalogue-item data-regions={regionsOf(lead.slug)} data-reveal>
               <div>
                 <p class="readout text-xs text-platinum">
                   {indexOf(lead.slug)} / {PRODUCTS.length} — {lead.category}
@@ -162,6 +183,8 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                 <a
                   href={`/products/${product.line}/${product.slug}`}
                   class="catalogue-card group relative flex flex-col border border-hairline bg-raised transition-colors duration-300"
+                  data-catalogue-item
+                  data-regions={regionsOf(product.slug)}
                   data-reveal
                 >
                   <span class="relative block overflow-hidden">
@@ -246,7 +269,38 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
   </section>
 </Base>
 
+<script>
+  // Anatomy filter. Progressive enhancement: without JS, or with an unknown
+  // region, the full catalogue shows. The region value is only ever compared
+  // against the allowlist baked into the page — never written into the DOM.
+  const bar = document.getElementById('region-filter');
+  const region = new URLSearchParams(location.search).get('region') ?? '';
+  const names: Record<string, string> = bar ? JSON.parse(bar.dataset.regionsMap ?? '{}') : {};
+  if (bar && Object.hasOwn(names, region)) {
+    const cards = [...document.querySelectorAll<HTMLElement>('[data-catalogue-item]')];
+    let shown = 0;
+    for (const card of cards) {
+      const match = (card.dataset.regions ?? '').split(' ').includes(region);
+      card.hidden = !match;
+      if (match) shown += 1;
+    }
+    for (const section of document.querySelectorAll<HTMLElement>('[data-line-section]')) {
+      section.hidden = !section.querySelector('[data-catalogue-item]:not([hidden])');
+    }
+    const label = bar.querySelector<HTMLElement>('[data-region-label]');
+    if (label) label.textContent = `${names[region]} — ${shown} of ${cards.length} systems`;
+    bar.hidden = false;
+  }
+</script>
+
 <style>
+  /* The filter hides cards with the hidden attribute; layout utilities such
+     as grid/flex would otherwise override its display:none. */
+  [data-catalogue-item][hidden],
+  [data-line-section][hidden] {
+    display: none;
+  }
+
   @media (hover: hover) {
     .catalogue-card:hover {
       border-color: var(--color-hairline-strong);

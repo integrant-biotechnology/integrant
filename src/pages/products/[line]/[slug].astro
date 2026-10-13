@@ -28,13 +28,14 @@ const pad = (i: number) => String(i + 1).padStart(2, '0');
 const prev = PRODUCTS[(position - 1 + PRODUCTS.length) % PRODUCTS.length];
 const next = PRODUCTS[(position + 1) % PRODUCTS.length];
 
-// Spec grid adapts to the count (2–4) so no product renders orphan whitespace
-const specCols =
-  product.specs.length <= 2
-    ? 'sm:grid-cols-2'
-    : product.specs.length === 3
-      ? 'sm:grid-cols-2 lg:grid-cols-3'
-      : 'sm:grid-cols-2 lg:grid-cols-4';
+// The hero rail already states the first three specs, so the engineering
+// panel carries only what the rail does not: any further specs, what the
+// system is designed for, and what a set contains. With nothing further to
+// say, the panel is not rendered at all.
+const HERO_SPECS = 3;
+const moreSpecs = product.specs.slice(HERO_SPECS);
+const hasPanel = moreSpecs.length > 0 || Boolean(product.applications) || Boolean(product.contents);
+const specCols = moreSpecs.length <= 1 ? '' : moreSpecs.length === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-3';
 
 // Minimal, claim-free structured data: name/brand/description only — no
 // medical properties, offers or ratings (TGA posture carries into metadata).
@@ -128,7 +129,7 @@ if (metaDescription.length > 158) {
           <dd class="mt-1.5 font-display text-body font-semibold text-ink">{lineLabel}</dd>
         </div>
         {
-          product.specs.slice(0, 3).map((spec) => (
+          product.specs.slice(0, HERO_SPECS).map((spec) => (
             <div>
               <dt class="readout text-xs text-ink-2">{spec.label}</dt>
               <dd class="mt-1.5 font-display text-body font-semibold text-ink">{spec.value}</dd>
@@ -172,18 +173,21 @@ if (metaDescription.length > 158) {
     </div>
   </section>
 
-  <!-- Engineering panel: specs + applications + contents -->
+  <!-- Engineering panel: further specs + applications + contents -->
+  {
+    hasPanel && (
   <section class="relative bg-base text-ink">
     <NeuralField variant="lattice" seed={101} />
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="eyebrow" data-reveal>03 — Specification</p>
-      <h2 class="display-2 mt-5" data-reveal>On the label.</h2>
+      <h2 class="display-2 mt-5" data-reveal>In detail.</h2>
 
-      <!-- Bordered cells rather than a gap-background grid: spec counts vary
-           per product (2–4) — the column count adapts, so no orphan cells -->
+      {/* Bordered cells rather than a gap-background grid: the column
+          count adapts to how many specs remain, so no orphan cells */}
+      {moreSpecs.length > 0 && (
       <div class={`mt-10 grid gap-4 ${specCols}`} data-reveal>
         {
-          product.specs.map((spec, i) => (
+          moreSpecs.map((spec, i) => (
             <div class="relative border border-hairline bg-base p-6">
               {i === 0 && <span class="corner corner-tl border-hairline-strong" aria-hidden="true" />}
               <p class="readout text-xs text-ink-2">{spec.label}</p>
@@ -194,16 +198,17 @@ if (metaDescription.length > 158) {
           ))
         }
       </div>
+      )}
 
       {
         (product.applications || product.contents) && (
-          <div class="mt-16 grid gap-14 md:grid-cols-2">
+          <div class:list={['grid gap-14 md:grid-cols-2', moreSpecs.length > 0 ? 'mt-16' : 'mt-10']}>
             {product.applications && (
               <div data-reveal>
                 <p class="eyebrow">Designed for</p>
                 <ul class="mt-6 space-y-3">
                   {product.applications.map((application) => (
-                    <li class="text-ink-2">{application}</li>
+                    <li class="border-b border-hairline pb-3 text-body text-ink-2">{application}</li>
                   ))}
                 </ul>
               </div>
@@ -213,7 +218,7 @@ if (metaDescription.length > 158) {
                 <p class="eyebrow">{product.slug === 'screw-removal-set' ? 'Removes' : 'Set contents'}</p>
                 <ul class="mt-6 space-y-3">
                   {product.contents.map((item) => (
-                    <li class="text-ink-2">{item}</li>
+                    <li class="border-b border-hairline pb-3 text-body text-ink-2">{item}</li>
                   ))}
                 </ul>
               </div>
@@ -223,6 +228,8 @@ if (metaDescription.length > 158) {
       }
     </div>
   </section>
+    )
+  }
 
   <!-- Catalogue tables — engineering-drawing treatment -->
   {

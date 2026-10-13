@@ -93,7 +93,7 @@ const instruments = [
             const products = area.productSlugs.map((slug) => getProduct(slug)).filter(Boolean);
             const active = products.length > 0;
             return active ? (
-              <a href="/products" class:list={['group relative flex min-h-64 flex-col justify-between bg-raised p-7 transition-colors duration-300 hover:bg-base', spanLast && 'sm:col-span-2', i < 2 ? 'lg:col-span-3' : 'lg:col-span-2']} data-reveal>
+              <a href={`/products?region=${area.slug}`} class:list={['group relative flex min-h-64 flex-col justify-between bg-raised p-7 transition-colors duration-300 hover:bg-base', spanLast && 'sm:col-span-2', i < 2 ? 'lg:col-span-3' : 'lg:col-span-2']} data-reveal>
                 <div>
                   {/* first-party anatomy plate art (legacy capture, regraded) —
                       image and text never overlap (rendered-contrast contract) */}

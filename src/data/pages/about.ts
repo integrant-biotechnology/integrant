@@ -15,8 +15,10 @@ export interface Milestone {
 }
 
 export const ABOUT = {
-  thesis:
-    'Integrant exists to close the distance between the operating theatre and the workshop — implant systems, biologics and clinical software designed by the people who use them.',
+  thesis: {
+    headline: 'Closing the distance between the operating theatre and the workshop.',
+    body: 'Integrant designs implant systems, biologics and clinical software as one platform. Each is specified by the people who use it.',
+  },
   founder: {
     name: 'Dr Gordon Slater',
     role: 'Founder',

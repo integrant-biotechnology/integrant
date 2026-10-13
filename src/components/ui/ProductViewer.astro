@@ -55,10 +55,12 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
             aria-selected={i === 0 ? 'true' : 'false'}
             aria-controls="pv-panel"
             tabindex={i === 0 ? 0 : -1}
-            class="pv-tab readout tap-target-sm whitespace-nowrap border border-hairline-strong px-3 py-2 text-xs text-ink-2 transition-colors"
+            class="pv-tab readout tap-target-sm min-w-11 justify-center whitespace-nowrap border border-hairline-strong px-3 py-2 text-xs text-ink-2 transition-colors"
             data-pv-tab={i}
+            aria-label={`View ${pad(i)}`}
           >
-            View {pad(i)}
+            {/* Phones show the number alone so four tabs fit one row */}
+            <span class="hidden sm:inline">View&nbsp;</span>{pad(i)}
           </button>
         ))
       }
