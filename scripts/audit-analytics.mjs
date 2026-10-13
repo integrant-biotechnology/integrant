@@ -20,7 +20,6 @@ const ROUTES = [
   '/', '/about', '/contact', '/partners', '/for-surgeons', '/innovation',
   '/research', '/clinical-images', '/products', '/privacy', '/404',
   '/products/med-tech/archit', '/products/bio-tech/frameit',
-  '/news', '/investors', '/news/series-a-capital-raise-closed',
 ];
 const EVENTS = new Set(['Request Meeting', 'Email Click', 'Contact Submit', 'View System', 'HCP Gate Accept', '404']);
 const problems = [];
