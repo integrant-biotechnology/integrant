@@ -1,7 +1,8 @@
 // Contact page content — mirrors cms/schemas/page.ts + siteSettings.ts.
-// Verified facts only (content-archive/structured/site-facts.json):
-// the ONLY published email is admin@integrant.com.au, the address is
-// 5 Ward Avenue Potts Point, and NO phone number exists — do not add one.
+// Verified facts only. admin@integrant.com.au and the 5 Ward Avenue address
+// come from content-archive/structured/site-facts.json; media@integrant.com.au
+// is the contact published on the company's own press releases (April 2026).
+// No phone number is published on the site — do not add one without sign-off.
 
 export const CONTACT = {
   address: {
@@ -12,6 +13,22 @@ export const CONTACT = {
     coordinates: '33.87°S · 151.22°E',
   },
   email: 'admin@integrant.com.au',
+  mediaEmail: 'media@integrant.com.au',
+  /** Direct lines — the primary contact design whenever the form is off. */
+  direct: [
+    {
+      id: 'general',
+      label: 'General & product enquiries',
+      detail: 'Systems, specifications, loan sets and clinical support.',
+      email: 'admin@integrant.com.au',
+    },
+    {
+      id: 'media-investors',
+      label: 'Media & investor enquiries',
+      detail: 'Press, interviews, company announcements and investor relations.',
+      email: 'media@integrant.com.au',
+    },
+  ],
   channels: [
     { label: 'General & product enquiries', value: 'admin@integrant.com.au', href: 'mailto:admin@integrant.com.au' },
     { label: 'Distribution & partnerships', value: 'Partner enquiries', href: '/partners' },

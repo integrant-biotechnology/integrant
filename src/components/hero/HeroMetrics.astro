@@ -11,7 +11,7 @@ interface Props {
   class?: string;
 }
 
-const { ids = ['systems', 'regions', 'divisions', 'supply'], class: className = '' } = Astro.props;
+const { ids = ['founded', 'systems', 'artg', 'supply'], class: className = '' } = Astro.props;
 
 const metrics = ids
   .map((id) => verifiedMetrics.find((m) => m.id === id))

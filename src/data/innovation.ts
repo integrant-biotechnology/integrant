@@ -46,8 +46,24 @@ export const INNOVATION_ITEMS: InnovationItem[] = [
     title: 'In development',
     category: 'R&D',
     summary:
-      'Active development programs across implant systems and clinical software. Detail is published as programs reach disclosure.',
+      'Engineering continues across all three parts of the platform, each programme led by the people who will use the result in theatre.',
     appStoreUrl: null,
-    gated: true,
+    gated: false,
   },
 ];
+
+/** The R&D programmes, described by scope — never by claims or dates. */
+export const RD_PROGRAMMES = [
+  {
+    title: 'Implant systems',
+    body: 'Extending the fixation and fusion range region by region, with instrumentation designed alongside each implant.',
+  },
+  {
+    title: 'Clinical software',
+    body: 'Building outward from the operation note toward structured documentation for the whole surgical team.',
+  },
+  {
+    title: 'Biologics',
+    body: 'Graft materials and frame systems developed in consultation with the surgeons who specify them.',
+  },
+] as const;

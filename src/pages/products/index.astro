@@ -9,7 +9,7 @@ const description =
   'Integrant implant systems, instrumentation and graft materials — engineered for foot, ankle, hand and wrist.';
 
 // Continuous catalogue index 01–12 — the same number the homepage showcase
-// and the detail-page pager use, tied to the "12 systems" metric.
+// and the detail-page pager use, tied to the product-systems metric.
 const indexOf = (slug: string) =>
   String(PRODUCTS.findIndex((p) => p.slug === slug) + 1).padStart(2, '0');
 
@@ -136,7 +136,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                   <figure class="relative overflow-hidden border border-hairline">
                     <span class="corner corner-tl border-hairline-strong" aria-hidden="true" />
                     <span class="corner corner-br border-hairline-strong" aria-hidden="true" />
-                    <div class="relative aspect-[4/3]" style="background: linear-gradient(155deg, #f2f2f2, #d4d4d4);">
+                    <div class="relative aspect-[4/3] specimen">
                       <img
                         src={lead.views[0].small ?? lead.views[0].src}
                         alt={lead.views[0].alt}
@@ -167,8 +167,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                   <span class="relative block overflow-hidden">
                     {product.views && product.views.length > 0 ? (
                       <span
-                        class="relative block aspect-[4/3]"
-                        style="background: linear-gradient(155deg, #f2f2f2, #d4d4d4);"
+                        class="relative block aspect-[4/3] specimen"
                         aria-hidden="true"
                       >
                         <img
@@ -220,7 +219,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
   <!-- The surgeon's route back in, now that For Surgeons has left the nav -->
   <section data-contrast class="relative overflow-hidden bg-base text-ink">
     <NeuralField variant="edge" seed={107} />
-    <div class="relative mx-auto max-w-6xl px-6 py-20 md:py-28">
+    <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-28">
       <p class="eyebrow" data-reveal>Operating with Integrant</p>
       <h2 class="display-1 mt-6 max-w-3xl" data-reveal>
         Consult, specify, theatre, document.

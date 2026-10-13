@@ -1,8 +1,7 @@
 ---
 // /about — "The Record". The company rendered as a technical document:
 // thesis, founder plate, the BIO+AI formula, careers, verifiable facts.
-// The milestone rail (ABOUT.milestones) renders only client-verified
-// entries — with none verified yet, the section is absent by design.
+// The milestone rail (ABOUT.milestones) renders only verified entries.
 // Legacy /about-us content is deliberately unused: it was Elementor demo
 // content with a fabricated team (content-archive/INDEX.md).
 import Base from '../layouts/Base.astro';
@@ -10,6 +9,7 @@ import SubpageHero from '../components/SubpageHero.astro';
 import NeuralField from '../components/ui/NeuralField.astro';
 import TrustBand from '../components/ui/TrustBand.astro';
 import { ABOUT } from '../data/pages/about';
+import { PRODUCTS } from '../data/products';
 import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
 ---
 
@@ -25,9 +25,9 @@ import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'About' }]}
     docRef="Doc 04 — About"
     meta={[
-      { label: 'Founded', value: 'Sydney, Australia' },
-      { label: 'Divisions', value: 'Med-Tech · Bio-Tech' },
-      { label: 'Systems', value: '12' },
+      { label: 'Founded', value: '2015' },
+      { label: 'Headquarters', value: 'Sydney, Australia' },
+      { label: 'Systems', value: String(PRODUCTS.length) },
       { label: 'Supply', value: 'AU · NZ' },
     ]}
     seed={149}
@@ -39,7 +39,7 @@ import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
   <section class="relative bg-raised text-ink">
     <NeuralField variant="organic" seed={151} />
     <span class="corner corner-br border-hairline-strong" aria-hidden="true"></span>
-    <div class="mx-auto max-w-6xl px-6 py-20 md:py-40">
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="eyebrow" data-reveal>01 — Thesis</p>
       <h2 class="sweep display-hero mt-6 max-w-5xl text-ink" data-sweep>
         {ABOUT.thesis}
@@ -88,7 +88,7 @@ import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
         </div>
 
         <div class="flex flex-col justify-center">
-          <h3 class="font-display text-5xl font-bold text-ink md:text-6xl">{ABOUT.founder.name}</h3>
+          <h2 class="font-display text-5xl font-bold text-ink md:text-6xl">{ABOUT.founder.name}</h2>
           <p class="readout mt-4 text-ink-2">{ABOUT.founder.role} · Surgeon-led design</p>
           <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2">
             {
@@ -104,7 +104,7 @@ import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
   <!-- 03 · The formula — dark restatement of the BIO+AI arc -->
   <section data-contrast class="relative overflow-hidden bg-base text-ink">
     <NeuralField variant="lattice" seed={163} />
-    <div class="mx-auto max-w-6xl px-6 py-20 md:py-32">
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="eyebrow" data-reveal>04 — The formula</p>
       <h2 class="display-1 mt-6 max-w-3xl" data-reveal>
         Biology, engineered. Intelligence, applied.
@@ -137,7 +137,7 @@ import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
       </svg>
 
       <div class="mt-14" data-reveal>
-        <a href="/innovation" class="cta-ghost">The innovation program</a>
+        <a href="/innovation" class="cta-ghost">The innovation program →</a>
       </div>
     </div>
   </section>

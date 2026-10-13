@@ -351,9 +351,17 @@
     transform: translateX(-120%);
     pointer-events: none;
   }
-  .cta-solid:hover::after {
-    transform: translateX(120%);
-    transition: transform 700ms var(--ease-precise);
+  @media (hover: hover) {
+    .cta-solid:hover::after {
+      transform: translateX(120%);
+      transition: transform 700ms var(--ease-precise);
+    }
+  }
+
+  /* Specimen plate — the light field product photography sits on. One ramp,
+     used by every card and viewer, identical in both themes by design. */
+  .specimen {
+    background: linear-gradient(155deg, #f4f4f4 0%, #dcdcdc 58%, #c9c9c9 100%);
   }
 
   .cta-ghost {

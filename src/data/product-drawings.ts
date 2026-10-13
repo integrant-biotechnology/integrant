@@ -170,21 +170,6 @@ export const PRODUCT_DRAWINGS: Record<string, ProductDrawing> = {
     dashed: 'M 60 0 V 300',
   },
 
-  // 2.5 mm screw — fine-pitch small-fragment profile
-  '2-5mm-screw': {
-    viewBox: '0 0 120 300',
-    paths: [
-      'M 50 34 H 70 L 66 52 H 54 Z',
-      'M 56 34 V 28 H 64 V 34',
-      'M 54 52 L 54 244 L 60 268 L 66 244 L 66 52',
-      // Fine thread pitch — closer ticks than the standard screw
-      'M 53 68 L 67 74', 'M 53 88 L 67 94', 'M 53 108 L 67 114',
-      'M 53 128 L 67 134', 'M 53 148 L 67 154', 'M 53 168 L 67 174',
-      'M 53 188 L 67 194', 'M 53 208 L 67 214', 'M 53 228 L 67 234',
-    ],
-    dashed: 'M 60 8 V 292',
-  },
-
   // External ring frame — two rings, connecting struts, tensioned wires
   frameit: {
     viewBox: '0 0 120 300',

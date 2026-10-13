@@ -56,7 +56,7 @@ const ROUTE_MAP = {
   '/loopit/': '/products/med-tech/loopit',
   '/integrant-screw-sets/': '/products/med-tech/screw-sets',
   '/integrant-screw-removal-set/': '/products/med-tech/screw-removal-set',
-  '/integrant-2-5mm-screw/': '/products/med-tech/2-5mm-screw',
+  '/integrant-2-5mm-screw/': '/products/med-tech/screwit',
   '/anterior-ankle-fusion-set/': '/products/med-tech/ankle-fusion-set',
   '/integrant-anterior-ankle-fusion-set/': '/products/med-tech/ankle-fusion-set',
   '/frame-it/': '/products/bio-tech/frameit',

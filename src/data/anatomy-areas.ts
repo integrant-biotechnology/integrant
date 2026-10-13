@@ -1,10 +1,9 @@
 // The browse-by-anatomy axis — mirrors cms/schemas/anatomyArea.ts for later
-// Sanity import. The 8 regions come from the legacy site's header navigation
+// Sanity import. Regions come from the legacy site's header navigation
 // (content-archive/structured/navigation.json); productSlugs are derived only
 // from each product's `applications` field in products.ts — no product is
-// mapped to a region its own data doesn't claim. Regions without products
-// render as portfolio-in-development, which is honest and matches the legacy
-// nav's ambition.
+// mapped to a region its own data doesn't claim. A region is listed only
+// once it has at least one system in the catalogue.
 
 export interface AnatomyArea {
   slug: string;
@@ -50,7 +49,7 @@ export const ANATOMY_AREAS: AnatomyArea[] = [
     summary:
       'Small-bone fixation and ligament reconstruction instrumentation sized for hand and wrist anatomy.',
     order: 2,
-    productSlugs: ['screwit', 'anchorit', '2-5mm-screw'],
+    productSlugs: ['screwit', 'anchorit'],
   },
   {
     slug: 'shoulder',
@@ -67,30 +66,6 @@ export const ANATOMY_AREAS: AnatomyArea[] = [
     summary: 'Anchor configurations rated for the loads of knee ligament work.',
     order: 4,
     productSlugs: ['anchorit'],
-  },
-  {
-    slug: 'spine',
-    illustration: '/photo/anatomy/spine.webp',
-    name: 'Spine',
-    summary: 'Portfolio in development.',
-    order: 5,
-    productSlugs: [],
-  },
-  {
-    slug: 'hip',
-    illustration: '/photo/anatomy/hip.webp',
-    name: 'Hip',
-    summary: 'Portfolio in development.',
-    order: 6,
-    productSlugs: [],
-  },
-  {
-    slug: 'elbow',
-    illustration: '/photo/anatomy/elbow.webp',
-    name: 'Elbow',
-    summary: 'Portfolio in development.',
-    order: 7,
-    productSlugs: [],
   },
   {
     slug: 'external-fixators',

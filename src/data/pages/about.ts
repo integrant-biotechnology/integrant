@@ -5,7 +5,6 @@
 // or is voice, not fact.
 
 import { PRODUCTS } from '../products';
-import { ANATOMY_AREAS } from '../anatomy-areas';
 
 export interface Milestone {
   year: string;
@@ -30,12 +29,15 @@ export const ABOUT = {
     portrait: '/founder/gordon-slater.jpg',
   },
   milestones: [
-    // Populated from the client questionnaire (docs/client-inputs.md).
-    // Nothing renders while verified === false.
-    { year: '', label: 'FOUNDED — SYDNEY', verified: false },
-    { year: '', label: 'FIRST IMPLANT SYSTEM', verified: false },
-    { year: '', label: 'BIO-TECH DIVISION', verified: false },
-    { year: '', label: 'AI DOCUMENTATION APP', verified: false },
+    // Nothing renders while verified === false. The verified rows are taken
+    // from the Australian Business Register (ABN active from 1 Apr 2015) and
+    // the company's own published announcements (see src/data/news.ts);
+    // the rest wait on the client questionnaire (docs/client-inputs.md).
+    { year: '2015', label: 'Integrant founded in Sydney', verified: true },
+    { year: '', label: 'First implant system', verified: false },
+    { year: '', label: 'Bio-tech division', verified: false },
+    { year: '2026', label: 'Series A capital raise closed', verified: false },
+    { year: '2026', label: 'Nasdaq ticker symbol INGT reserved', verified: false },
   ] as Milestone[],
   careers: {
     heading: 'Work at Integrant.',
@@ -47,11 +49,8 @@ export const ABOUT = {
     coordinates: '33.87°S · 151.22°E',
     label: 'SYDNEY · AUSTRALIA',
   },
-  facts: [
-    { value: String(PRODUCTS.length), label: 'Product systems' },
-    { value: String(ANATOMY_AREAS.filter((a) => a.productSlugs.length > 0).length), label: 'Anatomical regions covered' },
-    { value: '2', label: 'Divisions — med-tech · bio-tech' },
-  ],
+  /** Public record backing the ARTG statement — the regulator's own register. */
+  tgaSponsorRecord: 'https://www.tga.gov.au/resources/sponsor/integrant-pty-ltd',
 } as const;
 
 export const verifiedMilestones = ABOUT.milestones.filter((m) => m.verified);

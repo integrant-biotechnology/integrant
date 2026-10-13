@@ -1,19 +1,20 @@
 ---
 // Trust band — the credibility register as verified-gated slots.
 // Counters come from verifiedMetrics (structural TGA gate); the milestone
-// rail renders only verifiedMilestones. When the gated lists are empty the
-// band still reads complete: two labelled plates state the publication
-// standard instead of promising content. Nothing here can ever render an
-// unverified number — every list is a filtered import.
+// rail renders only verifiedMilestones. Two plates then point at where each
+// statement can be checked — the TGA register and the research ledger. Nothing here
+// can ever render an unverified number — every list is a filtered import.
 import { verifiedMetrics } from '../../data/site-metrics';
-import { verifiedMilestones } from '../../data/pages/about';
+import { ABOUT, verifiedMilestones } from '../../data/pages/about';
 
 interface Props {
   class?: string;
 }
 
 const { class: className = '' } = Astro.props;
-const counters = verifiedMetrics.filter((m) => ['systems', 'regions', 'divisions', 'supply'].includes(m.id));
+const counters = ['founded', 'systems', 'artg', 'supply']
+  .map((id) => verifiedMetrics.find((m) => m.id === id))
+  .filter((m): m is NonNullable<typeof m> => Boolean(m));
 ---
 
 <div class={className}>
@@ -31,7 +32,7 @@ const counters = verifiedMetrics.filter((m) => ['systems', 'regions', 'divisions
     }
   </dl>
 
-  <!-- The verified-gated rail: milestones render as each clears review -->
+  <!-- The verified-gated rail -->
   {
     verifiedMilestones.length > 0 && (
       <ol class="mt-12">
@@ -47,28 +48,34 @@ const counters = verifiedMetrics.filter((m) => ['systems', 'regions', 'divisions
     )
   }
 
-  <!-- The standard, stated — complete today, slots for what verifies later -->
+  <!-- Where to check it: the regulator's register and the company's own
+       announcements — links out, never a promise of future content -->
   <div class="mt-12 grid gap-px border border-hairline bg-hairline sm:grid-cols-2" data-reveal>
-    <div class="relative min-h-36 bg-raised p-7">
+    <div class="relative flex min-h-44 flex-col justify-between bg-raised p-7">
       <span class="corner corner-tr border-hairline-strong" aria-hidden="true"></span>
-      <p class="readout text-xs text-ink-2">Registrations</p>
-      <p class="mt-4 text-body leading-relaxed text-ink-2">
-        ARTG references and regulatory milestones are published here as each is
-        verified.
+      <div>
+        <p class="readout text-xs text-ink-2">Regulatory</p>
+        <p class="mt-4 text-body leading-relaxed text-ink-2">
+          Integrant Pty Ltd is a sponsor on the Australian Register of
+          Therapeutic Goods. Its entries are a matter of public record.
+        </p>
+      </div>
+      <p class="mt-6">
+        <a href={ABOUT.tgaSponsorRecord} target="_blank" rel="noopener noreferrer" class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink">TGA sponsor record ↗</a>
       </p>
     </div>
-    <div class="relative min-h-36 bg-raised p-7">
+    <div class="relative flex min-h-44 flex-col justify-between bg-raised p-7">
       <span class="corner corner-tr border-hairline-strong" aria-hidden="true"></span>
-      <p class="readout text-xs text-ink-2">Publications</p>
-      <p class="mt-4 text-body leading-relaxed text-ink-2">
-        Research activity is recorded on the ledger once compliance review
-        completes.
-        <a href="/research" class="readout tap-target-sm ml-1 text-xs text-ink transition-colors duration-300 hover:text-platinum">Research →</a>
+      <div>
+        <p class="readout text-xs text-ink-2">Research</p>
+        <p class="mt-4 text-body leading-relaxed text-ink-2">
+          Research activity is kept on a public ledger: what is being studied,
+          how, and with whom — never results.
+        </p>
+      </div>
+      <p class="mt-6">
+        <a href="/research" class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink">The ledger →</a>
       </p>
     </div>
   </div>
-
-  <p class="readout mt-8 text-xs leading-relaxed text-ink-2" data-reveal>
-    Company milestones and registrations are published as each is verified.
-  </p>
 </div>
