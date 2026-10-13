@@ -5,6 +5,12 @@ import '@fontsource/rajdhani/500.css';
 import '@fontsource/rajdhani/600.css';
 import '@fontsource/rajdhani/700.css';
 import '../styles/global.css';
+// The three faces every first screen uses, preloaded so they arrive with the
+// stylesheet instead of after it — otherwise the swap from the fallback
+// font reflows the hero (measured CLS ≈ 0.1 on interior pages).
+import rajdhani700 from '@fontsource/rajdhani/files/rajdhani-latin-700-normal.woff2?url';
+import rajdhani600 from '@fontsource/rajdhani/files/rajdhani-latin-600-normal.woff2?url';
+import titillium400 from '@fontsource/titillium-web/files/titillium-web-latin-400-normal.woff2?url';
 import Nav from '../components/Nav.astro';
 import BrandMark from '../components/ui/BrandMark.astro';
 import NeuralField from '../components/ui/NeuralField.astro';
@@ -82,6 +88,9 @@ const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph
     <!-- Dark-first: the chrome colour matches the default dark base; the
          inline script / toggle update this single meta on explicit choice -->
     <meta name="theme-color" content="#050505" />
+    {[rajdhani700, rajdhani600, titillium400].map((href) => (
+      <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />
+    ))}
     <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg" />
     <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />

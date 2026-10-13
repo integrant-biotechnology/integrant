@@ -31,6 +31,8 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
           width="1400"
           height="1400"
           loading={i === 0 ? 'eager' : 'lazy'}
+          fetchpriority={i === 0 ? 'high' : 'low'}
+          decoding={i === 0 ? 'sync' : 'async'}
           class="pv-view absolute inset-0 h-full w-full object-contain p-7"
           data-pv-view={i}
           data-active={i === 0 ? 'true' : undefined}
