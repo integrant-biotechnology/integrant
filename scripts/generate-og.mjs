@@ -32,8 +32,6 @@ const PAGES = [
   { file: 'research.png', eyebrow: 'ACTIVITY · METHODOLOGY · PARTNERSHIPS', title: 'Clinical research.' },
   { file: 'clinical-images.png', eyebrow: 'HEALTHCARE PROFESSIONALS ONLY', title: 'The case file.' },
   { file: 'privacy.png', eyebrow: 'SITE PRIVACY STATEMENT', title: 'Privacy.' },
-  { file: 'news.png', eyebrow: 'ANNOUNCEMENTS · PRESS · MEDIA', title: 'News.' },
-  { file: 'investors.png', eyebrow: 'COMPANY · PLATFORM · ANNOUNCEMENTS', title: 'Investors.' },
   ...publishedNews.map((n) => ({
     file: `news-${n.slug}.png`,
     eyebrow: `${n.category.toUpperCase()} · ${formatDateShort(n.date)}`,
