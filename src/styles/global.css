@@ -452,6 +452,19 @@
     animation: note-write 11s var(--ease-precise) infinite;
     animation-delay: calc(var(--i, 0) * 420ms);
   }
+  /* With motion off the op note shows its finished state — written lines —
+     instead of the empty frame the animation starts from. Declared here, in
+     the same layer as the rule it overrides. */
+  html[data-motion='off'] .note-fill {
+    animation: none !important;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .note-fill {
+      animation: none !important;
+      transform: none;
+    }
+  }
   @keyframes note-write {
     0% {
       transform: scaleX(0);

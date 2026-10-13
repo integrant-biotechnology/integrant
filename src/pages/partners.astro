@@ -51,27 +51,24 @@ import { PARTNER_MODELS } from '../data/pages/partners';
       <div class="mt-12 grid gap-5 md:grid-cols-2">
         {
           PARTNER_MODELS.map((model, i) => (
-            <details class="plate group relative border border-hairline bg-base/60 backdrop-blur-[2px]" data-reveal>
-              <summary class="tap-target flex items-center justify-between gap-6 p-7">
-                <span class="flex items-baseline gap-5">
-                  <span class="readout text-xs text-ink-2">{String(i + 1).padStart(2, '0')}</span>
-                  <span class="font-display text-2xl font-bold text-ink md:text-3xl">{model.label}</span>
-                </span>
-                <span class="plate-toggle font-display text-2xl font-semibold text-ink-2" aria-hidden="true">+</span>
-              </summary>
-              <div class="grid gap-8 border-t border-hairline p-7 md:grid-cols-2">
+            <article class="relative border border-hairline bg-base/60 backdrop-blur-[2px]" data-reveal data-partner-model>
+              <h3 class="flex items-baseline gap-5 p-7">
+                <span class="readout text-xs text-ink-2">{String(i + 1).padStart(2, '0')}</span>
+                <span class="font-display text-2xl font-bold text-ink md:text-3xl">{model.label}</span>
+              </h3>
+              <div class="grid gap-8 border-t border-hairline p-7 sm:grid-cols-2">
                 <div>
                   <p class="readout text-xs text-ink-2">We look for</p>
-                  <p class="mt-4 leading-relaxed text-ink-2">{model.seeks}</p>
+                  <p class="mt-4 text-body leading-relaxed text-ink-2">{model.seeks}</p>
                 </div>
                 <div>
                   <p class="readout text-xs text-ink-2">We provide</p>
-                  <p class="mt-4 leading-relaxed text-ink-2">{model.provides}</p>
+                  <p class="mt-4 text-body leading-relaxed text-ink-2">{model.provides}</p>
                 </div>
               </div>
               <span class="corner corner-tl border-hairline-strong" aria-hidden="true" />
               <span class="corner corner-br border-hairline-strong" aria-hidden="true" />
-            </details>
+            </article>
           ))
         }
       </div>

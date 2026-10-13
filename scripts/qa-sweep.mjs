@@ -160,17 +160,13 @@ console.log('toggle done:', problems.length, 'problems total');
   const subj2 = await page.evaluate(() => document.querySelector('input[name="subject"]')?.value);
   if (subj2) problems.push(`CHANNEL junk reflected: "${subj2}"`);
 
-  // partners plates (walk first: reveal-hidden elements are unclickable)
-  await page.goto(BASE + '/partners?forcevisible', { waitUntil: 'load' });
-  await page.waitForTimeout(600);
-  await page.evaluate(async () => {
-    for (let y = 0; y <= document.body.scrollHeight; y += 400) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 120)); }
-    window.scrollTo(0, 0);
-  });
-  await page.waitForTimeout(800);
-  await page.click('details.plate summary');
-  const open = await page.evaluate(() => document.querySelector('details.plate').open);
-  if (!open) problems.push('PARTNERS plate did not open');
+  // partners: all four models render in full — nothing hidden behind a toggle
+  await page.goto(BASE + '/partners?motion=off', { waitUntil: 'load' });
+  await page.waitForTimeout(400);
+  const models = await page.evaluate(() =>
+    [...document.querySelectorAll('[data-partner-model]')].filter((el) => el.offsetParent !== null && el.textContent.includes('We provide')).length,
+  );
+  if (models !== 4) problems.push(`PARTNERS expected 4 visible models, found ${models}`);
 
   // Cross-tab theme sync
   {

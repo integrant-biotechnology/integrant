@@ -26,7 +26,16 @@ const metrics = ids
           <dd class="font-display text-3xl font-bold tabular-nums text-platinum md:text-4xl">
             {m.kind === 'count' ? <span data-count={m.value}>{m.value}</span> : m.value}
           </dd>
-          <dt class="readout mt-1 text-xs text-ink-2 md:mt-1.5">{m.label}</dt>
+          <dt class="readout mt-1 text-xs text-ink-2 md:mt-1.5">
+            {m.shortLabel ? (
+              <>
+                <span class="md:hidden">{m.shortLabel}</span>
+                <span class="hidden md:inline">{m.label}</span>
+              </>
+            ) : (
+              m.label
+            )}
+          </dt>
         </div>
       ))
     }

@@ -21,6 +21,8 @@ export interface SiteMetric {
   kind: 'count' | 'readout';
   value: string | number;
   label: string;
+  /** One-word label for the phone hero, where four metrics share two rows. */
+  shortLabel?: string;
   /** HARD GATE — unverified rows never render anywhere. */
   verified: boolean;
   /** Provenance note for reviewers. Never rendered. */
@@ -41,6 +43,7 @@ export const SITE_METRICS: SiteMetric[] = [
     kind: 'count',
     value: PRODUCTS.length,
     label: 'Product systems',
+    shortLabel: 'Systems',
     verified: true,
     source: 'Derived: src/data/products.ts',
   },
@@ -49,6 +52,7 @@ export const SITE_METRICS: SiteMetric[] = [
     kind: 'readout',
     value: 'AU·NZ',
     label: 'Regulated supply',
+    shortLabel: 'Supply',
     verified: true,
     source: 'Cleared claim — carried over from the reviewed Stats band',
   },
@@ -57,6 +61,7 @@ export const SITE_METRICS: SiteMetric[] = [
     kind: 'readout',
     value: 'ARTG',
     label: 'Listed implant systems',
+    shortLabel: 'Listed',
     verified: true,
     source: 'Reviewed Platform chip (TI-6AL-4V · ARTG LISTED); public TGA sponsor record for Integrant Pty Ltd',
   },
