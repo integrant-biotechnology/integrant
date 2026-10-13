@@ -11,6 +11,9 @@ import { buildDotMap } from '../lib/dot-map';
 
 const formEnabled = import.meta.env.PUBLIC_CONTACT_FORM_ENABLED === '1';
 const map = buildDotMap();
+// The direct lines already carry the email addresses when the form is off,
+// so the side list then keeps only the links to other pages.
+const channels = formEnabled ? CONTACT.channels : CONTACT.channels.filter((c) => !c.href.startsWith('mailto:'));
 ---
 
 <Base
@@ -26,9 +29,8 @@ const map = buildDotMap();
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Contact' }]}
     docRef="Doc 07 — Contact"
     meta={[
-      { label: 'General', value: 'admin@integrant.com.au' },
-      { label: 'Media', value: 'media@integrant.com.au' },
-      { label: 'Address', value: 'Potts Point NSW 2011' },
+      { label: 'Office', value: 'Potts Point, Sydney' },
+      { label: 'Response', value: 'Within 2 business days' },
       { label: 'Position', value: '33.87°S · 151.22°E' },
     ]}
     seed={131}
@@ -135,11 +137,11 @@ const map = buildDotMap();
         <!-- Channels -->
         <ul class="mt-6 divide-y divide-[var(--color-hairline)] border border-hairline bg-base" data-reveal>
           {
-            CONTACT.channels.map((channel) => (
+            channels.map((channel) => (
               <li>
                 <a
                   href={channel.href}
-                  class="group flex items-center justify-between gap-4 p-5 transition-colors duration-300"
+                  class="group flex flex-col gap-1 p-5 transition-colors duration-300 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
                   data-event={channel.href.startsWith('mailto:') ? 'Email Click' : undefined}
                   data-event-location={channel.href.startsWith('mailto:') ? 'contact-channels' : undefined}
                 >

@@ -78,8 +78,8 @@ const pad = mode === 'thumb' ? 'p-1.5' : 'py-8 md:py-10';
 
       {mode !== 'thumb' && (
         <figcaption class="relative flex items-center justify-between gap-4 border-t border-hairline px-5 py-3">
-          <span class="readout text-xs text-ink-2">Technical specification</span>
-          {catalogue && <span class="readout text-xs text-platinum">{catalogue}</span>}
+          <span class="readout shrink-0 text-xs text-ink-2">Drawing</span>
+          {catalogue && <span class="readout min-w-0 text-right text-xs text-platinum">{catalogue}</span>}
         </figcaption>
       )}
       {mode === 'thumb' && <span class="sr-only">{product.name} — technical drawing</span>}
