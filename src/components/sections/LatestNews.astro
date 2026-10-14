@@ -1,0 +1,45 @@
+---
+// Latest news — the two most recent announcements, between the record and
+// the footer. Renders nothing at all while publishedNews is empty.
+import { publishedNews } from '../../data/news';
+import { formatDateShort } from '../../lib/format-date';
+
+const items = publishedNews.slice(0, 2);
+---
+
+{
+  items.length > 0 && (
+    <section class="relative bg-raised text-ink">
+      <div class="mx-auto max-w-6xl px-6 py-20 md:py-36">
+        <div class="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p class="eyebrow" data-reveal>08 — News</p>
+            <h2 class="display-1 mt-6" data-reveal>Latest announcements.</h2>
+          </div>
+          <div class="flex flex-wrap gap-4" data-reveal>
+            <a href="/investors" class="cta-ghost">For investors →</a>
+            <a href="/news" class="cta-ghost">All news →</a>
+          </div>
+        </div>
+
+        <ol class="mt-12 grid gap-px border border-hairline bg-hairline md:grid-cols-2" data-reveal-group>
+          {items.map((item) => (
+            <li class="bg-base" data-reveal-item>
+              <a href={`/news/${item.slug}`} class="group relative flex h-full min-h-64 flex-col justify-between p-8">
+                <span class="corner corner-tr border-hairline-strong" aria-hidden="true" />
+                <span>
+                  <time datetime={item.date} class="readout text-xs text-ink-2">{formatDateShort(item.date)}</time>
+                  <span class="mt-5 block font-display text-2xl font-semibold text-ink md:text-3xl">{item.title}</span>
+                  <span class="mt-4 block text-body leading-relaxed text-ink-2">{item.summary}</span>
+                </span>
+                <span class="readout mt-8 block text-xs text-ink-2 transition-colors duration-300 group-hover:text-ink">
+                  Read →
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )
+}
