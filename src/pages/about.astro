@@ -10,11 +10,12 @@ import NeuralField from '../components/ui/NeuralField.astro';
 import TrustBand from '../components/ui/TrustBand.astro';
 import { ABOUT } from '../data/pages/about';
 import { PRODUCTS } from '../data/products';
+import { photoSrcset } from '../lib/photo';
 import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
 ---
 
 <Base
-  title="About — Integrant"
+  title="About Integrant — Orthopaedic med-tech, bio-tech and AI"
   ogImage="/og/about.png"
   description="Integrant is a Sydney-based orthopaedic med-tech, bio-tech and AI company — implant systems, biologics and clinical software under one roof."
 >
@@ -72,6 +73,8 @@ import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
             ABOUT.founder.portrait ? (
               <img
                 src={ABOUT.founder.portrait}
+                srcset={photoSrcset(ABOUT.founder.portrait)}
+                sizes="340px"
                 alt={`${ABOUT.founder.name}, founder of Integrant`}
                 width="680"
                 height="907"

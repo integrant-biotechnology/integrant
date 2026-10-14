@@ -64,6 +64,7 @@ const {
 const hasAside = Astro.slots.has('aside');
 const stack: MetaRow[] = [...meta, ...chips.map((chip) => ({ label: '', value: chip }))];
 const hasRail = hasAside || stack.length > 0;
+import { photoSrcset } from '../lib/photo';
 ---
 
 <section data-contrast class="relative overflow-hidden bg-base text-ink">
@@ -72,6 +73,8 @@ const hasRail = hasAside || stack.length > 0;
       <>
         <img
           src={backdrop}
+          srcset={photoSrcset(backdrop)}
+          sizes="100vw"
           alt=""
           aria-hidden="true"
           loading="eager"

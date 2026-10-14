@@ -4,6 +4,8 @@
 // BELOW the image (never overlaid on pixels — the rendered-contrast gate
 // can't measure text over photographs, so we never create that case).
 // Captions state only what an image generically is; ambience, not claims.
+import { photoSrcset } from '../../lib/photo';
+
 interface Props {
   src: string;
   alt: string;
@@ -14,11 +16,14 @@ interface Props {
 }
 
 const { src, alt, width, height, caption, class: className = '' } = Astro.props;
+const srcset = photoSrcset(src);
 ---
 
 <figure class:list={['relative border border-hairline bg-raised', className]}>
   <img
     src={src}
+    srcset={srcset}
+    sizes={srcset ? '(min-width: 768px) 560px, 100vw' : undefined}
     alt={alt}
     width={width}
     height={height}

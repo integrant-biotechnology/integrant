@@ -1,0 +1,94 @@
+{
+  "/photo/metal.jpg": [
+    [
+      "/photo/metal-800.webp",
+      800
+    ],
+    [
+      "/photo/metal.jpg",
+      1600
+    ]
+  ],
+  "/photo/phone.jpg": [
+    [
+      "/photo/phone-800.webp",
+      800
+    ],
+    [
+      "/photo/phone.webp",
+      1200
+    ]
+  ],
+  "/photo/sydney-day.jpg": [
+    [
+      "/photo/sydney-day-800.webp",
+      800
+    ],
+    [
+      "/photo/sydney-day-1600.webp",
+      1600
+    ],
+    [
+      "/photo/sydney-day.webp",
+      1920
+    ]
+  ],
+  "/photo/sydney-night.jpg": [
+    [
+      "/photo/sydney-night-800.webp",
+      800
+    ],
+    [
+      "/photo/sydney-night-1600.webp",
+      1600
+    ],
+    [
+      "/photo/sydney-night.webp",
+      1920
+    ]
+  ],
+  "/photo/theatre-lights.jpg": [
+    [
+      "/photo/theatre-lights-800.webp",
+      800
+    ],
+    [
+      "/photo/theatre-lights-1600.webp",
+      1600
+    ],
+    [
+      "/photo/theatre-lights.webp",
+      1920
+    ]
+  ],
+  "/photo/theatre.jpg": [
+    [
+      "/photo/theatre-800.webp",
+      800
+    ],
+    [
+      "/photo/theatre-1600.webp",
+      1600
+    ],
+    [
+      "/photo/theatre.webp",
+      1920
+    ]
+  ],
+  "/photo/tray.jpg": [
+    [
+      "/photo/tray-800.webp",
+      800
+    ],
+    [
+      "/photo/tray.webp",
+      1200
+    ]
+  ],
+  "/founder/gordon-slater.jpg": [
+    [
+      "/founder/gordon-slater.webp",
+      680
+    ]
+  ]
+}

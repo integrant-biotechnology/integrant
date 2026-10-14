@@ -4,8 +4,9 @@ import { PRODUCTS, PRODUCT_LINES } from '../../data/products';
 import NeuralField from '../../components/ui/NeuralField.astro';
 import ProductPlate from '../../components/ui/ProductPlate.astro';
 import { ANATOMY_AREAS } from '../../data/anatomy-areas';
+import { photoSrcset } from '../../lib/photo';
 
-const title = 'Product systems — Integrant';
+const title = 'Product systems — Implants and graft materials — Integrant';
 const description =
   'Integrant implant systems, instrumentation and graft materials — engineered for foot, ankle, hand and wrist.';
 
@@ -40,6 +41,8 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
     <!-- Material ambience: spun-metal macro under the scrim (photography.ts) -->
     <img
       src="/photo/metal.jpg"
+      srcset={photoSrcset('/photo/metal.jpg')}
+      sizes="100vw"
       alt=""
       aria-hidden="true"
       loading="eager"
