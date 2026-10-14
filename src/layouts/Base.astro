@@ -179,7 +179,7 @@ const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph
              already end with their own. -->
         {
           footerCta && (
-            <div class="pb-24 text-center">
+            <div class="pb-24 text-center" data-print-hide>
               <h2 class="display-1" data-reveal>
                 Partner with Integrant.
               </h2>
@@ -235,7 +235,7 @@ const jsonLdPayload = JSON.stringify({ '@context': 'https://schema.org', '@graph
             </address>
           </div>
 
-          <nav aria-label="Footer" class="contents">
+          <nav aria-label="Footer" class="contents" data-print-hide>
             {
               [
                 {

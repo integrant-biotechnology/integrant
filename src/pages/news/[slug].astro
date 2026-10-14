@@ -64,6 +64,7 @@ const jsonLd = [
   <SubpageHero
     title={item.title}
     titleSize="compact"
+    breadcrumbLd={false}
     kicker={`${item.category} · ${formatDate(item.date)}`}
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'News', href: '/news' }, { label: formatDateShort(item.date) }]}
     docRef="Doc 10 — News"
