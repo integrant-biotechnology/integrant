@@ -1190,3 +1190,88 @@
     100% { transform: scale(1.6); opacity: 0; }
   }
 }
+
+/* --- Print ------------------------------------------------------------------
+   Surgeons and procurement teams print product and specification pages.
+   Print is always black on white, whatever the screen theme: tokens are
+   re-pinned everywhere (including contrast bands, which re-declare them),
+   decoration and chrome drop out, and reveal states are forced visible so
+   content hidden for a scroll animation is never missing from paper.
+   Unlayered on purpose, so it outranks the base and components layers. */
+@media print {
+  :root,
+  [data-theme],
+  [data-contrast] {
+    --color-base: #ffffff;
+    --color-raised: #ffffff;
+    --color-inset: #ffffff;
+    --color-void: #ffffff;
+    --color-ink: #000000;
+    --color-ink-2: #1f1f1f;
+    --color-ink-3: #3d3d3d;
+    --color-hairline: #c8c8c8;
+    --color-hairline-strong: #8a8a8a;
+    --color-hairline-control: #8a8a8a;
+    --color-platinum: #000000;
+    color-scheme: light;
+  }
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .site-nav,
+  #mobile-menu,
+  .skip-link,
+  .grain,
+  .neural-field,
+  .hero-bloom,
+  canvas,
+  .pv-tab,
+  [role='tablist'],
+  .cta-solid,
+  .cta-ghost,
+  .nav-cta,
+  footer > p[aria-hidden='true'],
+  [data-print-hide] {
+    display: none !important;
+  }
+  /* Backdrop photographs and their scrims are atmosphere, not content */
+  section > img[aria-hidden='true'],
+  section > div[aria-hidden='true'] {
+    display: none !important;
+  }
+  [data-reveal],
+  [data-reveal-item],
+  .boot-hide,
+  .hero-content,
+  .sweep {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    clip-path: none !important;
+  }
+  .sweep {
+    background: none !important;
+    -webkit-text-fill-color: currentColor !important;
+  }
+  section {
+    padding-top: 0 !important;
+    break-inside: auto;
+  }
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+  table,
+  figure,
+  dl > div {
+    break-inside: avoid;
+  }
+  main a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.8em;
+    word-break: break-all;
+  }
+}

@@ -44,6 +44,9 @@ interface Props {
   /** 'compact' sets the H1 one step down for long, sentence-length titles
    *  (news articles); 'hero' is the single-word page title. */
   titleSize?: 'hero' | 'compact';
+  /** Emit BreadcrumbList structured data from `crumbs` (pages that build
+   *  their own, like news articles, pass false). */
+  breadcrumbLd?: boolean;
 }
 
 const {
@@ -59,7 +62,25 @@ const {
   pulse = false,
   backdrop,
   titleSize = 'hero',
+  breadcrumbLd = true,
 } = Astro.props;
+
+// Breadcrumb structured data mirrors the visible trail; the last crumb is
+// the current page.
+const site = (Astro.site ?? Astro.url).toString().replace(/\/$/, '');
+const breadcrumbJson =
+  breadcrumbLd && crumbs.length > 1
+    ? JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: crumbs.map((crumb, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: crumb.label,
+          item: crumb.href ? `${site}${crumb.href === '/' ? '' : crumb.href}` : `${site}${Astro.url.pathname}`,
+        })),
+      })
+    : null;
 
 const hasAside = Astro.slots.has('aside');
 const stack: MetaRow[] = [...meta, ...chips.map((chip) => ({ label: '', value: chip }))];
@@ -67,6 +88,7 @@ const hasRail = hasAside || stack.length > 0;
 import { photoSrcset } from '../lib/photo';
 ---
 
+{breadcrumbJson && <script type="application/ld+json" set:html={breadcrumbJson} />}
 <section data-contrast class="relative overflow-hidden bg-base text-ink">
   {
     backdrop && (

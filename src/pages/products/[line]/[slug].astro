@@ -343,7 +343,7 @@ if (metaDescription.length > 158) {
   <!-- Related systems -->
   {
     related.length > 0 && (
-      <section class="relative bg-raised text-ink">
+      <section class="relative bg-raised text-ink" data-print-hide>
         <div class="mx-auto max-w-6xl px-6 py-16 md:py-28">
           <h2 class="eyebrow" data-reveal>Related systems</h2>
           <div class="mt-10 grid gap-6 sm:grid-cols-3">
@@ -389,7 +389,7 @@ if (metaDescription.length > 158) {
   }
 
   <!-- The walk-through: prev / next along the catalogue index -->
-  <nav aria-label="Catalogue walk-through" class="relative bg-base text-ink">
+  <nav aria-label="Catalogue walk-through" class="relative bg-base text-ink" data-print-hide>
     <div class="mx-auto grid max-w-6xl grid-cols-2 border-t border-hairline">
       <a
         href={`/products/${prev.line}/${prev.slug}`}
