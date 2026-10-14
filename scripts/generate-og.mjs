@@ -31,6 +31,7 @@ const PAGES = [
   { file: 'innovation.png', eyebrow: 'AI CLINICAL SOFTWARE · R&D', title: 'The notebook that writes itself.' },
   { file: 'research.png', eyebrow: 'ACTIVITY · METHODOLOGY · PARTNERSHIPS', title: 'Clinical research.' },
   { file: 'clinical-images.png', eyebrow: 'HEALTHCARE PROFESSIONALS ONLY', title: 'The case file.' },
+  { file: 'privacy.png', eyebrow: 'SITE PRIVACY STATEMENT', title: 'Privacy.' },
   ...publishedNews.map((n) => ({
     file: `news-${n.slug}.png`,
     eyebrow: `${n.category.toUpperCase()} · ${formatDateShort(n.date)}`,

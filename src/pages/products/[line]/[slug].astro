@@ -64,6 +64,10 @@ for (const sentence of sentences) {
   metaDescription += sentence;
 }
 metaDescription = metaDescription.trim();
+// Short summaries get the supply line so search results carry a full sentence pair.
+if (metaDescription.length < 70) {
+  metaDescription += ' Supplied to healthcare professionals across Australia and New Zealand.';
+}
 if (metaDescription.length > 158) {
   metaDescription = metaDescription.slice(0, 155).replace(/\s+\S*$/, '') + '…';
 }
