@@ -2,7 +2,7 @@
 // Trust band — the credibility register as verified-gated slots.
 // Counters come from verifiedMetrics (structural TGA gate); the milestone
 // rail renders only verifiedMilestones. Two plates then point at where each
-// statement can be checked — the TGA register and the research ledger. Nothing here
+// statement can be checked — the TGA register and the newsroom. Nothing here
 // can ever render an unverified number — every list is a filtered import.
 import { verifiedMetrics } from '../../data/site-metrics';
 import { ABOUT, verifiedMilestones } from '../../data/pages/about';
@@ -67,14 +67,14 @@ const counters = ['founded', 'systems', 'artg', 'supply']
     <div class="relative flex min-h-44 flex-col justify-between bg-raised p-7">
       <span class="corner corner-tr border-hairline-strong" aria-hidden="true"></span>
       <div>
-        <p class="readout text-xs text-ink-2">Research</p>
+        <p class="readout text-xs text-ink-2">Announcements</p>
         <p class="mt-4 text-body leading-relaxed text-ink-2">
-          Research activity is kept on a public ledger: what is being studied,
-          how, and with whom — never results.
+          Company announcements and press releases are kept in the newsroom,
+          each linked to its original source.
         </p>
       </div>
       <p class="mt-6">
-        <a href="/research" class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink">The ledger →</a>
+        <a href="/news" class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink">News →</a>
       </p>
     </div>
   </div>
