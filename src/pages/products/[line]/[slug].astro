@@ -353,24 +353,9 @@ if (metaDescription.length > 158) {
                 class="group flex flex-col border border-hairline bg-raised transition-colors duration-300 hover:border-hairline-strong hover:bg-base"
                 data-reveal
               >
-                {item.views && item.views.length > 0 ? (
-                  <span
-                    class="relative block h-40 border-b border-hairline specimen"
-                    aria-hidden="true"
-                  >
-                    <img
-                      src={item.views[0].small ?? item.views[0].src}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                      class="absolute inset-0 h-full w-full object-contain p-4"
-                    />
-                  </span>
-                ) : (
-                  <div class="flex h-40 items-center justify-center border-b border-hairline bg-inset" aria-hidden="true">
-                    <ProductPlate product={item} mode="thumb" class="h-32 w-32 border-0 bg-transparent" />
-                  </div>
-                )}
+                <div class="flex h-40 items-center justify-center border-b border-hairline bg-inset" aria-hidden="true">
+                  <ProductPlate product={item} mode="thumb" class="h-32 w-32 border-0 bg-transparent" />
+                </div>
                 <span class="flex flex-1 flex-col justify-between p-7">
                   <span>
                     <span class="readout block text-xs text-ink-2">{item.category}</span>

@@ -1,10 +1,9 @@
 ---
 // Product showcase — the catalogue as an editorial feature stack, not a wall
 // of identical cards. Four asymmetric feature rows (alternating), then a
-// hairline index completing the full catalogue. Photography renders on the
-// specimen plate (light gradient — the cutouts are matte-black hardware);
-// systems without photography get the ProductPlate engineering drawing, a
-// defined premium state, never a gap. Copy is the TGA-curated tagline set
+// hairline index completing the full catalogue. Every featured system is shown
+// as its ProductPlate technical drawing, so the stack reads as one visual
+// language; product photography lives on the detail pages. Copy is the TGA-curated tagline set
 // from src/data/products.ts — nothing new is claimed here.
 import NeuralField from '../ui/NeuralField.astro';
 import ProductPlate from '../ui/ProductPlate.astro';
@@ -72,39 +71,9 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
             </div>
 
             <div class={i % 2 === 0 ? 'md:order-2' : 'md:order-1'}>
-              {product.views?.length ? (
-                <figure class="showcase-plate relative overflow-hidden border border-hairline">
-                  <span class="corner corner-tl border-hairline-strong" aria-hidden="true" />
-                  <span class="corner corner-br border-hairline-strong" aria-hidden="true" />
-                  <div
-                    class="relative aspect-[4/3] specimen"
-                  >
-                    <img
-                      src={product.views[0].small ?? product.views[0].src}
-                      alt={product.views[0].alt}
-                      class="showcase-img absolute inset-0 h-full w-full object-contain p-8"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    {product.views.length > 1 && (
-                      <img
-                        src={product.views[1].small ?? product.views[1].src}
-                        alt=""
-                        class="showcase-img-alt absolute inset-0 h-full w-full object-contain p-8 opacity-0"
-                        loading="lazy"
-                        decoding="async"
-                        aria-hidden="true"
-                      />
-                    )}
-                  </div>
-                  <figcaption class="flex items-center justify-between gap-4 border-t border-hairline px-5 py-3">
-                    <span class="readout shrink-0 text-xs text-ink-2">Photograph</span>
-                    <span class="readout min-w-0 text-right text-xs text-ink-2">{product.name}</span>
-                  </figcaption>
-                </figure>
-              ) : (
-                <ProductPlate product={product} mode="card" />
-              )}
+              {/* One visual language across the showcase: every system is shown
+                  as its technical drawing. Photography lives on the detail page. */}
+              <ProductPlate product={product} mode="card" />
             </div>
           </article>
         ))
@@ -143,22 +112,6 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
 
 <style>
   @media (hover: hover) {
-    .showcase-img,
-    .showcase-img-alt {
-      transition: opacity 500ms var(--ease-precise), transform 700ms var(--ease-precise);
-    }
-    .group:hover .showcase-img {
-      transform: scale(1.03);
-    }
-    /* Only fade the base image out when a hover replacement actually exists */
-    .group:hover .showcase-img:has(+ .showcase-img-alt) {
-      opacity: 0;
-    }
-    /* Second view crossfades in over the first where it exists — pure CSS */
-    .group:hover .showcase-img-alt {
-      opacity: 1;
-      transform: scale(1.03);
-    }
     .index-row:hover {
       background-color: var(--color-raised);
     }

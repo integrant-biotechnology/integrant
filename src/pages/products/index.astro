@@ -160,27 +160,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                 </p>
               </div>
               <div class:list={[i % 2 === 1 && 'md:order-first']}>
-                {item.views?.length ? (
-                  <figure class="relative overflow-hidden border border-hairline">
-                    <span class="corner corner-tl border-hairline-strong" aria-hidden="true" />
-                    <span class="corner corner-br border-hairline-strong" aria-hidden="true" />
-                    <div class="relative aspect-[4/3] specimen">
-                      <img
-                        src={item.views[0].small ?? item.views[0].src}
-                        alt={item.views[0].alt}
-                        class="absolute inset-0 h-full w-full object-contain p-8"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-                    <figcaption class="flex items-center justify-between gap-4 border-t border-hairline px-5 py-3">
-                      <span class="readout shrink-0 text-xs text-ink-2">Photograph</span>
-                      <span class="readout min-w-0 text-right text-xs text-ink-2">{item.name}</span>
-                    </figcaption>
-                  </figure>
-                ) : (
-                  <ProductPlate product={item} mode="card" />
-                )}
+                <ProductPlate product={item} mode="card" />
               </div>
             </article>
             ))}
@@ -197,31 +177,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                   data-reveal
                 >
                   <div class="relative overflow-hidden">
-                    {product.views && product.views.length > 0 ? (
-                      <span
-                        class="relative block aspect-[4/3] specimen"
-                        aria-hidden="true"
-                      >
-                        <img
-                          src={product.views[0].small ?? product.views[0].src}
-                          alt=""
-                          loading="lazy"
-                          decoding="async"
-                          class="card-img absolute inset-0 h-full w-full object-contain p-8"
-                        />
-                        {product.views.length > 1 && (
-                          <img
-                            src={product.views[1].small ?? product.views[1].src}
-                            alt=""
-                            loading="lazy"
-                            decoding="async"
-                            class="card-img-alt absolute inset-0 h-full w-full object-contain p-8 opacity-0"
-                          />
-                        )}
-                      </span>
-                    ) : (
-                      <ProductPlate product={product} mode="card" class="border-0" />
-                    )}
+                    <ProductPlate product={product} mode="card" class="border-0" />
                   </div>
                   <span class="flex flex-1 flex-col justify-between p-7">
                     <span>
@@ -315,21 +271,6 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
     .catalogue-card:hover {
       border-color: var(--color-hairline-strong);
       background-color: var(--color-inset);
-    }
-    .card-img,
-    .card-img-alt {
-      transition: opacity 500ms var(--ease-precise), transform 700ms var(--ease-precise);
-    }
-    .catalogue-card:hover .card-img {
-      transform: scale(1.03);
-    }
-    /* Only fade the base image out when a hover replacement actually exists */
-    .catalogue-card:hover .card-img:has(+ .card-img-alt) {
-      opacity: 0;
-    }
-    .catalogue-card:hover .card-img-alt {
-      opacity: 1;
-      transform: scale(1.03);
     }
   }
 </style>
