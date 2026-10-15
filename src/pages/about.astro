@@ -9,7 +9,6 @@ import SubpageHero from '../components/SubpageHero.astro';
 import NeuralField from '../components/ui/NeuralField.astro';
 import TrustBand from '../components/ui/TrustBand.astro';
 import { ABOUT } from '../data/pages/about';
-import { PRODUCTS } from '../data/products';
 import { photoSrcset } from '../lib/photo';
 import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
 ---
@@ -26,10 +25,9 @@ import { BRAND_MARK_PATH } from '../lib/brand-mark-path';
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'About' }]}
     docRef="Doc 04 — About"
     meta={[
-      { label: 'Founded', value: '2015' },
+      { label: 'Entity', value: 'Integrant Pty Ltd' },
+      { label: 'Founder', value: ABOUT.founder.name },
       { label: 'Headquarters', value: 'Sydney, Australia' },
-      { label: 'Systems', value: String(PRODUCTS.length) },
-      { label: 'Supply', value: 'AU · NZ' },
     ]}
     seed={149}
     variant="organic"

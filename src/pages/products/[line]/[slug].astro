@@ -34,7 +34,6 @@ const next = PRODUCTS[(position + 1) % PRODUCTS.length];
 const HERO_SPECS = 3;
 const moreSpecs = product.specs.slice(HERO_SPECS);
 const hasPanel = moreSpecs.length > 0 || Boolean(product.applications) || Boolean(product.contents);
-const specCols = moreSpecs.length <= 1 ? '' : moreSpecs.length === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-3';
 
 // Minimal, claim-free structured data: name/brand/description only — no
 // medical properties, offers or ratings (TGA posture carries into metadata).
@@ -101,7 +100,7 @@ if (metaDescription.length > 158) {
             <li class="text-ink-2" aria-current="page">{product.name}</li>
           </ol>
         </nav>
-        <p class="readout shrink-0 text-xs text-platinum md:text-sm">{folio}</p>
+        <p class="readout hidden shrink-0 text-xs text-platinum sm:block md:text-sm">{folio}</p>
       </div>
 
       <div class="mt-10 grid gap-12 md:mt-14 md:grid-cols-[minmax(0,7fr)_minmax(300px,5fr)] md:gap-16">
@@ -176,22 +175,15 @@ if (metaDescription.length > 158) {
       <p class="eyebrow" data-reveal>03 — Specification</p>
       <h2 class="display-2 mt-5" data-reveal>In detail.</h2>
 
-      {/* Bordered cells rather than a gap-background grid: the column
-          count adapts to how many specs remain, so no orphan cells */}
       {moreSpecs.length > 0 && (
-      <div class={`mt-10 grid gap-4 ${specCols}`} data-reveal>
-        {
-          moreSpecs.map((spec, i) => (
-            <div class="relative border border-hairline bg-base p-6">
-              {i === 0 && <span class="corner corner-tl border-hairline-strong" aria-hidden="true" />}
-              <p class="readout text-xs text-ink-2">{spec.label}</p>
-              <p class="mt-3 font-display text-2xl font-bold leading-snug tabular-nums text-ink md:text-3xl">
-                {spec.value}
-              </p>
+        <dl class="mt-10 max-w-3xl border-t border-hairline" data-reveal>
+          {moreSpecs.map((spec) => (
+            <div class="flex items-baseline justify-between gap-6 border-b border-hairline py-5">
+              <dt class="readout text-xs text-ink-2">{spec.label}</dt>
+              <dd class="text-right font-display text-xl font-semibold tabular-nums text-ink">{spec.value}</dd>
             </div>
-          ))
-        }
-      </div>
+          ))}
+        </dl>
       )}
 
       {

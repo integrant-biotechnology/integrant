@@ -53,7 +53,7 @@ const instruments = [
       <p class="font-display text-8xl font-bold text-ink-3" aria-hidden="true">{consult.index}</p>
       <div class="mt-4 grid gap-10 md:grid-cols-2">
         <div>
-          <p class="eyebrow" data-reveal>{consult.index} — {consult.label}</p>
+          <p class="eyebrow" data-reveal><span class="sr-only">{consult.index} — </span>{consult.label}</p>
           <h2 class="display-1 mt-6" data-reveal>{consult.heading}</h2>
         </div>
         <div class="md:pt-14">
@@ -80,7 +80,7 @@ const instruments = [
     <NeuralField variant="organic" seed={197} />
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="font-display text-8xl font-bold text-ink-3" aria-hidden="true">{specify.index}</p>
-      <p class="mt-4 eyebrow" data-reveal>{specify.index} — {specify.label}</p>
+      <p class="mt-4 eyebrow" data-reveal><span class="sr-only">{specify.index} — </span>{specify.label}</p>
       <h2 class="display-1 mt-6 max-w-2xl" data-reveal>{specify.heading}</h2>
       <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{specify.body}</p>
 
@@ -135,7 +135,7 @@ const instruments = [
       <p class="font-display text-8xl font-bold text-ink-3" aria-hidden="true">{theatre.index}</p>
       <div class="mt-4 grid gap-10 md:grid-cols-2">
         <div>
-          <p class="eyebrow" data-reveal>{theatre.index} — {theatre.label}</p>
+          <p class="eyebrow" data-reveal><span class="sr-only">{theatre.index} — </span>{theatre.label}</p>
           <h2 class="display-1 mt-6" data-reveal>{theatre.heading}</h2>
         </div>
         <p class="max-w-xl text-lg leading-relaxed text-ink-2 md:pt-14" data-reveal>{theatre.body}</p>
@@ -178,7 +178,7 @@ const instruments = [
     <div class="mx-auto grid max-w-6xl gap-16 px-6 py-20 md:grid-cols-[1fr_280px] md:py-32">
       <div>
         <p class="font-display text-8xl font-bold text-ink-3" aria-hidden="true">{doc.index}</p>
-        <p class="mt-4 eyebrow" data-reveal>{doc.index} — {doc.label}</p>
+        <p class="mt-4 eyebrow" data-reveal><span class="sr-only">{doc.index} — </span>{doc.label}</p>
         <h2 class="display-1 mt-6" data-reveal>{doc.heading}</h2>
         <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{doc.body}</p>
         <div class="mt-10" data-reveal>

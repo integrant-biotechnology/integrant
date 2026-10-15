@@ -20,9 +20,14 @@ import { PARTNER_MODELS } from '../data/pages/partners';
   <SubpageHero
     title="Partners."
     kicker="Distribution · Hospitals · Suppliers · Research"
-    lede="Integrant works through a small, deliberate network."
+    lede="Integrant works through a small, deliberate network of distributors, hospital groups, manufacturers and research institutions."
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Partners' }]}
     docRef="Doc 06 — Partners"
+    meta={[
+      { label: 'Partnership models', value: String(PARTNER_MODELS.length) },
+      { label: 'Markets', value: 'AU · NZ · export' },
+      { label: 'Response', value: 'Within 2 business days' },
+    ]}
     seed={173}
     variant="lattice"
   />
