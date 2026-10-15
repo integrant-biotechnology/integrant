@@ -1,0 +1,13 @@
+{
+  "name": "Integrant",
+  "short_name": "Integrant",
+  "description": "Orthopaedic implant systems, biologics and AI clinical software, engineered in Sydney.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "icons": [
+    { "src": "/brand/logo-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/brand/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
