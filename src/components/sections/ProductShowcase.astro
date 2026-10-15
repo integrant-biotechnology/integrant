@@ -1,7 +1,6 @@
 ---
-// Product showcase — the catalogue as an editorial feature stack, not a wall
-// of identical cards. Four asymmetric feature rows (alternating), then a
-// hairline index completing the full catalogue. Every featured system is shown
+// Product showcase — four featured systems as a two-up grid of drawing cards,
+// then a hairline index completing the full catalogue. Every featured system is shown
 // as its ProductPlate technical drawing, so the stack reads as one visual
 // language; product photography lives on the detail pages. Copy is the TGA-curated tagline set
 // from src/data/products.ts — nothing new is claimed here.
@@ -20,11 +19,6 @@ const TOTAL = String(PRODUCTS.length);
 const NUMBER_WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen'];
 const TOTAL_WORD = NUMBER_WORDS[PRODUCTS.length] ?? TOTAL;
 
-const specLine = (p: (typeof PRODUCTS)[number]) =>
-  p.specs
-    .slice(0, 2)
-    .map((s) => s.value)
-    .join(' · ');
 ---
 
 <section id="products" class="relative bg-raised text-ink">
@@ -33,55 +27,38 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
     <p class="eyebrow" data-reveal>03 — Product systems</p>
     <h2 class="display-1 mt-6" data-reveal>{TOTAL_WORD} systems, engineered as one.</h2>
 
-    <!-- The feature stack: asymmetric, alternating -->
-    <div class="mt-16 space-y-16 md:space-y-24">
+    <!-- The featured systems: a two-up grid of drawing cards -->
+    <div class="mt-14 grid gap-6 sm:grid-cols-2" data-reveal-group>
       {
-        featured.map((product, i) => (
-          <article
-            class={`group grid items-center gap-8 md:gap-14 ${
-              i % 2 === 0 ? 'md:grid-cols-[5fr_7fr]' : 'md:grid-cols-[7fr_5fr]'
-            }`}
-            data-reveal
+        featured.map((product) => (
+          <a
+            href={`/products/${product.line}/${product.slug}`}
+            class="showcase-card group relative flex flex-col border border-hairline bg-base transition-colors duration-300"
+            data-event="View System"
+            data-event-product={product.slug}
+            data-event-location="home-showcase"
+            data-reveal-item
           >
-            <div class={i % 2 === 0 ? 'md:order-1' : 'md:order-2'}>
-              <p class="readout text-xs text-platinum">
-                {indexOf(product.slug)} / {TOTAL} — {product.category}
-              </p>
-              <h3 class="mt-4">
-                <a
-                  href={`/products/${product.line}/${product.slug}`}
-                  class="display-2 tap-target-sm text-ink transition-colors duration-300"
-                >
-                  {product.name}
-                </a>
-              </h3>
-              <p class="mt-4 max-w-md text-lg leading-relaxed text-ink-2">{product.tagline}</p>
-              <p class="readout mt-6 text-xs text-ink-2">{specLine(product)}</p>
-              <p class="mt-8">
-                <a
-                  href={`/products/${product.line}/${product.slug}`}
-                  class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 group-hover:text-ink"
-                  data-event="View System"
-                  data-event-product={product.slug}
-                  data-event-location="home-showcase"
-                >
-                  View system →
-                </a>
+            <ProductPlate product={product} mode="card" class="border-0" />
+            <div class="flex flex-1 flex-col justify-between border-t border-hairline p-7">
+              <div>
+                <p class="readout text-xs text-platinum">
+                  {indexOf(product.slug)} / {TOTAL} — {product.category}
+                </p>
+                <h3 class="mt-4 font-display text-3xl font-bold text-ink">{product.name}</h3>
+                <p class="mt-3 text-body leading-relaxed text-ink-2">{product.tagline}</p>
+              </div>
+              <p class="readout mt-6 text-xs text-ink-2 transition-colors duration-300 group-hover:text-ink">
+                View system →
               </p>
             </div>
-
-            <div class={i % 2 === 0 ? 'md:order-2' : 'md:order-1'}>
-              {/* One visual language across the showcase: every system is shown
-                  as its technical drawing. Photography lives on the detail page. */}
-              <ProductPlate product={product} mode="card" />
-            </div>
-          </article>
+          </a>
         ))
       }
     </div>
 
     <!-- The index: the remaining systems, completing the catalogue -->
-    <div class="mt-20 border-t border-hairline md:mt-28" data-reveal-group>
+    <div class="mt-16 border-t border-hairline md:mt-20" data-reveal-group>
       {
         rest.map((product) => (
           <a
@@ -112,6 +89,10 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
 
 <style>
   @media (hover: hover) {
+    .showcase-card:hover {
+      border-color: var(--color-hairline-strong);
+      background-color: var(--color-inset);
+    }
     .index-row:hover {
       background-color: var(--color-raised);
     }

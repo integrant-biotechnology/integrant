@@ -1,10 +1,9 @@
 ---
 // Engineering specification plate — the universal no-photo product visual.
 // A hand-authored technical line drawing (src/data/product-drawings.ts) in a
-// registration-cornered frame with a catalogue readout. Reads as an
-// intentional engineering document, not a missing image, and any product
-// swaps to real photography the day it exists (callers branch on
-// product.views?.length).
+// registration-cornered frame with a catalogue readout. It is the site's one
+// product visual: every listing and detail page uses it, so all systems read
+// as the same family of engineering documents.
 //
 // Modes: 'hero' (detail-page aside, draws on via data-draw) · 'card'
 // (catalogue/showcase visual region, draws on) · 'thumb' (static — grids of
@@ -79,7 +78,7 @@ const pad = mode === 'thumb' ? 'p-1.5' : 'py-8 md:py-10';
       {mode !== 'thumb' && (
         <figcaption class="relative flex items-center justify-between gap-4 border-t border-hairline px-5 py-3">
           <span class="readout shrink-0 text-xs text-ink-2">Drawing</span>
-          {catalogue && <span class="readout min-w-0 text-right text-xs text-platinum">{catalogue}</span>}
+          {catalogue && <span class="readout min-w-0 line-clamp-1 text-right text-xs text-platinum" title={catalogue}>{catalogue}</span>}
         </figcaption>
       )}
       {mode === 'thumb' && <span class="sr-only">{product.name} — technical drawing</span>}
