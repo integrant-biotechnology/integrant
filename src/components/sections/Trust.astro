@@ -14,7 +14,9 @@ import { ABOUT, verifiedMilestones } from '../../data/pages/about';
 const supply = verifiedMetrics.find((m) => m.id === 'supply');
 ---
 
-<section data-contrast class="relative overflow-hidden bg-base text-ink">
+{/* A hairline marks the join with the Innovation band above: both are
+    dark contrast bands and otherwise merge into one long void. */}
+<section data-contrast class="relative overflow-hidden border-t border-hairline bg-base text-ink">
   <NeuralField variant="scaffold" seed={61} />
   <div class="mx-auto max-w-6xl px-6 py-20 md:py-36">
     <p class="eyebrow" data-reveal>07 — The record</p>
