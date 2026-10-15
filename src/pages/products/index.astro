@@ -113,7 +113,9 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
     PRODUCT_LINES.map((line, lineIndex) => {
       const lineProducts = PRODUCTS.filter((p) => p.line === line.id);
       const lead = lineProducts.find((p) => p.slug === LEAD[line.id]) ?? lineProducts[0];
-      const rest = lineProducts.filter((p) => p !== lead);
+      const others = lineProducts.filter((p) => p !== lead);
+      const features = others.length === 1 ? [lead, ...others] : [lead];
+      const rest = others.length === 1 ? [] : others;
       return (
         <section
           id={line.id}
@@ -130,40 +132,42 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
               {line.blurb}
             </h2>
 
-            <!-- The flagship: a full feature row -->
-            <article class="group mt-14 grid items-center gap-8 md:grid-cols-[5fr_7fr] md:gap-14" data-catalogue-item data-regions={regionsOf(lead.slug)} data-reveal>
+            {/* Feature rows: the flagship, plus the second system when a line
+                has only two — a lone two-up card would leave half the row empty */}
+            {features.map((item, i) => (
+            <article class:list={['group mt-14 grid items-center gap-8 md:gap-14', i % 2 === 0 ? 'md:grid-cols-[5fr_7fr]' : 'md:grid-cols-[7fr_5fr]']} data-catalogue-item data-regions={regionsOf(item.slug)} data-reveal>
               <div>
                 <p class="readout text-xs text-platinum">
-                  {indexOf(lead.slug)} / {PRODUCTS.length} — {lead.category}
+                  {indexOf(item.slug)} / {PRODUCTS.length} — {item.category}
                 </p>
                 <h3 class="mt-4">
-                  <a href={`/products/${lead.line}/${lead.slug}`} class="display-2 tap-target-sm text-ink">
-                    {lead.name}
+                  <a href={`/products/${item.line}/${item.slug}`} class="display-2 tap-target-sm text-ink">
+                    {item.name}
                   </a>
                 </h3>
-                <p class="mt-4 max-w-md text-lg leading-relaxed text-ink-2">{lead.tagline}</p>
-                <p class="readout mt-6 text-xs text-ink-2">{specLine(lead)}</p>
+                <p class="mt-4 max-w-md text-lg leading-relaxed text-ink-2">{item.tagline}</p>
+                <p class="readout mt-6 text-xs text-ink-2">{specLine(item)}</p>
                 <p class="mt-8">
                   <a
-                    href={`/products/${lead.line}/${lead.slug}`}
+                    href={`/products/${item.line}/${item.slug}`}
                     class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 group-hover:text-ink"
                     data-event="View System"
-                    data-event-product={lead.slug}
+                    data-event-product={item.slug}
                     data-event-location="catalogue"
                   >
                     View system →
                   </a>
                 </p>
               </div>
-              <div>
-                {lead.views?.length ? (
+              <div class:list={[i % 2 === 1 && 'md:order-first']}>
+                {item.views?.length ? (
                   <figure class="relative overflow-hidden border border-hairline">
                     <span class="corner corner-tl border-hairline-strong" aria-hidden="true" />
                     <span class="corner corner-br border-hairline-strong" aria-hidden="true" />
                     <div class="relative aspect-[4/3] specimen">
                       <img
-                        src={lead.views[0].small ?? lead.views[0].src}
-                        alt={lead.views[0].alt}
+                        src={item.views[0].small ?? item.views[0].src}
+                        alt={item.views[0].alt}
                         class="absolute inset-0 h-full w-full object-contain p-8"
                         loading="lazy"
                         decoding="async"
@@ -171,16 +175,18 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                     </div>
                     <figcaption class="flex items-center justify-between gap-4 border-t border-hairline px-5 py-3">
                       <span class="readout shrink-0 text-xs text-ink-2">Photograph</span>
-                      <span class="readout min-w-0 text-right text-xs text-ink-2">{lead.name}</span>
+                      <span class="readout min-w-0 text-right text-xs text-ink-2">{item.name}</span>
                     </figcaption>
                   </figure>
                 ) : (
-                  <ProductPlate product={lead} mode="card" />
+                  <ProductPlate product={item} mode="card" />
                 )}
               </div>
             </article>
+            ))}
 
             <!-- The rest of the line: two-up premium cards -->
+            {rest.length > 0 && (
             <div class="mt-14 grid gap-6 sm:grid-cols-2">
               {rest.map((product) => (
                 <a
@@ -236,6 +242,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                 </a>
               ))}
             </div>
+            )}
           </div>
         </section>
       );
