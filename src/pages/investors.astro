@@ -75,20 +75,20 @@ const announcements = publishedNews.slice(0, 4);
       </div>
 
       <dl class="mt-12 grid gap-x-6 gap-y-10 border-y border-hairline py-10 sm:grid-cols-3" data-reveal>
-        <div>
-          <dd class="font-display text-5xl font-bold tabular-nums text-platinum md:text-6xl">{PRODUCTS.length}</dd>
+        <div class="flex flex-col-reverse">
           <dt class="readout mt-3 text-xs text-ink-2">Product systems in the catalogue</dt>
+          <dd class="font-display text-5xl font-bold tabular-nums text-platinum md:text-6xl">{PRODUCTS.length}</dd>
         </div>
-        <div>
-          <dd class="font-display text-5xl font-bold text-platinum md:text-6xl">ARTG</dd>
+        <div class="flex flex-col-reverse">
           <dt class="readout mt-3 text-xs text-ink-2">
             Listed implant systems ·
             <a href={ABOUT.tgaSponsorRecord} target="_blank" rel="noopener noreferrer" class="tap-target-sm text-ink-2 underline underline-offset-4 transition-colors duration-300 hover:text-ink">TGA record ↗</a>
           </dt>
+          <dd class="font-display text-5xl font-bold text-platinum md:text-6xl">ARTG</dd>
         </div>
-        <div>
-          <dd class="font-display text-5xl font-bold text-platinum md:text-6xl">AU·NZ</dd>
+        <div class="flex flex-col-reverse">
           <dt class="readout mt-3 text-xs text-ink-2">Regulated supply</dt>
+          <dd class="font-display text-5xl font-bold text-platinum md:text-6xl">AU·NZ</dd>
         </div>
       </dl>
     </div>
@@ -122,12 +122,10 @@ const announcements = publishedNews.slice(0, 4);
           <h3 class="readout text-xs text-ink-2">Capital position</h3>
           <dl class="mt-5 border-t border-hairline">
             {INVESTORS.capital.map((fact) => (
-              <div class="border-b border-hairline py-4">
-                <div class="flex items-baseline justify-between gap-6">
-                  <dt class="readout text-xs text-ink-2">{fact.label}</dt>
-                  <dd class="text-right font-display text-body font-semibold text-ink">{fact.value}</dd>
-                </div>
-                <p class="mt-1 text-right">
+              <div class="flex items-baseline justify-between gap-6 border-b border-hairline py-4">
+                <dt class="readout text-xs text-ink-2">{fact.label}</dt>
+                <dd class="text-right">
+                  <span class="block font-display text-body font-semibold text-ink">{fact.value}</span>
                   <a
                     href={fact.sourceUrl}
                     target="_blank"
@@ -135,9 +133,9 @@ const announcements = publishedNews.slice(0, 4);
                     class="readout tap-target-sm text-xs text-ink-2 transition-colors duration-300 hover:text-ink"
                   >
                     {/* one inline box: the link is a flex container, which would drop the spaces between loose children */}
-                    <span>Announced <time datetime={fact.asOf}>{formatDate(fact.asOf)}</time> ↗</span>
+                    <span class="lg:whitespace-nowrap">Announced <time datetime={fact.asOf}>{formatDate(fact.asOf)}</time> ↗</span>
                   </a>
-                </p>
+                </dd>
               </div>
             ))}
           </dl>

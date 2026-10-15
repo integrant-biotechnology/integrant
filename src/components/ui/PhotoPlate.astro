@@ -20,6 +20,8 @@ const srcset = photoSrcset(src);
 ---
 
 <figure class:list={['relative border border-hairline bg-raised', className]}>
+  <span class="corner corner-tl border-hairline-strong" aria-hidden="true"></span>
+  <span class="corner corner-br border-hairline-strong" aria-hidden="true"></span>
   <img
     src={src}
     srcset={srcset}
@@ -36,6 +38,4 @@ const srcset = photoSrcset(src);
       <figcaption class="readout border-t border-hairline px-5 py-4 text-xs text-ink-2">{caption}</figcaption>
     )
   }
-  <span class="corner corner-tl border-hairline-strong" aria-hidden="true"></span>
-  <span class="corner corner-br border-hairline-strong" aria-hidden="true"></span>
 </figure>

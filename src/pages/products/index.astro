@@ -196,7 +196,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                   data-regions={regionsOf(product.slug)}
                   data-reveal
                 >
-                  <span class="relative block overflow-hidden">
+                  <div class="relative overflow-hidden">
                     {product.views && product.views.length > 0 ? (
                       <span
                         class="relative block aspect-[4/3] specimen"
@@ -222,7 +222,7 @@ const specLine = (p: (typeof PRODUCTS)[number]) =>
                     ) : (
                       <ProductPlate product={product} mode="card" class="border-0" />
                     )}
-                  </span>
+                  </div>
                   <span class="flex flex-1 flex-col justify-between p-7">
                     <span>
                       <span class="readout block text-xs text-platinum">

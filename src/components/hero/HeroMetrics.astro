@@ -22,10 +22,7 @@ const metrics = ids
   <dl class="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-4 px-6 py-4 md:grid-cols-4 md:gap-y-5 md:py-6">
     {
       metrics.map((m) => (
-        <div class="text-center md:text-left">
-          <dd class="font-display text-3xl font-bold tabular-nums text-platinum md:text-4xl">
-            {m.kind === 'count' ? <span data-count={m.value}>{m.value}</span> : m.value}
-          </dd>
+        <div class="flex flex-col-reverse text-center md:text-left">
           <dt class="readout mt-1 text-xs text-ink-2 md:mt-1.5">
             {m.shortLabel ? (
               <>
@@ -36,6 +33,9 @@ const metrics = ids
               m.label
             )}
           </dt>
+          <dd class="font-display text-3xl font-bold tabular-nums text-platinum md:text-4xl">
+            {m.kind === 'count' ? <span data-count={m.value}>{m.value}</span> : m.value}
+          </dd>
         </div>
       ))
     }
