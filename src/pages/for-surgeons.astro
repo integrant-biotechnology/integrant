@@ -13,6 +13,7 @@ import SubpageHero from '../components/SubpageHero.astro';
 import NeuralField from '../components/ui/NeuralField.astro';
 import OpNote from '../components/ui/OpNote.astro';
 import PhotoPlate from '../components/ui/PhotoPlate.astro';
+import ProductPlate from '../components/ui/ProductPlate.astro';
 import { FOR_SURGEONS } from '../data/pages/for-surgeons';
 import { ANATOMY_AREAS } from '../data/anatomy-areas';
 import { getProduct } from '../data/products';
@@ -97,7 +98,7 @@ const instruments = [
                 <div>
                   {/* first-party anatomy plate art (legacy capture, regraded) —
                       image and text never overlap (rendered-contrast contract) */}
-                  {area.illustration && (
+                  {area.illustration ? (
                     <img
                       src={area.illustration}
                       alt=""
@@ -107,6 +108,13 @@ const instruments = [
                       class="mb-6 h-36 w-full object-contain opacity-75 transition-opacity duration-300 group-hover:opacity-100"
                       aria-hidden="true"
                     />
+                  ) : (
+                    /* No anatomy illustration (external fixators is a device
+                       class, not a region): its lead system's drawing holds the
+                       same slot so every card lines up */
+                    <div class="mb-6 flex h-36 items-center justify-center opacity-75 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true">
+                      <ProductPlate product={products[0]!} mode="thumb" class="h-32 w-32 border-0 bg-transparent" />
+                    </div>
                   )}
                   <h3 class="font-display text-2xl font-semibold text-ink">{area.name}</h3>
                   <p class="mt-3 text-sm leading-relaxed text-ink-2">{area.summary}</p>

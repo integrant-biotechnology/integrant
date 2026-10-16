@@ -22,15 +22,15 @@ export const INNOVATION_ITEMS: InnovationItem[] = [
     title: 'The Integrant app',
     category: 'App',
     summary:
-      'Clinical documentation for the operating theatre. The app listens to the case and drafts the operation note — structured, complete, ready for the surgeon to review and sign.',
+      'In development: clinical documentation for the operating theatre. The app is being built to listen to the case and draft the operation note for the surgeon to review and sign.',
     body: [
-      'Audio from the case is transcribed and organised into the sections an operation note requires: approach, findings, implants, closure.',
+      'Audio from the case will be transcribed and organised into the sections an operation note requires: approach, findings, implants, closure.',
       'Every draft stays a draft until the surgeon signs it. The app writes; the surgeon decides.',
-      'Reports export as PDF for the patient record.',
+      'Signed notes will export as PDF for the patient record.',
     ],
     appStoreUrl: null, // client to supply when App Store listing is live
     gated: false,
-    chips: ['Neural documentation', 'AI-assisted', 'iOS', 'PDF reports'],
+    chips: ['In development', 'Neural documentation', 'AI-assisted', 'iOS'],
   },
   {
     slug: 'ai-workflow',
@@ -51,6 +51,21 @@ export const INNOVATION_ITEMS: InnovationItem[] = [
     gated: false,
   },
 ];
+
+/** Wassup Secretary — the one software product in use today. Same copy
+ *  discipline as the app: describe what it does, never metrics, automation
+ *  rates, languages or comparisons (build-side figures stay off the site). */
+export const SECRETARY = {
+  title: 'Wassup Secretary',
+  status: 'In use · Sydney orthopaedic practice',
+  summary:
+    'A voice agent for the practice phone line. Wassup Secretary answers calls around the clock, takes messages and passes urgent calls to the team.',
+  body: [
+    'Answers the practice line at any hour and records the reason for each call.',
+    'Flags urgent calls and sends a text alert to the practice team.',
+    'Logs every call in a dashboard so staff can follow up during practice hours.',
+  ],
+} as const;
 
 /** The R&D programmes, described by scope — never by claims or dates. */
 export const RD_PROGRAMMES = [

@@ -114,7 +114,7 @@ export const PHOTOGRAPHY: PhotoRecord[] = [
   {
     file: 'phone.jpg',
     role: 'plate',
-    usedOn: '/innovation (02 — The app)',
+    usedOn: 'Not currently used (removed from /innovation, Oct 2026)',
     subject: 'Hands with phone in low light (no identifiable face)',
     photographer: 'Gilles Lambert',
     source: 'https://unsplash.com/photos/pb_lF8VWaPU',
