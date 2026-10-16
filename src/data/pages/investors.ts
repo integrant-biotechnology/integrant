@@ -31,8 +31,8 @@ export const INVESTORS = {
     body: 'Orthopaedic care reaches the operating theatre through separate suppliers of implants, biologics and software. Integrant is building all three as a single system, specified by the surgeons who use it.',
   },
   company: [
-    { label: 'Entity', value: 'Integrant Pty Ltd' },
-    { label: 'ABN', value: '73 605 083 485' },
+    { label: 'Entity', value: 'Integrant Biotechnology Ltd' },
+    { label: 'ABN', value: '33 697 668 876' },
     { label: 'Founded', value: '2015' },
     { label: 'Headquarters', value: 'Sydney, Australia' },
     { label: 'Status', value: 'Privately held' },
