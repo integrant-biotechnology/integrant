@@ -38,8 +38,8 @@ export const ABOUT = {
     { year: '2015', label: 'Integrant founded in Sydney', verified: true },
     { year: '', label: 'First implant system', verified: false },
     { year: '', label: 'Bio-tech division', verified: false },
-    { year: '2026', label: 'Series A capital raise closed', verified: false },
-    { year: '2026', label: 'Nasdaq ticker symbol INGT reserved', verified: false },
+    { year: '2026', label: 'Series A capital raise closed', verified: true },
+    { year: '2026', label: 'Nasdaq ticker symbol INGT reserved', verified: true },
   ] as Milestone[],
   careers: {
     heading: 'Work at Integrant.',
