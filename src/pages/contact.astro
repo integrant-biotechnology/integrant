@@ -25,7 +25,7 @@ const channels = formEnabled ? CONTACT.channels : CONTACT.channels.filter((c) =>
   <SubpageHero
     title="Contact."
     kicker="Sydney · Australia"
-    lede="Product, partnership, media and investor enquiries — each one read and answered by the team in Sydney."
+    lede="Product, partnership and media enquiries — each one read and answered by the team in Sydney."
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Contact' }]}
     docRef="Doc 07 — Contact"
     meta={[
@@ -170,7 +170,7 @@ const channels = formEnabled ? CONTACT.channels : CONTACT.channels.filter((c) =>
   // With JS disabled the form still posts and the function 303s back here.
   const form = document.getElementById('enquiry') as HTMLFormElement | null;
   // Allowlisted channel — the only query value that ever reaches analytics.
-  const CHANNELS = ['partners', 'surgeons', 'research', 'clinical', 'investors', 'media'];
+  const CHANNELS = ['partners', 'surgeons', 'research', 'clinical', 'media'];
   const rawChannel = new URLSearchParams(location.search).get('channel') ?? '';
   const safeChannel = CHANNELS.includes(rawChannel) ? rawChannel : 'direct';
   if (form && form.dataset.enabled === 'true') {
@@ -183,7 +183,6 @@ const channels = formEnabled ? CONTACT.channels : CONTACT.channels.filter((c) =>
       surgeons: 'Surgeon enquiry',
       research: 'Research collaboration enquiry',
       clinical: 'Clinical case material request',
-      investors: 'Investor enquiry',
       media: 'Media enquiry',
     };
     const channel = new URLSearchParams(location.search).get('channel') ?? '';
