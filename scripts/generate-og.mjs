@@ -28,7 +28,7 @@ const PAGES = [
   { file: 'contact.png', eyebrow: 'SYDNEY · AUSTRALIA', title: 'Contact.' },
   { file: 'partners.png', eyebrow: 'DISTRIBUTION · HOSPITALS · SUPPLIERS · RESEARCH', title: 'Partners.' },
   { file: 'for-surgeons.png', eyebrow: 'CONSULT · SPECIFY · THEATRE · DOCUMENT', title: 'For surgeons.' },
-  { file: 'innovation.png', eyebrow: 'AI · BIOMEDICAL · MEDICAL DEVICES', title: 'Wassup, the clinical AI platform.' },
+  { file: 'innovation.png', eyebrow: 'AI · BIOMEDICAL · MEDICAL DEVICES', title: 'Wassup, the clinical AI ecosystem.' },
   { file: 'research.png', eyebrow: 'ACTIVITY · METHODOLOGY · PARTNERSHIPS', title: 'Clinical research.' },
   { file: 'clinical-images.png', eyebrow: 'HEALTHCARE PROFESSIONALS ONLY', title: 'The case file.' },
   { file: 'privacy.png', eyebrow: 'SITE PRIVACY STATEMENT', title: 'Privacy.' },
