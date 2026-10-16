@@ -40,6 +40,12 @@ const RULES = [
   { id: 'guaranteed', group: 'securities', re: /\bguaranteed?\b/i },
   { id: 'highly-anticipated', group: 'securities', re: /\bhighly anticipated\b/i },
   { id: 'buy-shares', group: 'securities', re: /\b(?:buy|purchase) shares\b/i },
+  { id: 'valuation', group: 'securities', re: /\bvaluations?\b/i },
+  // --- Wassup platform: build-side detail that must stay off the site ------
+  { id: 'pilot-customer', group: 'wassup', re: /\b(?:Regen-U|Caponas)\b/i },
+  { id: 'drug-discovery', group: 'wassup', re: /\bdrug discovery\b/i },
+  { id: 'retired-wassup-name', group: 'wassup', re: /\bWassup (?:Copilot|Voice|Counsel|Spider)\b/i },
+  { id: 'integrant-app', group: 'wassup', re: /\bIntegrant app\b/i },
 ];
 
 // route → rule ids that are legitimately present there.
