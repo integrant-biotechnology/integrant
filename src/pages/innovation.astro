@@ -12,7 +12,7 @@ import Base from '../layouts/Base.astro';
 import SubpageHero from '../components/SubpageHero.astro';
 import NeuralField from '../components/ui/NeuralField.astro';
 import OpNote from '../components/ui/OpNote.astro';
-import { INNOVATION_ITEMS, RD_PROGRAMMES, SECRETARY } from '../data/innovation';
+import { INNOVATION_ITEMS, RD_PROGRAMMES } from '../data/innovation';
 
 const app = INNOVATION_ITEMS.find((i) => i.category === 'App')!;
 const rd = INNOVATION_ITEMS.find((i) => i.category === 'R&D')!;
@@ -66,12 +66,12 @@ const workflow = [
 <Base
   title="Innovation — AI clinical documentation — Integrant"
   ogImage="/og/innovation.png"
-  description="Integrant clinical software: Wassup Secretary for the practice phone line, an operation-note app in development, and the R&D pipeline behind them."
+  description="The Integrant innovation program — AI clinical documentation for the operating theatre and the engineering pipeline behind it."
 >
   <SubpageHero
     title="Innovation."
     kicker="AI clinical software · R&D"
-    lede="Clinical software for surgeons and their practices: Wassup Secretary on the practice line today, and an operation-note app in development."
+    lede="The notebook that writes itself: clinical documentation drafted from the case, signed by the surgeon."
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Innovation' }]}
     docRef="Doc 03 — Innovation"
     chips={app.chips}
@@ -153,37 +153,12 @@ const workflow = [
     </div>
   </section>
 
-  <!-- 03 · Wassup Secretary — the product in use today -->
-  <section class="relative bg-base text-ink">
-    <NeuralField variant="edge" seed={231} />
-    <div class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 md:py-32">
-      <div>
-        <p class="eyebrow" data-reveal>03 — In use</p>
-        <h2 class="display-1 mt-6" data-reveal>{SECRETARY.title}</h2>
-        <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{SECRETARY.summary}</p>
-        <p class="readout mt-10 text-xs text-ink-2" data-reveal>{SECRETARY.status}</p>
-      </div>
-      <div class="md:pt-16">
-        <ul class="space-y-6">
-          {
-            SECRETARY.body.map((paragraph, i) => (
-              <li class="flex gap-5 border-b border-hairline pb-6" data-reveal>
-                <span class="readout mt-1 text-xs text-ink-2">{String(i + 1).padStart(2, '0')}</span>
-                <p class="leading-relaxed text-ink-2">{paragraph}</p>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- 04 · The workflow — a four-stage storyboard on a vertical spine.
+  <!-- 03 · The workflow — a four-stage storyboard on a vertical spine.
        Each stage: drawn icon · stage copy (function only) · supporting
        instrument reusing the page's existing CSS animations. -->
   <section class="relative bg-base text-ink">
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="eyebrow" data-reveal>04 — The workflow</p>
+      <p class="eyebrow" data-reveal>03 — The workflow</p>
       <h2 class="display-1 mt-6 max-w-2xl" data-reveal>From audio to signed note.</h2>
 
       <ol class="mt-16 border-l border-hairline">
@@ -268,7 +243,7 @@ const workflow = [
   <section data-contrast class="relative bg-base text-ink">
     <NeuralField variant="dense" seed={233} />
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="eyebrow" data-reveal>05 — Research &amp; development</p>
+      <p class="eyebrow" data-reveal>04 — Research &amp; development</p>
       <h2 class="display-1 mt-6 max-w-2xl" data-reveal>Three programmes, one platform.</h2>
       <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{rd.summary}</p>
 

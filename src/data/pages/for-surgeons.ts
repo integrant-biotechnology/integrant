@@ -34,8 +34,8 @@ export const FOR_SURGEONS = {
     {
       index: '04',
       label: 'DOCUMENT',
-      heading: 'Operation notes, drafted for you to sign.',
-      body: 'In development: the Integrant app is being built to draft structured operation notes from theatre audio for surgeon review and signature.',
+      heading: 'The note writes itself. You sign it.',
+      body: 'The Integrant app drafts structured operation notes from theatre audio for surgeon review and signature.',
     },
   ] as WorkflowStep[],
   ifuNote: 'IFU — ON REQUEST', // replaced by ARTG/IFU references once client-verified
