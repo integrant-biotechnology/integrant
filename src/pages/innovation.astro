@@ -1,281 +1,151 @@
 ---
-// /innovation — "The Notebook". Only the hero and the R&D vault (04) are
-// permanent dark bands; everything between follows the theme — a page whose
-// first viewport is all contrast bands makes the theme switch look broken
-// (that bug shipped twice before this held). Copy discipline is absolute:
-// function only —
-// no time-saved, accuracy or error claims anywhere (substantiation + possible
-// device-classification exposure). The App Store CTA renders only when the
-// client supplies a URL; R&D detail stays behind locked plates until
-// disclosed.
+// /innovation — the Wassup platform first, then the biomedical and device
+// programmes. Only the hero and the R&D band (04) are permanent dark bands;
+// everything between follows the theme — a page whose first viewport is all
+// contrast bands makes the theme switch look broken (that bug shipped twice).
+// Copy rules live in src/data/innovation.ts.
 import Base from '../layouts/Base.astro';
 import SubpageHero from '../components/SubpageHero.astro';
 import NeuralField from '../components/ui/NeuralField.astro';
-import OpNote from '../components/ui/OpNote.astro';
-import { INNOVATION_ITEMS, RD_PROGRAMMES, SECRETARY } from '../data/innovation';
+import {
+  WASSUP_PLATFORM,
+  WASSUP_GROUPS,
+  WASSUP_PRODUCTS,
+  WASSUP_STEPS,
+  RD_PROGRAMMES,
+} from '../data/innovation';
 
-const app = INNOVATION_ITEMS.find((i) => i.category === 'App')!;
-const rd = INNOVATION_ITEMS.find((i) => i.category === 'R&D')!;
-
-// The storyboard: four stages, function language only (no time-saved,
-// accuracy or error claims — substantiation + device-classification
-// exposure). Icons are hand-drawn stroke paths for svg[data-draw].
-const workflow = [
-  {
-    index: '01',
-    label: 'Capture',
-    copy: 'Audio from the case is captured in theatre. Nothing else is recorded.',
-    io: 'In: theatre audio → Out: transcript',
-    icon: [
-      'M 20 8 H 32 V 28 C 32 34, 20 34, 20 28 Z',
-      'M 14 24 C 14 36, 38 36, 38 24',
-      'M 26 36 V 44', 'M 18 44 H 34',
-    ],
-  },
-  {
-    index: '02',
-    label: 'Structure',
-    copy: 'The transcript is organised into the sections an operation note requires — approach, findings, implants, closure.',
-    io: 'In: transcript → Out: structured sections',
-    icon: [
-      'M 10 8 V 44', 'M 10 8 H 16', 'M 10 44 H 16',
-      'M 42 8 V 44', 'M 42 8 H 36', 'M 42 44 H 36',
-      'M 20 16 H 32', 'M 20 26 H 32', 'M 20 36 H 32',
-    ],
-  },
-  {
-    index: '03',
-    label: 'Draft',
-    copy: 'A complete draft note, assembled from the case itself.',
-    io: 'In: sections → Out: draft note',
-    icon: [
-      'M 12 6 H 40 V 46 H 12 Z',
-      'M 18 14 H 34', 'M 18 21 H 34', 'M 18 28 H 34', 'M 18 35 H 28',
-    ],
-  },
-  {
-    index: '04',
-    label: 'Sign',
-    copy: 'Nothing is final until the surgeon signs. The app writes; the surgeon decides.',
-    io: 'In: draft → Out: signed note',
-    icon: ['M 8 34 C 14 24, 18 40, 24 30 C 30 20, 32 36, 38 28 C 41 24, 43 30, 46 27'],
-  },
-];
+const inUse = WASSUP_PRODUCTS.filter((p) => p.status === 'In use').length;
+const inDevelopment = WASSUP_PRODUCTS.length - inUse;
 ---
 
 <Base
-  title="Innovation — AI clinical documentation — Integrant"
+  title="Innovation — the Wassup platform — Integrant"
   ogImage="/og/innovation.png"
-  description="Integrant clinical software: Wassup Secretary for the practice phone line, an operation-note app in development, and the R&D pipeline behind them."
+  description="Wassup, the Integrant clinical AI platform: five software agents for clinicians, practices and research, alongside the biomedical and medical device programmes."
 >
   <SubpageHero
     title="Innovation."
-    kicker="AI clinical software · R&D"
-    lede="Clinical software for surgeons and their practices: Wassup Secretary on the practice line today, and an operation-note app in development."
+    kicker="AI · Biomedical · Medical devices"
+    lede="Wassup is the Integrant clinical AI platform: software agents that draft, organise and answer, with a qualified person reviewing every output."
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Innovation' }]}
     docRef="Doc 03 — Innovation"
-    chips={app.chips}
+    meta={[
+      { label: 'Platform', value: 'Wassup' },
+      { label: 'In use', value: String(inUse) },
+      { label: 'In development', value: String(inDevelopment) },
+    ]}
     seed={223}
     variant="dense"
     pulse
     backdrop="/photo/theatre-lights.jpg"
   />
 
-  <!-- 01 · The notebook, centre stage. Theme-responsive: in light mode the
-       op-note reads as paper — and the first viewport visibly answers the
-       theme switch (hero + vault are the page's only permanent dark bands). -->
+  <!-- 01 · The platform — theme-responsive, so the toggle visibly works -->
   <section class="relative overflow-hidden bg-base text-ink">
     <NeuralField variant="dense" seed={227} />
     <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="eyebrow" data-reveal>01 — The notebook</p>
-      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>The note, drafted live.</h2>
-
-      <div class="mt-14 flex justify-center" data-reveal aria-hidden="true">
-        <div class="w-full max-w-xs md:max-w-md">
-          <OpNote mobileRowCap={8} />
-        </div>
-      </div>
-
-      <!-- The vitals trace runs beneath the note — bio under the AI -->
-      <div class="vitals relative mx-auto mt-16 max-w-3xl" data-reveal>
-        <svg viewBox="0 0 800 140" class="w-full" fill="none" data-draw aria-hidden="true">
-          <path
-            class="vitals-base text-ink-3"
-            d="M 0 70 L 300 70 L 330 70 L 350 34 L 372 116 L 394 10 L 416 128 L 436 50 L 456 70 L 800 70"
-            stroke="currentColor"
-            stroke-width="1.5"
-          ></path>
-          <path
-            class="vitals-pulse text-ink"
-            d="M 0 70 L 300 70 L 330 70 L 350 34 L 372 116 L 394 10 L 416 128 L 436 50 L 456 70 L 800 70"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            data-no-draw
-          ></path>
-        </svg>
-      </div>
+      <p class="eyebrow" data-reveal>01 — The platform</p>
+      <h2 class="display-1 mt-6 max-w-3xl" data-reveal>{WASSUP_PLATFORM.heading}</h2>
+      <p class="mt-8 max-w-2xl text-lg leading-relaxed text-ink-2" data-reveal>{WASSUP_PLATFORM.body}</p>
     </div>
   </section>
 
-  <!-- 02 · The app — theme-responsive: the toggle must visibly work here -->
+  <!-- 02 · The products, in two groups -->
   <section class="relative bg-raised text-ink">
     <NeuralField variant="lattice" seed={229} />
-    <div class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 md:py-32">
-      <div>
-        <p class="eyebrow" data-reveal>02 — The app</p>
-        <h2 class="display-1 mt-6" data-reveal>{app.title}</h2>
-        <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{app.summary}</p>
-        <div class="mt-10" data-reveal>
-          {
-            app.appStoreUrl ? (
-              <a href={app.appStoreUrl} class="cta-solid" data-magnetic>
-                Download on the App Store
-              </a>
-            ) : (
-              <p class="readout text-xs text-ink-2">iOS · In development</p>
-            )
-          }
-        </div>
-      </div>
-      <div class="md:pt-16">
-        <ul class="space-y-6">
-          {
-            (app.body ?? []).map((paragraph, i) => (
-              <li class="flex gap-5 border-b border-hairline pb-6" data-reveal>
-                <span class="readout mt-1 text-xs text-ink-2">{String(i + 1).padStart(2, '0')}</span>
-                <p class="leading-relaxed text-ink-2">{paragraph}</p>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
+    <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="eyebrow" data-reveal>02 — The products</p>
+      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>Five agents, one platform.</h2>
+
+      {
+        WASSUP_GROUPS.map((group) => (
+          <div class="mt-14">
+            <h3 class="readout text-xs text-ink-2" data-reveal>{group.label}</h3>
+            <div
+              class={`mt-5 grid gap-px border border-hairline bg-hairline sm:grid-cols-2 ${
+                WASSUP_PRODUCTS.filter((p) => p.group === group.id).length % 3 === 0 ? 'lg:grid-cols-3' : ''
+              }`}
+            >
+              {WASSUP_PRODUCTS.filter((p) => p.group === group.id).map((product) => (
+                <article class="relative flex min-h-64 min-w-0 flex-col bg-raised p-7" data-reveal>
+                  <span class="corner corner-tr border-hairline-strong" aria-hidden="true" />
+                  <p class={`readout text-xs ${product.status === 'In use' ? 'text-ink' : 'text-ink-2'}`}>
+                    {product.status}
+                  </p>
+                  <h4 class="mt-4 font-display text-2xl font-semibold text-ink">{product.name}</h4>
+                  <p class="mt-4 text-body leading-relaxed text-ink-2">{product.summary}</p>
+                  {product.points && (
+                    <ul class="mt-6 space-y-3 border-t border-hairline pt-5">
+                      {product.points.map((point) => (
+                        <li class="text-body leading-relaxed text-ink-2">{point}</li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
+              ))}
+            </div>
+          </div>
+        ))
+      }
     </div>
   </section>
 
-  <!-- 03 · Wassup Secretary — the product in use today -->
-  <section class="relative bg-base text-ink">
-    <NeuralField variant="edge" seed={231} />
-    <div class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 md:py-32">
-      <div>
-        <p class="eyebrow" data-reveal>03 — In use</p>
-        <h2 class="display-1 mt-6" data-reveal>{SECRETARY.title}</h2>
-        <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{SECRETARY.summary}</p>
-        <p class="readout mt-10 text-xs text-ink-2" data-reveal>{SECRETARY.status}</p>
-      </div>
-      <div class="md:pt-16">
-        <ul class="space-y-6">
-          {
-            SECRETARY.body.map((paragraph, i) => (
-              <li class="flex gap-5 border-b border-hairline pb-6" data-reveal>
-                <span class="readout mt-1 text-xs text-ink-2">{String(i + 1).padStart(2, '0')}</span>
-                <p class="leading-relaxed text-ink-2">{paragraph}</p>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- 04 · The workflow — a four-stage storyboard on a vertical spine.
-       Each stage: drawn icon · stage copy (function only) · supporting
-       instrument reusing the page's existing CSS animations. -->
+  <!-- 03 · How every agent works -->
   <section class="relative bg-base text-ink">
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="eyebrow" data-reveal>04 — The workflow</p>
-      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>From audio to signed note.</h2>
+      <p class="eyebrow" data-reveal>03 — How Wassup works</p>
+      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>Drafted by the agent. Decided by a person.</h2>
 
-      <ol class="mt-16 border-l border-hairline">
+      <ol class="mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
         {
-          workflow.map((stage) => (
-            <li class="relative grid gap-8 pb-16 pl-8 last:pb-4 md:grid-cols-[minmax(0,1fr)_280px] md:gap-14 md:pl-14" data-reveal>
+          WASSUP_STEPS.map((step) => (
+            <li class="relative min-w-0 border-t border-hairline pt-9" data-reveal>
               <span
-                class="absolute -left-[3px] top-2 block h-[5px] w-[5px] rounded-full bg-platinum"
+                class="absolute -top-[3px] left-0 h-[5px] w-[5px] rounded-full bg-platinum"
                 aria-hidden="true"
               />
-              <div>
-                <div class="flex items-center gap-6">
-                  <svg
-                    viewBox="0 0 52 52"
-                    class="h-12 w-12 shrink-0 text-ink-2"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    data-draw
-                    aria-hidden="true"
-                  >
-                    {stage.icon.map((d) => (
-                      <path d={d} />
-                    ))}
-                  </svg>
-                  <p class="readout text-xs text-platinum md:text-sm">
-                    {stage.index} — {stage.label}
-                  </p>
-                </div>
-                <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2 md:text-xl">{stage.copy}</p>
-                <p class="readout mt-5 text-xs text-ink-2">{stage.io}</p>
-              </div>
-
-              <div class="flex items-center md:justify-end" aria-hidden="true">
-                {stage.label === 'Capture' && (
-                  <span class="flex items-center gap-4 border border-hairline px-6 py-5">
-                    <span class="level">
-                      <i style="--i:0" />
-                      <i style="--i:1" />
-                      <i style="--i:2" />
-                      <i style="--i:3" />
-                    </span>
-                    <span class="readout text-xs text-ink-2">Listening</span>
-                  </span>
-                )}
-                {stage.label === 'Structure' && (
-                  <svg viewBox="0 0 220 120" class="w-56 text-ink-2" fill="none" stroke="currentColor" stroke-width="1.2" data-draw>
-                    <path d="M 8 8 V 112" class="text-ink-3" />
-                    <path d="M 20 16 H 120" /> <path d="M 20 30 H 200" class="text-ink-3" /> <path d="M 20 40 H 168" class="text-ink-3" />
-                    <path d="M 20 60 H 108" /> <path d="M 20 74 H 200" class="text-ink-3" /> <path d="M 20 84 H 148" class="text-ink-3" />
-                    <path d="M 20 104 H 96" />
-                  </svg>
-                )}
-                {stage.label === 'Draft' && (
-                  <div class="w-full max-w-[14rem]">
-                    <OpNote lines={[88, 70, 92, 56]} mobileRowCap={4} />
-                  </div>
-                )}
-                {stage.label === 'Sign' && (
-                  <span class="flex flex-col items-start gap-3 border border-hairline px-6 py-5">
-                    <svg viewBox="0 0 160 44" class="w-36 text-ink" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" data-draw>
-                      <path d="M 6 30 C 22 10, 34 40, 52 24 C 70 8, 76 36, 96 22 C 108 14, 118 30, 132 20 C 140 15, 146 24, 154 18" />
-                    </svg>
-                    <span class="readout text-xs text-ink-2">Signed — surgeon</span>
-                  </span>
-                )}
-              </div>
+              <svg
+                viewBox="0 0 52 52"
+                class="h-12 w-12 text-ink-2"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                data-draw
+                aria-hidden="true"
+              >
+                {step.icon.map((d) => (
+                  <path d={d} />
+                ))}
+              </svg>
+              <p class="readout mt-6 text-xs text-platinum">
+                {step.index} — {step.label}
+              </p>
+              <p class="mt-4 text-body leading-relaxed text-ink-2">{step.copy}</p>
             </li>
           ))
         }
       </ol>
-
-      <p class="readout mt-12 max-w-3xl border-t border-hairline pt-8 text-xs leading-relaxed text-ink-2" data-reveal>
-        EVERY DRAFT REMAINS A DRAFT UNTIL THE SURGEON SIGNS IT
-      </p>
     </div>
   </section>
 
-  <!-- 04 · R&D — the three programmes, stated plainly -->
+  <!-- 04 · Biomedical and device R&D -->
   <section data-contrast class="relative bg-base text-ink">
     <NeuralField variant="dense" seed={233} />
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="eyebrow" data-reveal>05 — Research &amp; development</p>
-      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>Three programmes, one platform.</h2>
-      <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>{rd.summary}</p>
+      <p class="eyebrow" data-reveal>04 — Biomedical &amp; medical devices</p>
+      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>Three programmes, one company.</h2>
+      <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>
+        Engineering continues across implants, biologics and software, each programme led by
+        the people who will use the result in theatre.
+      </p>
 
       <div class="mt-12 grid gap-px border border-hairline bg-hairline sm:grid-cols-3">
         {
           RD_PROGRAMMES.map((programme) => (
-            <div class="relative flex min-h-56 flex-col bg-base p-7" data-reveal>
+            <div class="relative flex min-h-56 min-w-0 flex-col bg-base p-7" data-reveal>
               <span class="corner corner-tr border-hairline-strong" aria-hidden="true" />
               <h3 class="font-display text-2xl font-semibold text-ink">{programme.title}</h3>
               <p class="mt-4 text-body leading-relaxed text-ink-2">{programme.body}</p>
@@ -287,6 +157,7 @@ const workflow = [
       <div class="mt-14 flex flex-wrap gap-4" data-reveal>
         <a href="/for-surgeons" class="cta-ghost">For surgeons →</a>
         <a href="/research" class="cta-ghost">Research activity →</a>
+        <a href="/contact" class="cta-ghost" data-event="Request Meeting" data-event-location="innovation">Get in touch →</a>
       </div>
     </div>
   </section>
