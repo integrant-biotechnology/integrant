@@ -1,5 +1,5 @@
 ---
-// /innovation — the Wassup platform first, then the biomedical and device
+// /innovation — the Wassup ecosystem first, then the biomedical and device
 // programmes. Only the hero and the R&D band (05) are permanent dark bands;
 // everything between follows the theme (a first viewport of all contrast bands
 // makes the theme switch look broken), so the toggle visibly works on the page.
@@ -22,19 +22,19 @@ const inDevelopment = WASSUP_PRODUCTS.length - inUse;
 ---
 
 <Base
-  title="Innovation — the Wassup platform — Integrant"
+  title="Innovation — the Wassup ecosystem — Integrant"
   ogImage="/og/innovation.png"
-  description="Wassup, the Integrant clinical AI platform: five agents for clinical practice, medico-legal reporting and research on one governed foundation, alongside the biomedical and medical device programmes."
+  description="Wassup, the Integrant clinical AI ecosystem: five products for clinical practice, medico-legal reporting and research on one governed foundation, alongside the biomedical and medical device programmes."
 >
   <SubpageHero
     title="Innovation."
     kicker="AI · Biomedical · Medical devices"
-    lede="Wassup is the Integrant clinical AI platform: five agents for the practice, the theatre, the medico-legal report and the research bench, built on one governed foundation."
+    lede="Wassup is the Integrant clinical AI ecosystem: five products for the practice, the theatre, the medico-legal report and the research bench, built on one governed foundation."
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Innovation' }]}
     docRef="Doc 03 — Innovation"
     meta={[
-      { label: 'Platform', value: 'Wassup' },
-      { label: 'Agents', value: String(WASSUP_PRODUCTS.length) },
+      { label: 'Ecosystem', value: 'Wassup' },
+      { label: 'Products', value: String(WASSUP_PRODUCTS.length) },
       { label: 'In use', value: String(inUse) },
       { label: 'In development', value: String(inDevelopment) },
     ]}
@@ -44,18 +44,18 @@ const inDevelopment = WASSUP_PRODUCTS.length - inUse;
     backdrop="/photo/theatre-lights.jpg"
   />
 
-  <!-- 01 · The platform: agents on a shared foundation -->
+  <!-- 01 · The ecosystem: products on a shared foundation -->
   <section class="relative overflow-hidden bg-base text-ink">
     <NeuralField variant="dense" seed={227} />
     <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="eyebrow" data-reveal>01 — The platform</p>
+      <p class="eyebrow" data-reveal>01 — The ecosystem</p>
       <h2 class="display-1 mt-6 max-w-4xl" data-reveal>{WASSUP_PLATFORM.heading}</h2>
       <p class="mt-8 max-w-3xl text-lg leading-relaxed text-ink-2" data-reveal>{WASSUP_PLATFORM.body}</p>
 
-      <!-- Layered architecture: agents → foundation → review -->
+      <!-- Layered architecture: products → foundation → review -->
       <div class="mt-16 border border-hairline-strong" data-reveal>
         <div class="border-b border-hairline px-6 py-6 md:px-8">
-          <p class="readout text-xs text-ink-2">Agents</p>
+          <p class="readout text-xs text-ink-2">Products</p>
           <ul class="mt-5 grid gap-px bg-hairline sm:grid-cols-2 lg:grid-cols-5">
             {
               WASSUP_PRODUCTS.map((product) => (
@@ -88,12 +88,12 @@ const inDevelopment = WASSUP_PRODUCTS.length - inUse;
     </div>
   </section>
 
-  <!-- 02 · The agents — a register, one row per product -->
+  <!-- 02 · The products — a register, one row each -->
   <section class="relative bg-raised text-ink">
     <NeuralField variant="lattice" seed={229} />
     <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="eyebrow" data-reveal>02 — The agents</p>
-      <h2 class="display-1 mt-6 max-w-3xl" data-reveal>Five agents, each built for one demanding job.</h2>
+      <p class="eyebrow" data-reveal>02 — The products</p>
+      <h2 class="display-1 mt-6 max-w-3xl" data-reveal>Five products, each built for one demanding job.</h2>
 
       {
         WASSUP_GROUPS.map((group) => (
@@ -132,11 +132,11 @@ const inDevelopment = WASSUP_PRODUCTS.length - inUse;
     </div>
   </section>
 
-  <!-- 03 · How every agent works -->
+  <!-- 03 · How every product works -->
   <section class="relative bg-base text-ink">
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="eyebrow" data-reveal>03 — How Wassup works</p>
-      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>Drafted by the agent. Decided by a person.</h2>
+      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>Drafted by Wassup. Decided by a person.</h2>
 
       <ol class="mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
         {
@@ -178,8 +178,8 @@ const inDevelopment = WASSUP_PRODUCTS.length - inUse;
       <p class="eyebrow" data-reveal>04 — Governance by design</p>
       <h2 class="display-1 mt-6 max-w-3xl" data-reveal>Engineered for Australian healthcare.</h2>
       <p class="mt-8 max-w-2xl text-lg leading-relaxed text-ink-2" data-reveal>
-        The standards the Wassup platform is engineered against. They are part of the shared
-        foundation, so every agent inherits them.
+        The standards the Wassup ecosystem is engineered against. They are part of the shared
+        foundation, so every product inherits them.
       </p>
 
       <div class="mt-12 grid gap-px border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">

@@ -1,5 +1,5 @@
 // Innovation content — mirrors cms/schemas/innovationItem.ts. /innovation
-// leads with the Wassup platform, then the biomedical and device programmes.
+// leads with the Wassup ecosystem, then the biomedical and device programmes.
 //
 // Copy discipline (TGA + US pre-filing securities guidance) — hard rules:
 //   · function only, plus a plain status label: 'In use' or 'In development';
@@ -23,23 +23,23 @@ export interface WassupProduct {
   group: WassupGroup;
   status: WassupStatus;
   summary: string;
-  /** What the agent does — function language, one line each. */
+  /** What the product does — function language, one line each. */
   capabilities: string[];
-  /** The human-review principle for this agent, in a single sentence. */
+  /** The human-review principle for this product, in a single sentence. */
   principle: string;
 }
 
 export const WASSUP_PLATFORM = {
   name: 'Wassup',
-  heading: 'One platform. Five agents. A qualified person on every decision.',
-  body: 'Wassup is the Integrant clinical AI platform. Each agent takes on one demanding part of clinical, medico-legal or research work: answering the practice line, drafting the operation note, preparing an expert report, surfacing the right case at the point of decision, organising translational evidence. Every agent runs on the same foundation, so identity, audit, model access and human review are built once and shared by all of them.',
+  heading: 'One ecosystem. Five products. A qualified person on every decision.',
+  body: 'Wassup is the Integrant clinical AI ecosystem: one architecture, with products built on top of it. Each product takes on one demanding part of clinical, medico-legal or research work: answering the practice line, drafting the operation note, preparing an expert report, surfacing the right case at the point of decision, organising translational evidence. Every product runs on the same foundation, so identity, audit, model access and human review are built once and shared by all of them.',
 } as const;
 
-/** The layered architecture drawn in section 01: agents on a shared
+/** The layered architecture drawn in section 01: products on a shared
  *  foundation, under one governance layer. Design language from the
  *  platform blueprint — these describe the architecture, not certifications. */
 export const WASSUP_FOUNDATION = [
-  { label: 'Identity & access', detail: 'Role-based access for every user and agent' },
+  { label: 'Identity & access', detail: 'Role-based access for every user and service' },
   { label: 'Audit trail', detail: 'Every input, output and sign-off recorded' },
   { label: 'Model gateway', detail: 'One controlled route to every AI model' },
   { label: 'Prompt registry', detail: 'Versioned, reviewed instructions' },
@@ -50,30 +50,30 @@ export const WASSUP_FOUNDATION = [
 ] as const;
 
 export const WASSUP_GROUPS: { id: WassupGroup; label: string; lede: string }[] = [
-  { id: 'clinical', label: 'Clinical & practice', lede: 'Agents for the practice, the theatre and the medico-legal report.' },
-  { id: 'research', label: 'Research', lede: 'Agents for clinical decision support and translational research.' },
+  { id: 'clinical', label: 'Clinical & practice', lede: 'Products for the practice, the theatre and the medico-legal report.' },
+  { id: 'research', label: 'Research', lede: 'Products for clinical decision support and translational research.' },
 ];
 
 export const WASSUP_PRODUCTS: WassupProduct[] = [
   {
     slug: 'secretary',
     name: 'Wassup Secretary',
-    role: 'Practice voice agent',
+    role: 'Practice reception',
     group: 'clinical',
     status: 'In use',
-    summary: 'A voice and reception agent for the practice phone line. It answers every call, at any hour, and makes sure nothing urgent waits until morning.',
+    summary: 'An AI voice and reception service for the practice phone line. It answers every call, at any hour, and makes sure nothing urgent waits until morning.',
     capabilities: [
       'Answers the practice line around the clock and identifies the caller',
       'Records the reason for each call and takes post-operative and general messages',
       'Flags urgent calls and sends a text alert to the practice team',
       'Logs every call in a command centre for follow-up during practice hours',
     ],
-    principle: 'The agent takes the call; the practice team decides what happens next.',
+    principle: 'Wassup Secretary takes the call; the practice team decides what happens next.',
   },
   {
     slug: 'doc',
     name: 'Wassup Doc',
-    role: 'Clinical workflow agent',
+    role: 'Clinical documentation',
     group: 'clinical',
     status: 'In development',
     summary: 'Ambient clinical documentation for orthopaedic and regenerative-medicine practice. Wassup Doc turns the consultation or the case into structured, ready-to-sign records.',
@@ -88,7 +88,7 @@ export const WASSUP_PRODUCTS: WassupProduct[] = [
   {
     slug: 'first-opinion',
     name: 'Wassup First Opinion',
-    role: 'Medico-legal report agent',
+    role: 'Medico-legal reporting',
     group: 'clinical',
     status: 'In development',
     summary: 'Drafting support for independent medical expert reports. It works from the clinical record bundle and the letter of instruction to a report in the required court format.',
@@ -103,7 +103,7 @@ export const WASSUP_PRODUCTS: WassupProduct[] = [
   {
     slug: 'hive',
     name: 'Wassup Hive',
-    role: 'Decision support',
+    role: 'Clinical decision support',
     group: 'research',
     status: 'In development',
     summary: 'Real-time clinical decision support built on a de-identified record of surgical decisions, delivering relevant references to the clinician during the consult.',
@@ -117,7 +117,7 @@ export const WASSUP_PRODUCTS: WassupProduct[] = [
   {
     slug: 'genesis',
     name: 'Wassup Genesis',
-    role: 'Translational research engine',
+    role: 'Translational research',
     group: 'research',
     status: 'In development',
     summary: 'A structured decision engine for translational medicine. Genesis moves a research question from clinical problem to an organised evidence package through a staged reasoning cascade.',
@@ -131,24 +131,24 @@ export const WASSUP_PRODUCTS: WassupProduct[] = [
   },
 ];
 
-/** Section 04 — the governance design every agent inherits. Framed as
+/** Section 04 — the governance design every product inherits. Framed as
  *  "designed with reference to": design alignment, never certification. */
 export const WASSUP_GOVERNANCE = [
   { title: 'Australian privacy law', body: 'Designed around the Privacy Act 1988 and the Australian Privacy Principles, including APP 8 for any cross-border disclosure.' },
   { title: 'Breach readiness', body: 'Controls and records that support the Notifiable Data Breaches scheme.' },
   { title: 'Security controls', body: 'Designed with reference to ACSC Essential Eight guidance and ISO/IEC 27001 Annex A control themes.' },
   { title: 'Decision support only', body: 'Every clinical, legal or scientific output is decision support for a qualified professional to review and approve.' },
-  { title: 'Traceable outputs', body: 'Sources, versions, reviewers and sign-off recorded for every output an agent produces.' },
-  { title: 'Health record boundary', body: 'The platform does not connect to the My Health Record system.' },
+  { title: 'Traceable outputs', body: 'Sources, versions, reviewers and sign-off recorded for every output a product produces.' },
+  { title: 'Health record boundary', body: 'Wassup does not connect to the My Health Record system.' },
 ] as const;
 
-/** How every Wassup agent works — function language only. Icons are stroke
+/** How every Wassup product works — function language only. Icons are stroke
  *  paths for svg[data-draw]. */
 export const WASSUP_STEPS = [
   {
     index: '01',
     label: 'Capture',
-    copy: 'The agent takes in what the task needs: a call, theatre audio or case documents.',
+    copy: 'Wassup takes in what the task needs: a call, theatre audio or case documents.',
     icon: ['M 20 8 H 32 V 28 C 32 34, 20 34, 20 28 Z', 'M 14 24 C 14 36, 38 36, 38 24', 'M 26 36 V 44', 'M 18 44 H 34'],
   },
   {
@@ -166,7 +166,7 @@ export const WASSUP_STEPS = [
   {
     index: '04',
     label: 'Review & sign',
-    copy: 'Nothing is final until a qualified person reviews it. The agent drafts; the person decides.',
+    copy: 'Nothing is final until a qualified person reviews it. Wassup drafts; the person decides.',
     icon: ['M 8 34 C 14 24, 18 40, 24 30 C 30 20, 32 36, 38 28 C 41 24, 43 30, 46 27'],
   },
 ] as const;
@@ -179,7 +179,7 @@ export const RD_PROGRAMMES = [
   },
   {
     title: 'Clinical software',
-    body: 'The Wassup platform: software agents for clinicians, practices and research, each built around human review.',
+    body: 'The Wassup ecosystem: AI products for clinicians, practices and research, each built around human review.',
   },
   {
     title: 'Biologics',
