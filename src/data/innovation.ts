@@ -8,9 +8,9 @@
 //   · no therapeutic, diagnostic or outcome claims — every output is drafted
 //     for a person to review, and that person decides;
 //   · canonical product names only (Doc, Secretary, First Opinion, Hive,
-//     Genesis, Horizon) — scripts/audit-copy.mjs fails on the retired ones;
-//   · Wassup is presented as an Integrant brand; no claim about who owns the
-//     underlying technology.
+//     Genesis) — scripts/audit-copy.mjs fails on retired names and Horizon,
+//     which is kept off the site;
+//   · Wassup is an Integrant platform (ownership confirmed by Integrant, Oct 2026).
 
 export type WassupGroup = 'clinical' | 'research';
 export type WassupStatus = 'In use' | 'In development';
@@ -75,13 +75,6 @@ export const WASSUP_PRODUCTS: WassupProduct[] = [
     group: 'research',
     status: 'In development',
     summary: 'A computational research engine for early-stage biomedical discovery work, operated by the research team.',
-  },
-  {
-    slug: 'horizon',
-    name: 'Wassup Horizon',
-    group: 'research',
-    status: 'In development',
-    summary: 'Applying the platform and its agents to sectors outside healthcare.',
   },
 ];
 

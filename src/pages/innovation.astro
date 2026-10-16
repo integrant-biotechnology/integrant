@@ -22,7 +22,7 @@ const inDevelopment = WASSUP_PRODUCTS.length - inUse;
 <Base
   title="Innovation — the Wassup platform — Integrant"
   ogImage="/og/innovation.png"
-  description="Wassup, the Integrant clinical AI platform: six software agents for clinicians, practices and research, alongside the biomedical and medical device programmes."
+  description="Wassup, the Integrant clinical AI platform: five software agents for clinicians, practices and research, alongside the biomedical and medical device programmes."
 >
   <SubpageHero
     title="Innovation."
@@ -56,13 +56,17 @@ const inDevelopment = WASSUP_PRODUCTS.length - inUse;
     <NeuralField variant="lattice" seed={229} />
     <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="eyebrow" data-reveal>02 — The products</p>
-      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>Six agents, one platform.</h2>
+      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>Five agents, one platform.</h2>
 
       {
         WASSUP_GROUPS.map((group) => (
           <div class="mt-14">
             <h3 class="readout text-xs text-ink-2" data-reveal>{group.label}</h3>
-            <div class="mt-5 grid gap-px border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
+            <div
+              class={`mt-5 grid gap-px border border-hairline bg-hairline sm:grid-cols-2 ${
+                WASSUP_PRODUCTS.filter((p) => p.group === group.id).length % 3 === 0 ? 'lg:grid-cols-3' : ''
+              }`}
+            >
               {WASSUP_PRODUCTS.filter((p) => p.group === group.id).map((product) => (
                 <article class="relative flex min-h-64 min-w-0 flex-col bg-raised p-7" data-reveal>
                   <span class="corner corner-tr border-hairline-strong" aria-hidden="true" />
