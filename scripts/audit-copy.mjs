@@ -41,6 +41,8 @@ const RULES = [
   { id: 'highly-anticipated', group: 'securities', re: /\bhighly anticipated\b/i },
   { id: 'buy-shares', group: 'securities', re: /\b(?:buy|purchase) shares\b/i },
   { id: 'valuation', group: 'securities', re: /\bvaluations?\b/i },
+  { id: 'investor-invitation', group: 'securities', re: /\binvestor (?:enquir|inquir|relations)\w*/i },
+  { id: 'ai-drafted', group: 'wassup', re: /\bAI-drafted\b/i },
   // --- Wassup platform: build-side detail that must stay off the site ------
   { id: 'pilot-customer', group: 'wassup', re: /\b(?:Regen-U|Caponas)\b/i },
   { id: 'drug-discovery', group: 'wassup', re: /\bdrug discovery\b/i },

@@ -23,9 +23,9 @@ export const CONTACT = {
       email: 'admin@integrant.com.au',
     },
     {
-      id: 'media-investors',
-      label: 'Media & investor enquiries',
-      detail: 'Press, interviews, company announcements and investor relations.',
+      id: 'media',
+      label: 'Media enquiries',
+      detail: 'Press, interviews and company news.',
       email: 'media@integrant.com.au',
     },
   ],
