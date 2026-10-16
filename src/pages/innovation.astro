@@ -1,17 +1,19 @@
 ---
 // /innovation — the Wassup platform first, then the biomedical and device
-// programmes. Only the hero and the R&D band (04) are permanent dark bands;
-// everything between follows the theme — a page whose first viewport is all
-// contrast bands makes the theme switch look broken (that bug shipped twice).
+// programmes. Only the hero and the R&D band (05) are permanent dark bands;
+// everything between follows the theme (a first viewport of all contrast bands
+// makes the theme switch look broken), so the toggle visibly works on the page.
 // Copy rules live in src/data/innovation.ts.
 import Base from '../layouts/Base.astro';
 import SubpageHero from '../components/SubpageHero.astro';
 import NeuralField from '../components/ui/NeuralField.astro';
 import {
   WASSUP_PLATFORM,
+  WASSUP_FOUNDATION,
   WASSUP_GROUPS,
   WASSUP_PRODUCTS,
   WASSUP_STEPS,
+  WASSUP_GOVERNANCE,
   RD_PROGRAMMES,
 } from '../data/innovation';
 
@@ -22,16 +24,17 @@ const inDevelopment = WASSUP_PRODUCTS.length - inUse;
 <Base
   title="Innovation — the Wassup platform — Integrant"
   ogImage="/og/innovation.png"
-  description="Wassup, the Integrant clinical AI platform: five software agents for clinicians, practices and research, alongside the biomedical and medical device programmes."
+  description="Wassup, the Integrant clinical AI platform: five agents for clinical practice, medico-legal reporting and research on one governed foundation, alongside the biomedical and medical device programmes."
 >
   <SubpageHero
     title="Innovation."
     kicker="AI · Biomedical · Medical devices"
-    lede="Wassup is the Integrant clinical AI platform: software agents that draft, organise and answer, with a qualified person reviewing every output."
+    lede="Wassup is the Integrant clinical AI platform: five agents for the practice, the theatre, the medico-legal report and the research bench, built on one governed foundation."
     crumbs={[{ label: 'Integrant', href: '/' }, { label: 'Innovation' }]}
     docRef="Doc 03 — Innovation"
     meta={[
       { label: 'Platform', value: 'Wassup' },
+      { label: 'Agents', value: String(WASSUP_PRODUCTS.length) },
       { label: 'In use', value: String(inUse) },
       { label: 'In development', value: String(inDevelopment) },
     ]}
@@ -41,50 +44,88 @@ const inDevelopment = WASSUP_PRODUCTS.length - inUse;
     backdrop="/photo/theatre-lights.jpg"
   />
 
-  <!-- 01 · The platform — theme-responsive, so the toggle visibly works -->
+  <!-- 01 · The platform: agents on a shared foundation -->
   <section class="relative overflow-hidden bg-base text-ink">
     <NeuralField variant="dense" seed={227} />
     <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-32">
       <p class="eyebrow" data-reveal>01 — The platform</p>
-      <h2 class="display-1 mt-6 max-w-3xl" data-reveal>{WASSUP_PLATFORM.heading}</h2>
-      <p class="mt-8 max-w-2xl text-lg leading-relaxed text-ink-2" data-reveal>{WASSUP_PLATFORM.body}</p>
+      <h2 class="display-1 mt-6 max-w-4xl" data-reveal>{WASSUP_PLATFORM.heading}</h2>
+      <p class="mt-8 max-w-3xl text-lg leading-relaxed text-ink-2" data-reveal>{WASSUP_PLATFORM.body}</p>
+
+      <!-- Layered architecture: agents → foundation → review -->
+      <div class="mt-16 border border-hairline-strong" data-reveal>
+        <div class="border-b border-hairline px-6 py-6 md:px-8">
+          <p class="readout text-xs text-ink-2">Agents</p>
+          <ul class="mt-5 grid gap-px bg-hairline sm:grid-cols-2 lg:grid-cols-5">
+            {
+              WASSUP_PRODUCTS.map((product) => (
+                <li class="min-w-0 bg-base px-4 py-4">
+                  <p class="font-display text-xl font-semibold text-ink">{product.name.replace('Wassup ', '')}</p>
+                  <p class="readout mt-2 text-xs text-ink-2">{product.status}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="border-b border-hairline px-6 py-6 md:px-8">
+          <p class="readout text-xs text-ink-2">Shared foundation</p>
+          <ul class="mt-5 grid gap-px bg-hairline sm:grid-cols-2 lg:grid-cols-4">
+            {
+              WASSUP_FOUNDATION.map((service) => (
+                <li class="min-w-0 bg-base px-4 py-4">
+                  <p class="text-body font-semibold text-ink">{service.label}</p>
+                  <p class="mt-1 text-sm leading-relaxed text-ink-2">{service.detail}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-4 px-6 py-6 md:px-8">
+          <p class="readout text-xs text-ink-2">Governance</p>
+          <p class="text-body text-ink">A qualified person reviews and approves every output.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- 02 · The products, in two groups -->
+  <!-- 02 · The agents — a register, one row per product -->
   <section class="relative bg-raised text-ink">
     <NeuralField variant="lattice" seed={229} />
     <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="eyebrow" data-reveal>02 — The products</p>
-      <h2 class="display-1 mt-6 max-w-2xl" data-reveal>Five agents, one platform.</h2>
+      <p class="eyebrow" data-reveal>02 — The agents</p>
+      <h2 class="display-1 mt-6 max-w-3xl" data-reveal>Five agents, each built for one demanding job.</h2>
 
       {
         WASSUP_GROUPS.map((group) => (
-          <div class="mt-14">
-            <h3 class="readout text-xs text-ink-2" data-reveal>{group.label}</h3>
-            <div
-              class={`mt-5 grid gap-px border border-hairline bg-hairline sm:grid-cols-2 ${
-                WASSUP_PRODUCTS.filter((p) => p.group === group.id).length % 3 === 0 ? 'lg:grid-cols-3' : ''
-              }`}
-            >
-              {WASSUP_PRODUCTS.filter((p) => p.group === group.id).map((product) => (
-                <article class="relative flex min-h-64 min-w-0 flex-col bg-raised p-7" data-reveal>
-                  <span class="corner corner-tr border-hairline-strong" aria-hidden="true" />
-                  <p class={`readout text-xs ${product.status === 'In use' ? 'text-ink' : 'text-ink-2'}`}>
-                    {product.status}
-                  </p>
-                  <h4 class="mt-4 font-display text-2xl font-semibold text-ink">{product.name}</h4>
-                  <p class="mt-4 text-body leading-relaxed text-ink-2">{product.summary}</p>
-                  {product.points && (
-                    <ul class="mt-6 space-y-3 border-t border-hairline pt-5">
-                      {product.points.map((point) => (
-                        <li class="text-body leading-relaxed text-ink-2">{point}</li>
-                      ))}
-                    </ul>
-                  )}
-                </article>
-              ))}
+          <div class="mt-16">
+            <div class="flex flex-wrap items-baseline justify-between gap-3 border-b border-hairline-strong pb-4" data-reveal>
+              <h3 class="readout text-xs text-ink">{group.label}</h3>
+              <p class="text-body text-ink-2">{group.lede}</p>
             </div>
+            <ol>
+              {WASSUP_PRODUCTS.filter((p) => p.group === group.id).map((product) => (
+                <li class="grid gap-8 border-b border-hairline py-10 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] md:gap-14" data-reveal>
+                  <div class="min-w-0">
+                    <p class="readout text-xs text-ink-2">
+                      {product.role} · <span class={product.status === 'In use' ? 'text-ink' : ''}>{product.status}</span>
+                    </p>
+                    <h4 class="mt-4 font-display text-3xl font-semibold text-ink md:text-4xl">{product.name}</h4>
+                    <p class="mt-5 text-body leading-relaxed text-ink-2">{product.summary}</p>
+                    <p class="mt-6 border-l border-hairline-strong pl-4 text-body leading-relaxed text-ink">
+                      {product.principle}
+                    </p>
+                  </div>
+                  <ul class="min-w-0 md:pt-10">
+                    {product.capabilities.map((capability, i) => (
+                      <li class="flex gap-5 border-t border-hairline py-4 first:border-t-0 md:first:border-t">
+                        <span class="readout mt-0.5 text-xs text-ink-2">{String(i + 1).padStart(2, '0')}</span>
+                        <p class="text-body leading-relaxed text-ink-2">{capability}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ol>
           </div>
         ))
       }
@@ -131,11 +172,35 @@ const inDevelopment = WASSUP_PRODUCTS.length - inUse;
     </div>
   </section>
 
-  <!-- 04 · Biomedical and device R&D -->
+  <!-- 04 · Governance by design -->
+  <section class="relative bg-raised text-ink">
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
+      <p class="eyebrow" data-reveal>04 — Governance by design</p>
+      <h2 class="display-1 mt-6 max-w-3xl" data-reveal>Engineered for Australian healthcare.</h2>
+      <p class="mt-8 max-w-2xl text-lg leading-relaxed text-ink-2" data-reveal>
+        The standards the Wassup platform is engineered against. They are part of the shared
+        foundation, so every agent inherits them.
+      </p>
+
+      <div class="mt-12 grid gap-px border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
+        {
+          WASSUP_GOVERNANCE.map((item) => (
+            <div class="relative flex min-w-0 flex-col bg-raised p-7" data-reveal>
+              <span class="corner corner-tr border-hairline-strong" aria-hidden="true" />
+              <h3 class="font-display text-2xl font-semibold text-ink">{item.title}</h3>
+              <p class="mt-4 text-body leading-relaxed text-ink-2">{item.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 · Biomedical and device R&D -->
   <section data-contrast class="relative bg-base text-ink">
     <NeuralField variant="dense" seed={233} />
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
-      <p class="eyebrow" data-reveal>04 — Biomedical &amp; medical devices</p>
+      <p class="eyebrow" data-reveal>05 — Biomedical &amp; medical devices</p>
       <h2 class="display-1 mt-6 max-w-2xl" data-reveal>Three programmes, one company.</h2>
       <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink-2" data-reveal>
         Engineering continues across implants, biologics and software, each programme led by
