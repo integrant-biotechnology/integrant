@@ -28,7 +28,7 @@ export const FOR_SURGEONS = {
     {
       index: '03',
       label: 'THEATRE',
-      heading: 'Sets that arrive complete.',
+      heading: 'Sets configured for the procedure.',
       body: 'Instrumentation, implants and disposables configured as documented tray systems, with catalogue references matching the labels on the box.',
     },
     {
