@@ -17,7 +17,7 @@ export interface Milestone {
 export const ABOUT = {
   thesis: {
     headline: 'Closing the distance between the operating theatre and the workshop.',
-    body: 'Integrant designs implant systems, biologics and clinical software as one platform. Each is specified by the people who use it.',
+    body: 'Integrant Biotechnology designs implant systems, biologics and clinical software as one platform. Each is specified by the people who use it.',
   },
   founder: {
     name: 'Dr Gordon Slater',
@@ -42,7 +42,7 @@ export const ABOUT = {
     { year: '2026', label: 'Nasdaq ticker symbol INGT reserved', verified: false },
   ] as Milestone[],
   careers: {
-    heading: 'Work at Integrant.',
+    heading: 'Work at Integrant Biotechnology.',
     body: 'We hire slowly and deliberately — engineering, clinical support and operations, in Sydney. Send a CV and a note on what you want to build.',
     email: 'admin@integrant.com.au',
   },
