@@ -72,9 +72,9 @@ export const BOILERPLATE =
 
 /** Public company identifiers — ABN from the Australian Business Register. */
 export const COMPANY = {
-  legalName: 'Integrant Biotechnology Ltd',
-  abn: '33 697 668 876',
-  abnRecord: 'https://abr.business.gov.au/ABN/View/33697668876',
+  legalName: 'Integrant Pty Ltd',
+  abn: '73 605 083 485',
+  abnRecord: 'https://abr.business.gov.au/ABN/View/73605083485',
   linkedin: 'https://www.linkedin.com/company/integrantau/',
 } as const;
 
