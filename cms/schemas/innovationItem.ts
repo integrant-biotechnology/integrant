@@ -23,8 +23,10 @@ const innovationItem: SchemaType = {
       type: 'string',
       options: { list: ['In use', 'In development'] },
     },
+    { name: 'role', title: 'Role', type: 'string' },
     { name: 'summary', title: 'Summary', type: 'text', rows: 3 },
-    { name: 'points', title: 'Points', type: 'array', of: [{ type: 'string' }] },
+    { name: 'capabilities', title: 'Capabilities', type: 'array', of: [{ type: 'string' }] },
+    { name: 'principle', title: 'Human-review principle', type: 'string' },
   ],
 };
 
