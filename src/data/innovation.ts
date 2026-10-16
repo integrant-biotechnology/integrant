@@ -32,7 +32,7 @@ export interface WassupProduct {
 export const WASSUP_PLATFORM = {
   name: 'Wassup',
   heading: 'One ecosystem. Five products. A qualified person on every decision.',
-  body: 'Wassup is the Integrant clinical AI ecosystem: one architecture, with products built on top of it. Each product takes on one demanding part of clinical, medico-legal or research work: answering the practice line, drafting the operation note, preparing an expert report, surfacing the right case at the point of decision, organising translational evidence. Every product runs on the same foundation, so identity, audit, model access and human review are built once and shared by all of them.',
+  body: 'Wassup is the Integrant Biotechnology clinical AI ecosystem: one architecture, with products built on top of it. Each product takes on one demanding part of clinical, medico-legal or research work: answering the practice line, drafting the operation note, preparing an expert report, surfacing the right case at the point of decision, organising translational evidence. Every product runs on the same foundation, so identity, audit, model access and human review are built once and shared by all of them.',
 } as const;
 
 /** The layered architecture drawn in section 01: products on a shared
